@@ -42,6 +42,11 @@ public class LoginForm extends javax.swing.JFrame {
         BtnIngresar.setText("Ingresar");
 
         BtnCreateNewUser.setText("Crear Nuevo Usuario");
+        BtnCreateNewUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCreateNewUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,6 +89,12 @@ public class LoginForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtnCreateNewUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCreateNewUserActionPerformed
+            this.dispose();
+            CreateNewUser h = new CreateNewUser();
+            h.setVisible(true);
+    }//GEN-LAST:event_BtnCreateNewUserActionPerformed
 
     /**
      * @param args the command line arguments

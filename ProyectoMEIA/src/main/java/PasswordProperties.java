@@ -15,7 +15,7 @@ public class PasswordProperties {
             FileReader archivoResultado=null;
              try {
               archivoPuntuacion = new FileReader("C:/MEIA/puntuacion.txt");
-            archivoResultado = new FileReader("C:/MEIA/puntuacion.txt");
+            archivoResultado = new FileReader("C:/MEIA/resultado.txt");
             BufferedReader LeerArchivoPuntuacion = new BufferedReader(archivoPuntuacion);
             var firstLine=Integer.parseInt(LeerArchivoPuntuacion.readLine());
             if (Password.length()<firstLine) {

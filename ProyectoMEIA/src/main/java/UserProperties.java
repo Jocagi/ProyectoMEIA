@@ -22,19 +22,12 @@ class UserProperties {
     public String LastName;
     public String Password;
     public String Role;
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    String dateString = format.format( new Date()   );
-    Date   date;       
+    public String Birthday;  
     public String Mail;
     public String Phone;
-    public Path PhotoPath;
+    public String PhotoPath;
     public String Description;
     public Boolean Status =true;
     public UserProperties() {
-        try {
-            this.date = format.parse ( "00-00-00" );
-        } catch (ParseException ex) {
-            Logger.getLogger(UserProperties.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

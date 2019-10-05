@@ -38,7 +38,7 @@ public class CreateNewUser extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         MailField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        PhoneField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         PhotoPathField = new javax.swing.JTextField();
         ImportPhotoBtn = new javax.swing.JButton();
@@ -109,7 +109,7 @@ public class CreateNewUser extends javax.swing.JFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(MailField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PhoneField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PhotoPathField, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -153,7 +153,7 @@ public class CreateNewUser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -177,7 +177,7 @@ public class CreateNewUser extends javax.swing.JFrame {
 
     private void ImportPhotoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportPhotoBtnActionPerformed
         JFileChooser dialogo = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Imagenes", ".jpg, .png");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Imagenes", "jpg");
         File ficheroImagen;
         String rutaArchivo;
         dialogo.setFileFilter(filtro);
@@ -190,12 +190,57 @@ public class CreateNewUser extends javax.swing.JFrame {
     }//GEN-LAST:event_ImportPhotoBtnActionPerformed
 
     private void CreateUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateUserBtnActionPerformed
+        
         UserProperties Usuario= new UserProperties();
+        PasswordProperties Password=new PasswordProperties();
         Usuario.UserName=NewUserField.getText();
         Usuario.Name=NameField.getText();
         Usuario.LastName=LastNameField.getText();
+        Usuario.Password=PasswordField.getText();    
+        String ResultadoValPass=Password.Validar(Usuario.Password);        
+        Usuario.Birthday=BirthDayField.getText();
+        Usuario.Mail=MailField.getText();
+        Usuario.Description=DescriptionField.getText();
+        Usuario.Phone=PhoneField.getText();
+        Usuario.PhotoPath=PhotoPathField.getText();
+        if (EsPrimero()) {
+                    Usuario.Role="Admin";
+        }
+        else{                    
+            Usuario.Role="Usuario";
+        }
+        if ("Muy Corta".equals(ResultadoValPass) ||"Insegura".equals(ResultadoValPass)  ) {
+            JOptionPane.showMessageDialog(null, "Tu password es muy inseguro, cambialo y trata otra vez.");
+        }
+        else
+        {        
+            JOptionPane.showMessageDialog(null, "Creado con exito");
+        }
+        
     }//GEN-LAST:event_CreateUserBtnActionPerformed
 
+    public boolean EsPrimero()
+    {
+        try {
+            var archivoUsuarios = new FileReader("C:/MEIA/Usuarios.txt");
+            BufferedReader LeerArchivoUsuario = new BufferedReader(archivoUsuarios);
+            try {
+                var firstLine=LeerArchivoUsuario.read();
+                if ("-1".equals(firstLine)) {                
+                    return true;
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (rootPaneCheckingEnabled) {
+                
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        return false;
+    }
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -215,6 +260,7 @@ public class CreateNewUser extends javax.swing.JFrame {
     private javax.swing.JTextField NameField;
     private javax.swing.JTextField NewUserField;
     private javax.swing.JTextField PasswordField;
+    private javax.swing.JTextField PhoneField;
     private javax.swing.JTextField PhotoPathField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -226,6 +272,5 @@ public class CreateNewUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
