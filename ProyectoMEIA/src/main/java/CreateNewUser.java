@@ -12,8 +12,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.nio.file.*; 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 public class CreateNewUser extends javax.swing.JFrame {
 
     public CreateNewUser() {
@@ -203,44 +206,270 @@ public class CreateNewUser extends javax.swing.JFrame {
         Usuario.Description=DescriptionField.getText();
         Usuario.Phone=PhoneField.getText();
         Usuario.PhotoPath=PhotoPathField.getText();
-        if (EsPrimero()) {
-                    Usuario.Role="Admin";
-        }
-        else{                    
-            Usuario.Role="Usuario";
-        }
-        if ("Muy Corta".equals(ResultadoValPass) ||"Insegura".equals(ResultadoValPass)  ) {
+        //Validacion de password
+        if ("Muy Corta".equals(ResultadoValPass) ||"Insegura".equals(ResultadoValPass)  ) 
+        {
             JOptionPane.showMessageDialog(null, "Tu password es muy inseguro, cambialo y trata otra vez.");
-        }
+        } 
         else
-        {        
-            JOptionPane.showMessageDialog(null, "Creado con exito");
-        }
-        
+        {
+        //Validacion de administrador o de Usuario
+            if (EsPrimero()) 
+            {
+                    Usuario.Role="Admin";         
+                    Date date = new Date();
+                    SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+                    String FechaCreacion=ft.format(date);
+                    //Actualizar Descriptor
+                    EscribirDescriptor("Usuarios","Secuencial",Usuario.UserName,FechaCreacion,FechaCreacion,1,1,0,5);   
+                    //Escribir en Usuario.txt     
+                    String status;
+                        if (Usuario.Status)
+                            status="Vigente";
+                        else
+                            status="No Vigente";
+                    String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+Usuario.Password+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
+                                    Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
+                           EscribirEnArchivo("Usuarios",Escribir);
+                           JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
+                           this.setVisible(false);
+                           MenuAplicacion Menu= new MenuAplicacion();
+                           Menu.setVisible(true);
+            }
+            else
+            {                    
+                Usuario.Role="Usuario";
+                String Administrador=IdentificarAdmin("C:/MEIA/Usuarios.txt");
+                String FechaCreacion=IdentificarFechaCreacion("C:/MEIA/desc_Usuarios.txt");
+                int TotalRegistros=IdentificarTotRegistros("C:/MEIA/desc_Usuarios.txt");
+                int TotalRegistrosActivos=IdentificarRegActivos("C:/MEIA/desc_Usuarios.txt");
+                int TotalRegistrosInactivos=IdentificarRegInactivos("C:/MEIA/desc_Usuarios.txt");
+                int NumReorga=IdentificarNumReorg("C:/MEIA/desc_Usuarios.txt");            
+                Date date = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+                String FechaActual=ft.format(date);
+                //Actualizar Descriptor
+                EscribirDescriptor("Usuarios","Secuencial",Administrador,FechaCreacion,FechaActual,TotalRegistros+1,TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga);
+                //Escribir en Usuarios.txt
+                String status;
+                    if (Usuario.Status)
+                        status="Vigente";
+                    else
+                        status="No Vigente";
+                String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+Usuario.Password+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
+                                    Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;        
+                EscribirEnArchivo("Usuarios",Escribir);
+                JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
+                this.setVisible(false);
+                MenuAplicacion Menu= new MenuAplicacion();
+                Menu.setVisible(true);
+            }           
+        }              
     }//GEN-LAST:event_CreateUserBtnActionPerformed
 
     public boolean EsPrimero()
     {
+        File Archivo= new File("C:/MEIA/Usuarios.txt");
+        if (Archivo.length()==0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
+            int TotRegistros, int RegistrosActivos,int RegistrosInactivos, int NumeroReorganizacion)
+    {
         try {
-            var archivoUsuarios = new FileReader("C:/MEIA/Usuarios.txt");
-            BufferedReader LeerArchivoUsuario = new BufferedReader(archivoUsuarios);
-            try {
-                var firstLine=LeerArchivoUsuario.read();
-                if ("-1".equals(firstLine)) {                
-                    return true;
+            FileWriter Escribir=null;
+            String regArchivo="Archivo|"+NombreArchivo;
+            String regOrganizacion="Organizacion|"+TipoOrg;
+            String regUsuario="Usuario|"+UsuarioCreador;
+            String regFechaCreacion="Fecha_Creacion|"+FechaCreacion;
+            String regFechaMod="Fecha_Modificacion|"+FechaModificacion;
+            String regTotalReg="Total_Registros|"+Integer.toString(TotRegistros);
+            String regRegistros_Activos="Registros_Activos|"+Integer.toString(RegistrosActivos);
+            String regRegistros_Inavtivos="Registros_Inactivos|"+Integer.toString(RegistrosInactivos);
+            String regReorganizacion="Numero_Reorganizacion|"+Integer.toString(NumeroReorganizacion);
+            Escribir = new FileWriter("C:/MEIA/desc_"+NombreArchivo+".txt",false);
+            BufferedWriter bw = new BufferedWriter(Escribir);
+            //Escribir en descriptor
+            bw.write(regArchivo+ System.getProperty( "line.separator" ));
+            bw.write(regOrganizacion+ System.getProperty( "line.separator" ));
+            bw.write(regUsuario+ System.getProperty( "line.separator" ));
+            bw.write(regFechaCreacion+ System.getProperty( "line.separator" ));
+            bw.write(regFechaMod+ System.getProperty( "line.separator" ));
+            bw.write(regTotalReg+ System.getProperty( "line.separator" ));
+            bw.write(regRegistros_Activos+ System.getProperty( "line.separator" ));
+            bw.write(regRegistros_Inavtivos+ System.getProperty( "line.separator" ));
+            bw.write(regReorganizacion);
+            bw.close();
+            Escribir.close();
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   
+    public void EscribirEnArchivo(String NombreArchivo,String strContenido)
+    {
+        try {
+            FileWriter Escribir=null;
+            Escribir = new FileWriter("C:/MEIA/"+NombreArchivo+".txt",true);
+            BufferedWriter bw = new BufferedWriter(Escribir);          
+            bw.write(strContenido+ System.getProperty( "line.separator" ));
+            bw.close();
+            Escribir.close();    
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public String IdentificarAdmin(String strPath)
+    {
+        String Admin="";
+        try {
+            File Archivo = new File(strPath);
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(Archivo);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
+            String Linea=LeerArchivo.readLine();
+            String []split;
+            while(Linea!=null)
+            {
+                split=Linea.split("\\|");
+                if ("Admin".equals(split[4]))
+                {
+                    Admin=split[0];
+                    break;
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (rootPaneCheckingEnabled) {
-                
+                Linea=LeerArchivo.readLine();
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-        return false;
+        return Admin;
     }
+    public String IdentificarFechaCreacion(String strPath)
+    {
+        String FechaCreacion="";
+            try {
+            File Archivo = new File(strPath);
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(Archivo);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
+            String Linea=LeerArchivo.readLine();
+            String []split=Linea.split("\\|");            
+            while(!"Fecha_Creacion".equals(split[0]))
+            {
+                Linea=LeerArchivo.readLine();
+                split=Linea.split("\\|");
+            }
+            FechaCreacion=split[1];
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return FechaCreacion;
+    }
+    public int IdentificarTotRegistros(String strPath)
+    {
+        int TotRegistros=0;
+            try {
+            File Archivo = new File(strPath);
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(Archivo);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
+            String Linea=LeerArchivo.readLine();
+            String []split=Linea.split("\\|");            
+            while(!"Total_Registros".equals(split[0]))
+            {
+                Linea=LeerArchivo.readLine();
+                split=Linea.split("\\|");
+            }
+            TotRegistros=Integer.parseInt(split[1]);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return TotRegistros;
+    }
+    public int IdentificarRegActivos(String strPath)
+    {
+        int TotRegistrosAct=0;
+            try {
+            File Archivo = new File(strPath);
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(Archivo);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
+            String Linea=LeerArchivo.readLine();
+            String []split=Linea.split("\\|");            
+            while(!"Registros_Activos".equals(split[0]))
+            {
+                Linea=LeerArchivo.readLine();
+                split=Linea.split("\\|");
+            }
+            TotRegistrosAct=Integer.parseInt(split[1]);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return TotRegistrosAct;
+    }
+    public int IdentificarRegInactivos(String strPath)
+    {
+        int TotRegistrosInact=0;
+            try {
+            File Archivo = new File(strPath);
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(Archivo);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
+            String Linea=LeerArchivo.readLine();
+            String []split=Linea.split("\\|");            
+            while(!"Registros_Inactivos".equals(split[0]))
+            {
+                Linea=LeerArchivo.readLine();
+                split=Linea.split("\\|");
+            }
+            TotRegistrosInact=Integer.parseInt(split[1]);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return TotRegistrosInact;
+    }   
+    public int IdentificarNumReorg(String strPath)
+    {
+        int NumReorg=0;
+            try {
+            File Archivo = new File(strPath);
+            FileReader LecturaArchivo;
+            LecturaArchivo = new FileReader(Archivo);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
+            String Linea=LeerArchivo.readLine();
+            String []split=Linea.split("\\|");            
+            while(!"Numero_Reorganizacion".equals(split[0]))
+            {
+                Linea=LeerArchivo.readLine();
+                split=Linea.split("\\|");
+            }
+            NumReorg=Integer.parseInt(split[1]);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return NumReorg;
+    }
+    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
