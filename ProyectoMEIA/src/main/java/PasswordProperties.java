@@ -7,7 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class PasswordProperties {    
+public class PasswordProperties {
+    
          public String Validar(String Password)           
          {
             String Resultado="";
@@ -17,25 +18,25 @@ public class PasswordProperties {
               archivoPuntuacion = new FileReader("C:/MEIA/puntuacion.txt");
             archivoResultado = new FileReader("C:/MEIA/resultado.txt");
             BufferedReader LeerArchivoPuntuacion = new BufferedReader(archivoPuntuacion);
-            var firstLine=Integer.parseInt(LeerArchivoPuntuacion.readLine());
+            int firstLine=Integer.parseInt(LeerArchivoPuntuacion.readLine());
             if (Password.length()<firstLine) {
                 Resultado="Muy Corta";
                 return Resultado;
             }
             else{
-                var puntuacion=0;
+                int puntuacion=0;
                 int aux=Integer.parseInt(LeerArchivoPuntuacion.readLine());
                 puntuacion=(aux*Password.length());
                 //Contar numero de mayusculas
                 aux=Integer.parseInt(LeerArchivoPuntuacion.readLine());
-                var upperCase=0;
+                int upperCase=0;
                 for (int k = 0; k < Password.length(); k++) {
                     if (Character.isUpperCase(Password.charAt(k))) upperCase++;
                 }
                 puntuacion=puntuacion+(aux*upperCase);
                 //Contar numero de letras
                 aux=Integer.parseInt(LeerArchivoPuntuacion.readLine());
-                var cuantityLetter=0;
+                int cuantityLetter=0;
                 for (int i = 0; i < Password.length(); i++) {
                     if (Character.isLetter(Password.charAt(i)))
                         cuantityLetter++;
@@ -43,14 +44,14 @@ public class PasswordProperties {
                 puntuacion=puntuacion+(cuantityLetter*aux);
                 //Contar cantidad de numeros        
                 aux=Integer.parseInt(LeerArchivoPuntuacion.readLine());
-                var cuantityNumbers=0;
+                int cuantityNumbers=0;
                 for (int i = 0; i < Password.length(); i++) {
                     if (Character.isDigit(Password.charAt(i)))
                         cuantityNumbers++;
                 }
                 puntuacion=puntuacion+(cuantityNumbers*aux);
                 //Contar cantidad de simbolos
-                var cuantitySymbols=0;
+                int cuantitySymbols=0;
                 aux=Integer.parseInt(LeerArchivoPuntuacion.readLine());
                 for (int i = 0; i < Password.length(); i++) {
                     Character aux2 =(Password.charAt(i));
@@ -108,4 +109,5 @@ public class PasswordProperties {
         }
              return Resultado;
     }
+         
 }

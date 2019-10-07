@@ -21,13 +21,14 @@ public class BackUp {
   public static void MoverCarpeta(String Origen, String Destino)
   {
       try {
-            Path temp = Files.move(new File(Origen).toPath(), new File (Destino).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Path temp = Files.copy(new File(Origen).toPath(), new File (Destino).toPath(), StandardCopyOption.REPLACE_EXISTING);
             
-            JOptionPane.showMessageDialog(null, "Files moved succesfully");
+            JOptionPane.showMessageDialog(null, "BackUp Succesful");
             
         } catch (IOException ex) {
             
-            JOptionPane.showMessageDialog(null, "Couldnt move files");
+            JOptionPane.showMessageDialog(null, "Couldnt copy files");
         }
-  }  
+  }
+  
 }

@@ -40,6 +40,11 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel2.setText("Ingresa tu Contrasena:");
 
         BtnIngresar.setText("Ingresar");
+        BtnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnIngresarActionPerformed(evt);
+            }
+        });
 
         BtnCreateNewUser.setText("Crear Nuevo Usuario");
         BtnCreateNewUser.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +100,12 @@ public class LoginForm extends javax.swing.JFrame {
             CreateNewUser h = new CreateNewUser();
             h.setVisible(true);
     }//GEN-LAST:event_BtnCreateNewUserActionPerformed
+
+    private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
+            this.dispose();
+            Test h = new Test();
+            h.setVisible(true);
+    }//GEN-LAST:event_BtnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
