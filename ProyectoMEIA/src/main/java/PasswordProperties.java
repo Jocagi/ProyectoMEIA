@@ -3,6 +3,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -108,4 +111,19 @@ public class PasswordProperties {
         }
              return Resultado;
     }
+         public String Encriptar(String Password)
+         {
+             String PasswordCifrado="";
+             try {
+                 MessageDigest md = MessageDigest.getInstance("MD5");
+                 byte[] messageDigest = md.digest(Password.getBytes());
+                 BigInteger no = new BigInteger(1, messageDigest);
+                 PasswordCifrado = no.toString(16);
+                 while (PasswordCifrado.length() < 32) {
+                     PasswordCifrado = "0" + PasswordCifrado; 
+                 }} catch (NoSuchAlgorithmException ex) {
+                 Logger.getLogger(PasswordProperties.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             return PasswordCifrado; 
+         }
 }

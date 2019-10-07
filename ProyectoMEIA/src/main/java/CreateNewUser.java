@@ -7,12 +7,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.nio.file.*; 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +39,6 @@ public class CreateNewUser extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         LastNameField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        PasswordField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         BirthDayField = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -48,6 +51,7 @@ public class CreateNewUser extends javax.swing.JFrame {
         DescriptionField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         CreateUserBtn = new javax.swing.JButton();
+        PasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,34 +94,6 @@ public class CreateNewUser extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NewUserField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NameField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LastNameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                    .addComponent(PasswordField, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(DescriptionField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BirthDayField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(MailField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PhoneField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PhotoPathField, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ImportPhotoBtn)))
-                .addGap(70, 76, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -127,6 +103,38 @@ public class CreateNewUser extends javax.swing.JFrame {
                         .addGap(259, 259, 259)
                         .addComponent(CreateUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(DescriptionField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(NewUserField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(NameField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LastNameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                                    .addComponent(PasswordField))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(BirthDayField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(MailField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(PhoneField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(PhotoPathField, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ImportPhotoBtn)))
+                        .addGap(76, 76, 76))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,9 +171,9 @@ public class CreateNewUser extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PhotoPathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ImportPhotoBtn))
+                    .addComponent(ImportPhotoBtn)
+                    .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(3, 3, 3)
@@ -196,10 +204,23 @@ public class CreateNewUser extends javax.swing.JFrame {
         
         UserProperties Usuario= new UserProperties();
         PasswordProperties Password=new PasswordProperties();
+        ArchivoSecuencial ASecuencial=new ArchivoSecuencial();
+        if (NewUserField.getText().equals("")||NameField.getText().equals("")||LastNameField.getText().equals("")||PasswordField.getText().equals("")||
+                BirthDayField.getText().equals("")||MailField.getText().equals("")||PhoneField.getText().equals("")||PhotoPathField.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Haz dejado un campo vacio, rellenalo para continuar");
+        }
+        else if(NewUserField.getText().contains("|")||NameField.getText().contains("|")||LastNameField.getText().contains("|")
+                ||PasswordField.getText().contains("|")||BirthDayField.getText().contains("|")||MailField.getText().contains("|")
+                ||PhoneField.getText().contains("|")||PhotoPathField.getText().contains("|"))
+        {
+            JOptionPane.showMessageDialog(null, "No puedes utilizar | en ningun formulario, cambialo e intenta otra vez.");
+        }
+        else
+        {
         Usuario.UserName=NewUserField.getText();
         Usuario.Name=NameField.getText();
         Usuario.LastName=LastNameField.getText();
-        Usuario.Password=PasswordField.getText();    
+        Usuario.Password=Arrays.toString(PasswordField.getPassword());
         String ResultadoValPass=Password.Validar(Usuario.Password);        
         Usuario.Birthday=BirthDayField.getText();
         Usuario.Mail=MailField.getText();
@@ -213,6 +234,19 @@ public class CreateNewUser extends javax.swing.JFrame {
         } 
         else
         {
+            String PasswordCifrado=Password.Encriptar(Usuario.Password);
+            try { 
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                byte[] messageDigest = md.digest(Usuario.Password.getBytes()); 
+                BigInteger no = new BigInteger(1, messageDigest); 
+                PasswordCifrado = no.toString(16); 
+                while (PasswordCifrado.length() < 32) { 
+                PasswordCifrado = "0" + PasswordCifrado; 
+            } 
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         //Validacion de administrador o de Usuario
             if (EsPrimero()) 
             {
@@ -221,16 +255,17 @@ public class CreateNewUser extends javax.swing.JFrame {
                     SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
                     String FechaCreacion=ft.format(date);
                     //Actualizar Descriptor
-                    EscribirDescriptor("Usuarios","Secuencial",Usuario.UserName,FechaCreacion,FechaCreacion,1,1,0,5);   
+                    ASecuencial.EscribirDescriptorBitacora("Usuarios","Secuencial",Usuario.UserName,FechaCreacion,FechaCreacion,1,1,0,5
+                            ,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
                     //Escribir en Usuario.txt     
-                    String status;
+                    int status;
                         if (Usuario.Status)
-                            status="Vigente";
+                            status=1;
                         else
-                            status="No Vigente";
-                    String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+Usuario.Password+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
+                            status=0;
+                    String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+PasswordCifrado+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
                                     Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
-                           EscribirEnArchivo("Usuarios",Escribir);
+                           ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
                            JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
                            this.setVisible(false);
                            MenuAplicacion Menu= new MenuAplicacion();
@@ -239,237 +274,47 @@ public class CreateNewUser extends javax.swing.JFrame {
             else
             {                    
                 Usuario.Role="Usuario";
-                String Administrador=IdentificarAdmin("C:/MEIA/Usuarios.txt");
-                String FechaCreacion=IdentificarFechaCreacion("C:/MEIA/desc_Usuarios.txt");
-                int TotalRegistros=IdentificarTotRegistros("C:/MEIA/desc_Usuarios.txt");
-                int TotalRegistrosActivos=IdentificarRegActivos("C:/MEIA/desc_Usuarios.txt");
-                int TotalRegistrosInactivos=IdentificarRegInactivos("C:/MEIA/desc_Usuarios.txt");
-                int NumReorga=IdentificarNumReorg("C:/MEIA/desc_Usuarios.txt");            
+                String Administrador=ASecuencial.IdentificarAdmin("C:/MEIA/BitacoraUsuarios.txt");
+                if ("".equals(Administrador)) {
+                    Administrador=ASecuencial.IdentificarAdmin("C:/MEIA/Usuarios.txt");
+                }
+                String FechaCreacion=ASecuencial.IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt");
+                int TotalRegistros=ASecuencial.IdentificarTotRegistros("C:/MEIA/desc_BitacoraUsuarios.txt");
+                int TotalRegistrosActivos=ASecuencial.IdentificarRegActivos("C:/MEIA/desc_BitacoraUsuarios.txt");
+                int TotalRegistrosInactivos=ASecuencial.IdentificarRegInactivos("C:/MEIA/desc_BitacoraUsuarios.txt");
+                int NumReorga=ASecuencial.IdentificarNumReorg("C:/MEIA/desc_BitacoraUsuarios.txt");            
                 Date date = new Date();
                 SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
                 String FechaActual=ft.format(date);
                 //Actualizar Descriptor
-                EscribirDescriptor("Usuarios","Secuencial",Administrador,FechaCreacion,FechaActual,TotalRegistros+1,TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga);
+                ASecuencial.EscribirDescriptorBitacora("Usuarios","Secuencial",Administrador,FechaCreacion,FechaActual,TotalRegistros+1,
+                        TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga,
+                        "Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");
                 //Escribir en Usuarios.txt
-                String status;
+                int status;
                     if (Usuario.Status)
-                        status="Vigente";
+                        status=1;
                     else
-                        status="No Vigente";
-                String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+Usuario.Password+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
+                        status=0;
+                String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+PasswordCifrado+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
                                     Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;        
-                EscribirEnArchivo("Usuarios",Escribir);
+                ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
                 JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
                 this.setVisible(false);
                 MenuAplicacion Menu= new MenuAplicacion();
                 Menu.setVisible(true);
             }           
-        }              
+        }
+    }                      
     }//GEN-LAST:event_CreateUserBtnActionPerformed
 
     public boolean EsPrimero()
     {
         File Archivo= new File("C:/MEIA/Usuarios.txt");
-        if (Archivo.length()==0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        File Archivo2= new File("C:/MEIA/BitacoraUsuarios.txt");
+
+        return Archivo.length()==0&&Archivo2.length()==0;
     }
-    
-    public void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
-            int TotRegistros, int RegistrosActivos,int RegistrosInactivos, int NumeroReorganizacion)
-    {
-        try {
-            FileWriter Escribir=null;
-            String regArchivo="Archivo|"+NombreArchivo;
-            String regOrganizacion="Organizacion|"+TipoOrg;
-            String regUsuario="Usuario|"+UsuarioCreador;
-            String regFechaCreacion="Fecha_Creacion|"+FechaCreacion;
-            String regFechaMod="Fecha_Modificacion|"+FechaModificacion;
-            String regTotalReg="Total_Registros|"+Integer.toString(TotRegistros);
-            String regRegistros_Activos="Registros_Activos|"+Integer.toString(RegistrosActivos);
-            String regRegistros_Inavtivos="Registros_Inactivos|"+Integer.toString(RegistrosInactivos);
-            String regReorganizacion="Numero_Reorganizacion|"+Integer.toString(NumeroReorganizacion);
-            Escribir = new FileWriter("C:/MEIA/desc_"+NombreArchivo+".txt",false);
-            BufferedWriter bw = new BufferedWriter(Escribir);
-            //Escribir en descriptor
-            bw.write(regArchivo+ System.getProperty( "line.separator" ));
-            bw.write(regOrganizacion+ System.getProperty( "line.separator" ));
-            bw.write(regUsuario+ System.getProperty( "line.separator" ));
-            bw.write(regFechaCreacion+ System.getProperty( "line.separator" ));
-            bw.write(regFechaMod+ System.getProperty( "line.separator" ));
-            bw.write(regTotalReg+ System.getProperty( "line.separator" ));
-            bw.write(regRegistros_Activos+ System.getProperty( "line.separator" ));
-            bw.write(regRegistros_Inavtivos+ System.getProperty( "line.separator" ));
-            bw.write(regReorganizacion);
-            bw.close();
-            Escribir.close();
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-   
-    public void EscribirEnArchivo(String NombreArchivo,String strContenido)
-    {
-        try {
-            FileWriter Escribir=null;
-            Escribir = new FileWriter("C:/MEIA/"+NombreArchivo+".txt",true);
-            BufferedWriter bw = new BufferedWriter(Escribir);          
-            bw.write(strContenido+ System.getProperty( "line.separator" ));
-            bw.close();
-            Escribir.close();    
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public String IdentificarAdmin(String strPath)
-    {
-        String Admin="";
-        try {
-            File Archivo = new File(strPath);
-            FileReader LecturaArchivo;
-            LecturaArchivo = new FileReader(Archivo);
-            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
-            String Linea=LeerArchivo.readLine();
-            String []split;
-            while(Linea!=null)
-            {
-                split=Linea.split("\\|");
-                if ("Admin".equals(split[4]))
-                {
-                    Admin=split[0];
-                    break;
-                }
-                Linea=LeerArchivo.readLine();
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return Admin;
-    }
-    public String IdentificarFechaCreacion(String strPath)
-    {
-        String FechaCreacion="";
-            try {
-            File Archivo = new File(strPath);
-            FileReader LecturaArchivo;
-            LecturaArchivo = new FileReader(Archivo);
-            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
-            String Linea=LeerArchivo.readLine();
-            String []split=Linea.split("\\|");            
-            while(!"Fecha_Creacion".equals(split[0]))
-            {
-                Linea=LeerArchivo.readLine();
-                split=Linea.split("\\|");
-            }
-            FechaCreacion=split[1];
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return FechaCreacion;
-    }
-    public int IdentificarTotRegistros(String strPath)
-    {
-        int TotRegistros=0;
-            try {
-            File Archivo = new File(strPath);
-            FileReader LecturaArchivo;
-            LecturaArchivo = new FileReader(Archivo);
-            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
-            String Linea=LeerArchivo.readLine();
-            String []split=Linea.split("\\|");            
-            while(!"Total_Registros".equals(split[0]))
-            {
-                Linea=LeerArchivo.readLine();
-                split=Linea.split("\\|");
-            }
-            TotRegistros=Integer.parseInt(split[1]);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return TotRegistros;
-    }
-    public int IdentificarRegActivos(String strPath)
-    {
-        int TotRegistrosAct=0;
-            try {
-            File Archivo = new File(strPath);
-            FileReader LecturaArchivo;
-            LecturaArchivo = new FileReader(Archivo);
-            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
-            String Linea=LeerArchivo.readLine();
-            String []split=Linea.split("\\|");            
-            while(!"Registros_Activos".equals(split[0]))
-            {
-                Linea=LeerArchivo.readLine();
-                split=Linea.split("\\|");
-            }
-            TotRegistrosAct=Integer.parseInt(split[1]);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return TotRegistrosAct;
-    }
-    public int IdentificarRegInactivos(String strPath)
-    {
-        int TotRegistrosInact=0;
-            try {
-            File Archivo = new File(strPath);
-            FileReader LecturaArchivo;
-            LecturaArchivo = new FileReader(Archivo);
-            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
-            String Linea=LeerArchivo.readLine();
-            String []split=Linea.split("\\|");            
-            while(!"Registros_Inactivos".equals(split[0]))
-            {
-                Linea=LeerArchivo.readLine();
-                split=Linea.split("\\|");
-            }
-            TotRegistrosInact=Integer.parseInt(split[1]);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return TotRegistrosInact;
-    }   
-    public int IdentificarNumReorg(String strPath)
-    {
-        int NumReorg=0;
-            try {
-            File Archivo = new File(strPath);
-            FileReader LecturaArchivo;
-            LecturaArchivo = new FileReader(Archivo);
-            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);            
-            String Linea=LeerArchivo.readLine();
-            String []split=Linea.split("\\|");            
-            while(!"Numero_Reorganizacion".equals(split[0]))
-            {
-                Linea=LeerArchivo.readLine();
-                split=Linea.split("\\|");
-            }
-            NumReorg=Integer.parseInt(split[1]);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return NumReorg;
-    }
-    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -488,7 +333,7 @@ public class CreateNewUser extends javax.swing.JFrame {
     private javax.swing.JTextField MailField;
     private javax.swing.JTextField NameField;
     private javax.swing.JTextField NewUserField;
-    private javax.swing.JTextField PasswordField;
+    private javax.swing.JPasswordField PasswordField;
     private javax.swing.JTextField PhoneField;
     private javax.swing.JTextField PhotoPathField;
     private javax.swing.JLabel jLabel1;
