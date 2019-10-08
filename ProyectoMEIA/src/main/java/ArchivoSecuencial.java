@@ -434,9 +434,26 @@ public class ArchivoSecuencial {
     }
    }
 
-   public UserProperties obtenerUsuario(String username, String path)
+   public static UserProperties getUser(String username)
+   {
+       //Buscar en Bitacora
+       UserProperties user1 = obtenerUsuario(username, RutaArchivos.Bitacora);
+       UserProperties user2 = obtenerUsuario(username, RutaArchivos.Master);
+       
+       if (user1.UserName != "") //Si el usuario estaba en bitacora 
+       {
+           return user1;
+       }
+       else //Si el usuario estaba en maestro
+       {
+           return user2;
+       }
+       
+   }
+   private static UserProperties obtenerUsuario(String username, String path)
    {
        UserProperties Usuario = new UserProperties();
+       Usuario.UserName = "default";
        
        try {
         // Recorrer Archivo Principal

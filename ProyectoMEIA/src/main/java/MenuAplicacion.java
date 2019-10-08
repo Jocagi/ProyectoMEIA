@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 /*
@@ -25,24 +26,8 @@ public class MenuAplicacion extends javax.swing.JFrame {
      * Creates new form MenuAplicacion
      */
     public MenuAplicacion() throws IOException {
-       try {
         initComponents();
-
-//        ScaleImage n = new ScaleImage();
-//        ImageIcon img = n.resizeImage("C:/Users/user/Desktop/descarga.png", Fotografia.getWidth(), Fotografia.getHeight());
-//        Fotografia.setIcon(img);
-
-          BufferedImage img = ImageIO.read(new File("C:\\Users\\user\\Desktop\\descarga.png"));
-          
-          Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
-          ImageIcon imageIcon = new ImageIcon(dimg);
-          Fotografia.setIcon(imageIcon);
-          
-       }
-       catch (IOException ex)
-       {
-           Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        cargarContenido();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,22 +39,25 @@ public class MenuAplicacion extends javax.swing.JFrame {
     private void initComponents() {
 
         Fotografia = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        Username = new javax.swing.JLabel();
+        Nombre = new javax.swing.JLabel();
+        Role = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Fotografia.setIcon(new javax.swing.ImageIcon("C:\\Users\\user\\Desktop\\descarga.png")); // NOI18N
+        Username.setText("Nombre Usuario");
 
-        jLabel1.setText("Nombre Usuario");
+        Nombre.setText("Nombre y Apellido");
 
-        jLabel2.setText("Nombre y Apellido");
-
-        jLabel3.setText("Rol");
+        Role.setText("Rol");
 
         jButton1.setText("Configuracion");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,9 +68,9 @@ public class MenuAplicacion extends javax.swing.JFrame {
                 .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
+                    .addComponent(Nombre)
+                    .addComponent(Username)
+                    .addComponent(Role))
                 .addContainerGap(89, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -95,11 +83,11 @@ public class MenuAplicacion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(Nombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
+                        .addComponent(Username)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3))
+                        .addComponent(Role))
                     .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -108,6 +96,42 @@ public class MenuAplicacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void cargarContenido()
+{
+        try {
+            //Imagen
+            
+            BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));
+        Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        Fotografia.setIcon(imageIcon);
+            
+        
+            //Nombre
+            Nombre.setText(Login.getUserFullName());
+            Username.setText(Login.getUsername());
+            Role.setText(Login.getUserRole());    
+          
+        } catch (IOException ex) {
+            Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (Role.getText() == "admin") {
+            this.dispose();
+            ConfiguracionAdmin h = new ConfiguracionAdmin();
+            h.setVisible(true);
+        }
+        else if (Role.getText() == "user") {
+            this.dispose();
+            ConfiguracionUsuario h = new ConfiguracionUsuario();
+            h.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Error en la aplicacion");                        
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,9 +174,9 @@ public class MenuAplicacion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel Fotografia;
+    private javax.swing.JLabel Nombre;
+    private javax.swing.JLabel Role;
+    private javax.swing.JLabel Username;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
