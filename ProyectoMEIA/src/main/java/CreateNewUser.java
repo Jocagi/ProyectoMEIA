@@ -213,7 +213,7 @@ public class CreateNewUser extends javax.swing.JFrame {
                 ||PasswordField.getText().contains("|")||BirthDayField.getText().contains("|")||MailField.getText().contains("|")
                 ||PhoneField.getText().contains("|")||PhotoPathField.getText().contains("|"))
         {
-            JOptionPane.showMessageDialog(null, "No puedes utilizar | en ningun formulario, cambialo e intenta otra vez.");
+            JOptionPane.showMessageDialog(null, "No puedes utilizar '|' en ningun formulario, cambialo e intenta otra vez.");
         }
         else
         {
@@ -250,59 +250,68 @@ public class CreateNewUser extends javax.swing.JFrame {
         //Validacion de administrador o de Usuario
             if (EsPrimero()) 
             {
-                    Usuario.Role="Admin";         
+                try {         
+                    Usuario.Role="Admin";
                     Date date = new Date();
                     SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
                     String FechaCreacion=ft.format(date);
                     //Actualizar Descriptor
                     ASecuencial.EscribirDescriptorBitacora("Usuarios","Secuencial",Usuario.UserName,FechaCreacion,FechaCreacion,1,1,0,5
-                            ,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+                            ,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");
                     //Escribir en Usuario.txt     
                     int status;
-                        if (Usuario.Status)
-                            status=1;
-                        else
-                            status=0;
-                    String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+PasswordCifrado+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
-                                    Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
-                           ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
-                           JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
-                           this.setVisible(false);
-                           MenuAplicacion Menu= new MenuAplicacion();
-                           Menu.setVisible(true);
-            }
-            else
-            {                    
-                Usuario.Role="Usuario";
-                String Administrador=ASecuencial.IdentificarAdmin("C:/MEIA/BitacoraUsuarios.txt");
-                if ("".equals(Administrador)) {
-                    Administrador=ASecuencial.IdentificarAdmin("C:/MEIA/Usuarios.txt");
-                }
-                String FechaCreacion=ASecuencial.IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt");
-                int TotalRegistros=ASecuencial.IdentificarTotRegistros("C:/MEIA/desc_BitacoraUsuarios.txt");
-                int TotalRegistrosActivos=ASecuencial.IdentificarRegActivos("C:/MEIA/desc_BitacoraUsuarios.txt");
-                int TotalRegistrosInactivos=ASecuencial.IdentificarRegInactivos("C:/MEIA/desc_BitacoraUsuarios.txt");
-                int NumReorga=ASecuencial.IdentificarNumReorg("C:/MEIA/desc_BitacoraUsuarios.txt");            
-                Date date = new Date();
-                SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
-                String FechaActual=ft.format(date);
-                //Actualizar Descriptor
-                ASecuencial.EscribirDescriptorBitacora("Usuarios","Secuencial",Administrador,FechaCreacion,FechaActual,TotalRegistros+1,
-                        TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga,
-                        "Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");
-                //Escribir en Usuarios.txt
-                int status;
                     if (Usuario.Status)
                         status=1;
                     else
                         status=0;
-                String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+PasswordCifrado+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
-                                    Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;        
-                ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
-                JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
-                this.setVisible(false);
-                MenuAplicacion Menu= new MenuAplicacion();
-                Menu.setVisible(true);
+                    String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+PasswordCifrado+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
+                            Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
+                    ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
+                    JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
+                    this.setVisible(false);
+                    MenuAplicacion Menu;
+                    Menu = new MenuAplicacion();
+                    Menu.setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+            {                    
+                try {
+                    Usuario.Role="Usuario";
+                    String Administrador=ASecuencial.IdentificarAdmin(RutaArchivos.Bitacora);
+                    if ("".equals(Administrador)) {
+                        Administrador=ASecuencial.IdentificarAdmin(RutaArchivos.Master);
+                    }
+                    String FechaCreacion=ASecuencial.IdentificarFechaCreacion(RutaArchivos.DescBitacora);
+                    int TotalRegistros=ASecuencial.IdentificarTotRegistros(RutaArchivos.DescBitacora);
+                    int TotalRegistrosActivos=ASecuencial.IdentificarRegActivos(RutaArchivos.DescBitacora);
+                    int TotalRegistrosInactivos=ASecuencial.IdentificarRegInactivos(RutaArchivos.DescBitacora);
+                    int NumReorga=ASecuencial.IdentificarNumReorg(RutaArchivos.DescBitacora);
+                    Date date = new Date();
+                    SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+                    String FechaActual=ft.format(date);
+                    //Actualizar Descriptor
+                    ASecuencial.EscribirDescriptorBitacora("Usuarios","Secuencial",Administrador,FechaCreacion,FechaActual,TotalRegistros+1,
+                            TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga,
+                            "Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");
+                    //Escribir en Usuarios.txt
+                    int status;
+                    if (Usuario.Status)
+                        status=1;
+                    else
+                        status=0;
+                    String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+PasswordCifrado+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
+                            Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
+                    ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
+                    JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
+                    this.setVisible(false);
+                    MenuAplicacion Menu= new MenuAplicacion();
+                    Menu.setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }           
         }
     }                      
@@ -310,8 +319,8 @@ public class CreateNewUser extends javax.swing.JFrame {
 
     public boolean EsPrimero()
     {
-        File Archivo= new File("C:/MEIA/Usuarios.txt");
-        File Archivo2= new File("C:/MEIA/BitacoraUsuarios.txt");
+        File Archivo= new File(RutaArchivos.Master);
+        File Archivo2= new File(RutaArchivos.Bitacora);
 
         return Archivo.length()==0&&Archivo2.length()==0;
     }

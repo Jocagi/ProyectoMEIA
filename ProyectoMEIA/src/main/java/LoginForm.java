@@ -102,38 +102,35 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCreateNewUserActionPerformed
 
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
+        try {
             this.dispose();
-            Test h = new Test();
-            h.setVisible(true);
-    }//GEN-LAST:event_BtnIngresarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        String Usuario=UserField.getText();
-        String Password=Arrays.toString(jPasswordField1.getPassword());
-        if(EstaEnBitacora(Usuario,Password)||EstaEnUsuarios(Usuario,Password))
-        {  
-            JOptionPane.showMessageDialog(null, "Te has logeado exitosamente, estas siendo redirigido");                        
-            this.setVisible(false);
             MenuAplicacion Siguiente = new MenuAplicacion();
             Siguiente.setVisible(true);
+            
+            {
+//            
+//        String Usuario=UserField.getText();
+//        String Password=Arrays.toString(jPasswordField1.getPassword());
+//        if(EstaEnBitacora(Usuario,Password)||EstaEnUsuarios(Usuario,Password))
+//        {
+//            JOptionPane.showMessageDialog(null, "Te has logeado exitosamente, estas siendo redirigido");                        
+//            this.setVisible(false);
+//            MenuAplicacion Siguiente = new MenuAplicacion();
+//            Siguiente.setVisible(true);
+//        }
+//        else{
+//            JOptionPane.showMessageDialog(null, "Usuario o contrasena incorrectos, prueba otra vez");
+            }   } catch (IOException ex) {                                           
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else
-            JOptionPane.showMessageDialog(null, "Usuario o contrasena incorrectos, prueba otra vez");
 
     }//GEN-LAST:event_BtnIngresarActionPerformed
+    
     public Boolean EstaEnBitacora(String Usuario, String Password)
     {
 
         try {
-            File Archivo = new File("C:/MEIA/BitacoraUsuarios.txt");
+            File Archivo = new File(RutaArchivos.Bitacora);
             FileReader LecturaArchivo;
             LecturaArchivo = new FileReader(Archivo);
             BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
@@ -160,7 +157,7 @@ public class LoginForm extends javax.swing.JFrame {
     public Boolean EstaEnUsuarios(String Usuario, String Password)
     {
         try {
-            File Archivo = new File("C:/MEIA/Usuarios.txt");
+            File Archivo = new File(RutaArchivos.Master);
             FileReader LecturaArchivo;
             LecturaArchivo = new FileReader(Archivo);
             BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);

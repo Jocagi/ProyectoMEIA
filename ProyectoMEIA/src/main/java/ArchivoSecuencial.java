@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
  * @author allan
  */
 public class ArchivoSecuencial {
+    
     public void EscribirDescriptorBitacora(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
             int TotRegistros, int RegistrosActivos,int RegistrosInactivos, int NumeroReorganizacion, String Atributos)
     {
@@ -56,6 +58,7 @@ public class ArchivoSecuencial {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
             int TotRegistros, int RegistrosActivos,int RegistrosInactivos, String Atributos)
     {
@@ -139,6 +142,7 @@ public class ArchivoSecuencial {
         }
         }
     }
+    
     public void EscribirEnArchivo(String NombreArchivo,String strContenido)
     {
         try {
@@ -197,6 +201,7 @@ public class ArchivoSecuencial {
         }
         return Admin;
     }
+    
     public String IdentificarFechaCreacion(String strPath)
     {
         String FechaCreacion="";
@@ -220,6 +225,7 @@ public class ArchivoSecuencial {
         }
         return FechaCreacion;
     }
+    
     public int IdentificarTotRegistros(String strPath)
     {
         int TotRegistros=0;
@@ -243,6 +249,7 @@ public class ArchivoSecuencial {
         }
         return TotRegistros;
     }
+    
     public int IdentificarRegActivos(String strPath)
     {
         int TotRegistrosAct=0;
@@ -266,6 +273,7 @@ public class ArchivoSecuencial {
         }
         return TotRegistrosAct;
     }
+    
     public int IdentificarRegInactivos(String strPath)
     {
         int TotRegistrosInact=0;
@@ -288,7 +296,8 @@ public class ArchivoSecuencial {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return TotRegistrosInact;
-    }   
+    }
+    
     public int IdentificarNumReorg(String strPath)
     {
         int NumReorg=0;
@@ -313,4 +322,155 @@ public class ArchivoSecuencial {
         return NumReorg;
     }
    
+   public void EliminarUsuario(String username)
+   {
+              //Buscar en Bitacora
+       if (EliminarUsuarioDeArchivo(RutaArchivos.Bitacora, username)) 
+       {
+           //Modificar Descriptor
+           EliminarModificarDescriptor(RutaArchivos.DescBitacora);
+       }
+                  //Buscar en Maestro
+       if (EliminarUsuarioDeArchivo(RutaArchivos.Master, username)) 
+       {
+           //Modificar Descriptor
+           EliminarModificarDescriptor(RutaArchivos.DescMaster);
+       }
+   }
+   
+   private static boolean EliminarUsuarioDeArchivo(String ruta, String username)
+   {
+       boolean found = false;
+       
+       try {
+        // Recorrer Archivo Principal
+        BufferedReader file = new BufferedReader(new FileReader(ruta));
+        StringBuffer inputBuffer = new StringBuffer();
+        String line;
+
+        while ((line = file.readLine()) != null) 
+        {
+            String[] data = line.split("|");
+            
+            //Si es el usuario buscado
+            if (data[0] == username) 
+            {
+               line = data[0] + "|" + data[1] + "|" + data[2] + "|" + data[3] + "|" + data[4] + "|" +  
+                      data[5] + "|" + data[6] + "|" + data[7] + "|" + data[8] + "|" + data[9] + "|" + data[10] + "|" + "0";
+               
+               found = true;
+            }
+            
+            inputBuffer.append(line);
+            inputBuffer.append('\n');
+        }
+        file.close();
+
+        // write the new string with the replaced line OVER the same file
+        FileOutputStream fileOut = new FileOutputStream(ruta);
+        fileOut.write(inputBuffer.toString().getBytes());
+        fileOut.close();
+
+    } 
+       catch (Exception e) {
+        System.out.println("Problem reading file.");
+    }
+       
+        return found;
+   }
+   
+   private static void EliminarModificarDescriptor(String ruta)
+   {
+       try {
+        // Recorrer Archivo Descriptor
+        BufferedReader file = new BufferedReader(new FileReader(ruta));
+        StringBuffer inputBuffer = new StringBuffer();
+        String line;
+        int contador = 1;
+
+        while ((line = file.readLine()) != null) 
+        {
+            String[] data = line.split("|");
+            
+            //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
+            //Si es el usuario buscado
+            if (contador == 5) 
+            {
+                Date date = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+                String FechaActual=ft.format(date);
+                
+               line = data[0] + "|" + FechaActual; 
+            }
+            if (contador == 7) {
+                int registros = Integer.parseInt(data[1]);
+                registros--;
+                
+                line = data[0] + "|" + 
+                Integer.toString(registros);
+            }
+            if (contador == 8) {
+                int registros = Integer.parseInt(data[1]);
+                registros++;
+                
+                line = data[0] + "|" + 
+                Integer.toString(registros);
+            }
+            
+            inputBuffer.append(line);
+            inputBuffer.append('\n');
+            contador++;
+        }
+        file.close();
+
+        // write the new string with the replaced line OVER the same file
+        FileOutputStream fileOut = new FileOutputStream(ruta);
+        fileOut.write(inputBuffer.toString().getBytes());
+        fileOut.close();
+
+    } 
+       catch (Exception e) {
+        System.out.println("Problem reading file.");
+    }
+   }
+
+   public UserProperties obtenerUsuario(String username, String path)
+   {
+       UserProperties Usuario = new UserProperties();
+       
+       try {
+        // Recorrer Archivo Principal
+        BufferedReader file = new BufferedReader(new FileReader(path));
+        String line;
+
+        while ((line = file.readLine()) != null) 
+        {
+            String[] data = line.split("|");
+            
+            //Si es el usuario buscado
+            if (data[0] == username) 
+            {
+                Usuario.UserName = data[0];
+                Usuario.Name = data[1];
+                Usuario.LastName = data[2];
+                Usuario.Password = data[3];
+                Usuario.Role = data[4];
+                Usuario.Birthday = data[5];
+                Usuario.Mail = data[6];
+                Usuario.Phone = data[7];
+                Usuario.PhotoPath= data[8];
+                Usuario.Description = data[9];
+                Usuario.Status = true;
+            }
+        }
+        file.close();
+    } 
+       catch (Exception e) {
+        System.out.println("Problem reading file.");
+    }
+       return Usuario;
+   }
 }
+
+   
+   

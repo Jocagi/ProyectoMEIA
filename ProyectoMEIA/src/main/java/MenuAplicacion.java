@@ -1,6 +1,11 @@
 
 import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 
@@ -19,12 +24,25 @@ public class MenuAplicacion extends javax.swing.JFrame {
     /**
      * Creates new form MenuAplicacion
      */
-    public MenuAplicacion() {
+    public MenuAplicacion() throws IOException {
+       try {
         initComponents();
-//
+
 //        ScaleImage n = new ScaleImage();
-//        ImageIcon img = n.resizeImage("/default.png", Fotografia.getWidth(), Fotografia.getHeight());
+//        ImageIcon img = n.resizeImage("C:/Users/user/Desktop/descarga.png", Fotografia.getWidth(), Fotografia.getHeight());
 //        Fotografia.setIcon(img);
+
+          BufferedImage img = ImageIO.read(new File("C:\\Users\\user\\Desktop\\descarga.png"));
+          
+          Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
+          ImageIcon imageIcon = new ImageIcon(dimg);
+          Fotografia.setIcon(imageIcon);
+          
+       }
+       catch (IOException ex)
+       {
+           Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,8 +54,22 @@ public class MenuAplicacion extends javax.swing.JFrame {
     private void initComponents() {
 
         Fotografia = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        Fotografia.setIcon(new javax.swing.ImageIcon("C:\\Users\\user\\Desktop\\descarga.png")); // NOI18N
+
+        jLabel1.setText("Nombre Usuario");
+
+        jLabel2.setText("Nombre y Apellido");
+
+        jLabel3.setText("Rol");
+
+        jButton1.setText("Configuracion");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -46,14 +78,32 @@ public class MenuAplicacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addContainerGap(89, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3))
+                    .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -89,12 +139,20 @@ public class MenuAplicacion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuAplicacion().setVisible(true);
+                try {
+                    new MenuAplicacion().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel Fotografia;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
