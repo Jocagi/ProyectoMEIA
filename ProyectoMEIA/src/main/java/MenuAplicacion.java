@@ -28,6 +28,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
     public MenuAplicacion() throws IOException {
         initComponents();
         cargarContenido();
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,8 +100,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
 private void cargarContenido()
 {
         try {
-            //Imagen
-            
+            //Imagen            
             BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));
         Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
@@ -117,12 +117,12 @@ private void cargarContenido()
         }
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (Role.getText() == "admin") {
+        if (Role.getText().equals("admin")||Role.getText().equals("Admin")) {
             this.dispose();
             ConfiguracionAdmin h = new ConfiguracionAdmin();
             h.setVisible(true);
         }
-        else if (Role.getText() == "user") {
+        else if (Role.getText().equals("usuario")||Role.getText().equals("Usuario")) {
             this.dispose();
             ConfiguracionUsuario h = new ConfiguracionUsuario();
             h.setVisible(true);
@@ -163,6 +163,7 @@ private void cargarContenido()
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 try {
                     new MenuAplicacion().setVisible(true);
                 } catch (IOException ex) {

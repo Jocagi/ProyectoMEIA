@@ -1,5 +1,8 @@
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -56,10 +59,6 @@ public class CambiarContraseña extends javax.swing.JFrame {
             }
         });
 
-        CurrentPassword.setText("jPasswordField1");
-
-        NewPassword.setText("jPasswordField1");
-
         ConfirmPassword.setText("jPasswordField2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -114,11 +113,15 @@ public class CambiarContraseña extends javax.swing.JFrame {
         {
          if (nuevaContraseña == nuevaContraseña2) //La contraseña coincide con la confirmacion
          {
-             //TODO cambiar contrasenia en archivo...
-             
-             this.dispose();
-             MenuAplicacion h = new MenuAplicacion();
-             h.setVisible(true);
+             try {
+                 //TODO cambiar contrasenia en archivo...
+                 
+                 this.dispose();
+                 MenuAplicacion h = new MenuAplicacion();
+                 h.setVisible(true);
+             } catch (IOException ex) {
+                 Logger.getLogger(CambiarContraseña.class.getName()).log(Level.SEVERE, null, ex);
+             }
          } 
          else 
          {
