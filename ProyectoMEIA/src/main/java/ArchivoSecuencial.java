@@ -457,7 +457,7 @@ public class ArchivoSecuencial {
        {
            return user1;
        }
-       else if(!user1.UserName.equals("")) //Si el usuario estaba en maestro
+       else if(!user2.UserName.equals("")) //Si el usuario estaba en maestro
        {
            return user2;
        }
@@ -694,7 +694,8 @@ public class ArchivoSecuencial {
        catch (Exception e) {
         System.out.println("Problem reading file.");
     }
-
+   }
+    
    public void Reorganizar()
    {
             List<String> lista1 = new ArrayList<String>();

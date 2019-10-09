@@ -26,6 +26,8 @@ public class ResultadoBusqueda extends javax.swing.JFrame {
      */
     public ResultadoBusqueda() {
         initComponents();
+        
+        cargarContenido();
     }
 
     /**
@@ -78,6 +80,11 @@ public class ResultadoBusqueda extends javax.swing.JFrame {
         });
 
         jButton3.setText("Regresar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Resultado:");
 
@@ -93,9 +100,12 @@ public class ResultadoBusqueda extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(Nombre)
                     .addComponent(Username)
-                    .addComponent(Role)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Role)))
                 .addGap(115, 115, 115)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -125,16 +135,16 @@ public class ResultadoBusqueda extends javax.swing.JFrame {
                     .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Nombre)
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Username)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addGap(5, 5, 5)
-                        .addComponent(Role)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Role)
+                            .addComponent(jLabel3))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jButton3))
         );
@@ -196,6 +206,20 @@ public class ResultadoBusqueda extends javax.swing.JFrame {
             CambiarInfo h = new CambiarInfo();
             h.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        try {
+            
+            this.setVisible(false);
+            MenuAplicacion Siguiente = new MenuAplicacion();
+            Siguiente.setVisible(true);         
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ResultadoBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

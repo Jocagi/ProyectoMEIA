@@ -86,14 +86,17 @@ public class BusquedaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_userActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      
         UserProperties usuario = ArchivoSecuencial.getUser(user.getText());
         
         if(usuario != null)
         {
             UsuarioBuscado.user = usuario; //Se guarda el usuario encontrado
+            
             this.setVisible(false);
-            MenuAplicacion Siguiente = new MenuAplicacion();
+            ResultadoBusqueda Siguiente = new ResultadoBusqueda();
             Siguiente.setVisible(true); 
+        
         }
         else
         {

@@ -118,7 +118,10 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonNuevoUsuarioActionPerformed
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
-        // TODO add your handling code here:
+        
+        BusquedaUsuario h = new BusquedaUsuario();
+            h.setVisible(true);
+            this.dispose();
         
     }//GEN-LAST:event_BotonBuscarActionPerformed
 
