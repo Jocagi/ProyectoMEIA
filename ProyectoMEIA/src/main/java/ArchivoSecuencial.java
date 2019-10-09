@@ -440,7 +440,7 @@ public class ArchivoSecuencial {
        UserProperties user1 = obtenerUsuario(username, RutaArchivos.Bitacora);
        UserProperties user2 = obtenerUsuario(username, RutaArchivos.Master);
        
-       if (user1.UserName != "") //Si el usuario estaba en bitacora 
+       if (!user1.UserName.equals("")) //Si el usuario estaba en bitacora 
        {
            return user1;
        }
@@ -462,10 +462,10 @@ public class ArchivoSecuencial {
 
         while ((line = file.readLine()) != null) 
         {
-            String[] data = line.split("|");
+            String[] data = line.split("\\|");
             
             //Si es el usuario buscado
-            if (data[0] == username) 
+            if (data[0].equals(username)) 
             {
                 Usuario.UserName = data[0];
                 Usuario.Name = data[1];
