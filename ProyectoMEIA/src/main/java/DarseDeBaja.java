@@ -1,3 +1,9 @@
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -82,15 +88,43 @@ public class DarseDeBaja extends javax.swing.JFrame {
     private void BotonSIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSIActionPerformed
             // 
             // TODO agregar codigo para eliminar usuario
-            this.dispose();
-            LoginForm h = new LoginForm();
-            h.setVisible(true);
+            
+            if (Login.getUserRole().equals("Admin")) {
+                try {
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar al Admin");
+                    
+                    this.dispose();
+                    MenuAplicacion h = new MenuAplicacion();
+                    h.setVisible(true);
+                } catch (IOException ex) {
+                    
+                    Login.destroySingleton();
+                    this.dispose();
+                    LoginForm h = new LoginForm();
+                    h.setVisible(true);
+                }
+            }
+            else
+            {
+               
+                ArchivoSecuencial.EliminarUsuario(Login.getUsername());
+                
+                Login.destroySingleton();
+                this.dispose();
+                LoginForm h = new LoginForm();
+                h.setVisible(true);
+            }
+            
     }//GEN-LAST:event_BotonSIActionPerformed
 
     private void BotonNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNOActionPerformed
+        try {
             this.dispose();
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(DarseDeBaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BotonNOActionPerformed
 
     /**

@@ -27,7 +27,14 @@ public class MenuAplicacion extends javax.swing.JFrame {
      */
     public MenuAplicacion() throws IOException {
         initComponents();
-        cargarContenido();
+        try
+        {
+            cargarContenido();
+        }
+        catch(Exception ex)
+        {
+        }
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,24 +112,24 @@ private void cargarContenido()
         Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
         Fotografia.setIcon(imageIcon);
-            
+          
+        } catch (IOException ex) {
+            Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
             //Nombre
             Nombre.setText(Login.getUserFullName());
             Username.setText(Login.getUsername());
             Role.setText(Login.getUserRole());    
           
-        } catch (IOException ex) {
-            Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (Role.getText() == "admin") {
+        if (Role.getText().equals("Admin")) {
             this.dispose();
             ConfiguracionAdmin h = new ConfiguracionAdmin();
             h.setVisible(true);
         }
-        else if (Role.getText() == "user") {
+        else if (Role.getText().equals("Usuario")) {
             this.dispose();
             ConfiguracionUsuario h = new ConfiguracionUsuario();
             h.setVisible(true);
