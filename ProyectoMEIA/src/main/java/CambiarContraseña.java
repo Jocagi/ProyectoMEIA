@@ -34,11 +34,9 @@ public class CambiarContraseña extends javax.swing.JFrame {
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         BotonValidar = new javax.swing.JButton();
-        CurrentPassword = new javax.swing.JPasswordField();
         NewPassword = new javax.swing.JPasswordField();
         ConfirmPassword = new javax.swing.JPasswordField();
 
@@ -46,11 +44,9 @@ public class CambiarContraseña extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Escriba la contraseña actual:");
-
         jLabel2.setText("Escriba su nueva contraseña:");
 
-        jLabel3.setText("Escriba de nuevo su nueva contraseña:");
+        jLabel3.setText("Confirme su nueva contraseña:");
 
         BotonValidar.setText("Validar");
         BotonValidar.addActionListener(new java.awt.event.ActionListener() {
@@ -58,8 +54,6 @@ public class CambiarContraseña extends javax.swing.JFrame {
                 BotonValidarActionPerformed(evt);
             }
         });
-
-        ConfirmPassword.setText("jPasswordField2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,36 +63,28 @@ public class CambiarContraseña extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(NewPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(CurrentPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(102, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BotonValidar)
-                .addGap(75, 75, 75))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(BotonValidar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(NewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addGap(15, 15, 15)
-                .addComponent(CurrentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(NewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(71, 71, 71)
                 .addComponent(BotonValidar)
-                .addContainerGap())
+                .addGap(52, 52, 52))
         );
 
         pack();
@@ -109,13 +95,14 @@ public class CambiarContraseña extends javax.swing.JFrame {
         String nuevaContraseña = Arrays.toString(NewPassword.getPassword());
         String nuevaContraseña2 = Arrays.toString(NewPassword.getPassword());
         
-        if (true) //TODO validar contrasenia actual... 
-        {
-         if (nuevaContraseña == nuevaContraseña2) //La contraseña coincide con la confirmacion
+         if (nuevaContraseña.equals(nuevaContraseña2)) //La contraseña coincide con la confirmacion
          {
              try {
-                 //TODO cambiar contrasenia en archivo...
+                 UserProperties Usuario = new UserProperties();
+                 PasswordProperties Password = new PasswordProperties();
+                 Usuario.Password = Password.Encriptar(nuevaContraseña);
                  
+                 ArchivoSecuencial.ModificarUsuario(Login.getUsername(), Usuario); 
                  this.dispose();
                  MenuAplicacion h = new MenuAplicacion();
                  h.setVisible(true);
@@ -127,11 +114,6 @@ public class CambiarContraseña extends javax.swing.JFrame {
          {
              JOptionPane.showMessageDialog(null, "Contraseña nueva NO coincide con la confirmación. Por favor revisar.");
          }    
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Contraseña incorrecta.");
-        }
         
     }//GEN-LAST:event_BotonValidarActionPerformed
 
@@ -173,9 +155,7 @@ public class CambiarContraseña extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonValidar;
     private javax.swing.JPasswordField ConfirmPassword;
-    private javax.swing.JPasswordField CurrentPassword;
     private javax.swing.JPasswordField NewPassword;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JToggleButton jToggleButton1;

@@ -61,7 +61,7 @@
                   <EmptySpace pref="354" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="BirthDayField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="BirthdayField" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="MailField" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -112,7 +112,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="BirthDayField" min="-2" max="-2" attributes="0"/>
+                  <Component id="BirthdayField" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -124,7 +124,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JFormattedTextField" name="BirthDayField">
+    <Component class="javax.swing.JFormattedTextField" name="BirthdayField">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>

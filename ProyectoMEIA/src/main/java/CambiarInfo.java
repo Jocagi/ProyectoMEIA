@@ -1,5 +1,8 @@
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -15,6 +18,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class CambiarInfo extends javax.swing.JFrame {
 
+    
+    public static String username = ""; //Variable que define el usuario que se modifica 
     /**
      * Creates new form CambiarInfo
      */
@@ -31,7 +36,7 @@ public class CambiarInfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        BirthDayField = new javax.swing.JFormattedTextField();
+        BirthdayField = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         MailField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -113,7 +118,7 @@ public class CambiarInfo extends javax.swing.JFrame {
                     .addContainerGap(354, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(BirthDayField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(BirthdayField, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(MailField, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGap(119, 119, 119)))
@@ -155,7 +160,7 @@ public class CambiarInfo extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(jLabel6)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(BirthDayField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BirthdayField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jLabel7)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -182,7 +187,30 @@ public class CambiarInfo extends javax.swing.JFrame {
 
     private void BotonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConfirmarActionPerformed
 
-        //TODO Actualizar datos en archivo
+        try {
+            //TODO Actualizar datos en archivo
+            
+            UserProperties Usuario = new UserProperties();
+            
+                Usuario.UserName = username;
+                Usuario.Name = NameField.getText();
+                Usuario.LastName = LastNameField.getText();
+                Usuario.Birthday = BirthdayField.getText();
+                Usuario.Mail = MailField.getText();
+                Usuario.Phone = PhoneField.getText();
+                Usuario.PhotoPath= PhotoPathField.getText();
+                Usuario.Description = DescriptionField.getText();
+                Usuario.Status = true;
+            
+            ArchivoSecuencial.ModificarUsuario(Login.getUsername(), Usuario);
+            
+            this.dispose();
+            MenuAplicacion h = new MenuAplicacion();
+            h.setVisible(true);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(CambiarInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_BotonConfirmarActionPerformed
 
@@ -222,11 +250,9 @@ public class CambiarInfo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField BirthDayField;
+    private javax.swing.JFormattedTextField BirthdayField;
     private javax.swing.JButton BotonConfirmar;
     private javax.swing.JTextField DescriptionField;
-    private javax.swing.JButton ImportPhotoBtn;
-    private javax.swing.JButton ImportPhotoBtn1;
     private javax.swing.JButton ImportPhotoBtn2;
     private javax.swing.JTextField LastNameField;
     private javax.swing.JTextField MailField;

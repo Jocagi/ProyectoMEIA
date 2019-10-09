@@ -70,7 +70,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre:");
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("Nombre de Usuario:");
 
         jLabel3.setText("Rol:");
 
@@ -93,7 +93,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
                     .addComponent(Role)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +121,8 @@ public class MenuAplicacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 private void cargarContenido()
 {
+    Login.updateInfo();
+    
         try {
             //Imagen            
             BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));

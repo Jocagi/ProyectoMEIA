@@ -528,9 +528,9 @@ public class ArchivoSecuencial {
                 {
                     currentLine = "";
                     
-                    currentLine = currentLine + ("|" + username);
+                    currentLine = currentLine + (username);
                     
-                    if (!"".equals(Usuario.Name))
+                    if (!"".equals(Usuario.Name) && Usuario.Name != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.Name);
                     }
@@ -539,7 +539,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[1]);
                     }
                     
-                    if (!"".equals(Usuario.LastName))
+                    if (!"".equals(Usuario.LastName) && Usuario.LastName != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.LastName);
                     }
@@ -548,7 +548,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[2]);
                     }
                     
-                    if (!"".equals(Usuario.Password))
+                    if (!"".equals(Usuario.Password) && Usuario.Password != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.Password);
                     }
@@ -557,7 +557,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[3]);
                     }
                     
-                    if (!"".equals(Usuario.Role))
+                    if (!"".equals(Usuario.Role) && Usuario.Role != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.Role);
                     }
@@ -566,7 +566,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[4]);
                     }
                     
-                    if (!"".equals(Usuario.Birthday))
+                    if (!"".equals(Usuario.Birthday) && Usuario.Birthday != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.Birthday);
                     }
@@ -575,7 +575,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[5]);
                     }
                     
-                    if (!"".equals(Usuario.Mail))
+                    if (!"".equals(Usuario.Mail) && Usuario.Mail != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.Mail);
                     }
@@ -584,7 +584,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[6]);
                     }
                     
-                    if (!"".equals(Usuario.Phone))
+                    if (!"".equals(Usuario.Phone) && Usuario.Phone != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.Phone);
                     }
@@ -593,7 +593,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[7]);
                     }
                     
-                    if (!"".equals(Usuario.PhotoPath))
+                    if (!"".equals(Usuario.PhotoPath) &&  Usuario.PhotoPath != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.PhotoPath);
                     }
@@ -602,7 +602,7 @@ public class ArchivoSecuencial {
                         currentLine = currentLine + ("|" +  data[8]);
                     }
                     
-                    if (!"".equals(Usuario.Description))
+                    if (!"".equals(Usuario.Description) && Usuario.Description != null)
                     {
                         currentLine = currentLine + ("|" + Usuario.Description);
                     }
@@ -619,6 +619,8 @@ public class ArchivoSecuencial {
             }
             
                found = true;
+               
+               CambiarInfoModificarDescriptor(ruta);
             }
             
             inputBuffer.append(line);
@@ -638,6 +640,45 @@ public class ArchivoSecuencial {
        }
         return found;
 }
+   private static void CambiarInfoModificarDescriptor(String ruta)
+   {
+       try {
+        // Recorrer Archivo Descriptor
+        BufferedReader file = new BufferedReader(new FileReader(ruta));
+        StringBuffer inputBuffer = new StringBuffer();
+        String line;
+        int contador = 1;
+
+        while ((line = file.readLine()) != null) 
+        {
+            String[] data = line.split("\\|");
+            
+            //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
+            if (contador == 5) 
+            {
+                Date date = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+                String FechaActual=ft.format(date);
+                
+               line = data[0] + "|" + FechaActual; 
+            }
+            
+            inputBuffer.append(line);
+            inputBuffer.append('\n');
+            contador++;
+        }
+        file.close();
+
+        // write the new string with the replaced line OVER the same file
+        FileOutputStream fileOut = new FileOutputStream(ruta);
+        fileOut.write(inputBuffer.toString().getBytes());
+        fileOut.close();
+
+    } 
+       catch (Exception e) {
+        System.out.println("Problem reading file.");
+    }
+   }
 }
 
    

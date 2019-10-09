@@ -28,6 +28,11 @@ public class Login {
     
     // metodos getter y setter
     
+    public static void updateInfo()
+    {
+        user = ArchivoSecuencial.getUser(user.UserName);
+    }
+    
     public static UserProperties getUserInfo()
     {
         return Login.user;

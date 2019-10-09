@@ -104,6 +104,7 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonBackUPActionPerformed
 
     private void BontonCambiarInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BontonCambiarInformacionActionPerformed
+CambiarInfo.username = Login.getUsername();
         this.dispose();
             CambiarInfo h = new CambiarInfo();
             h.setVisible(true);
