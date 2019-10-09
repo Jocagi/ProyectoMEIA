@@ -1,3 +1,8 @@
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -89,8 +94,13 @@ public class DarseDeBaja extends javax.swing.JFrame {
 
     private void BotonNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNOActionPerformed
             this.dispose();
+            try{
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(DarseDeBaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
     }//GEN-LAST:event_BotonNOActionPerformed
 
     /**
