@@ -20,7 +20,18 @@ public class Login {
         return currentLogin;
     }
     
+    public static void destroySingleton()
+    {
+        currentLogin = null;
+        user = null;
+    } 
+    
     // metodos getter y setter
+    
+    public static void updateInfo()
+    {
+        user = ArchivoSecuencial.getUser(user.UserName);
+    }
     
     public static UserProperties getUserInfo()
     {

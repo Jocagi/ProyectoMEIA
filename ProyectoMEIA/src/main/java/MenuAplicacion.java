@@ -27,8 +27,13 @@ public class MenuAplicacion extends javax.swing.JFrame {
      */
     public MenuAplicacion() throws IOException {
         initComponents();
-        cargarContenido();
-
+        try
+        {
+            cargarContenido();
+        }
+        catch(Exception ex)
+        {
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,7 +70,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre:");
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("Nombre de Usuario:");
 
         jLabel3.setText("Rol:");
 
@@ -88,7 +93,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
                     .addComponent(Role)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,22 +121,24 @@ public class MenuAplicacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 private void cargarContenido()
 {
+    Login.updateInfo();
+    
         try {
             //Imagen            
             BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));
         Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
         Fotografia.setIcon(imageIcon);
-            
+          
+        } catch (IOException ex) {
+            Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
             //Nombre
             Nombre.setText(Login.getUserFullName());
             Username.setText(Login.getUsername());
             Role.setText(Login.getUserRole());    
-          
-        } catch (IOException ex) {
-            Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (Role.getText().equals("admin")||Role.getText().equals("Admin")) {

@@ -83,15 +83,15 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addComponent(BontonCambiarInformacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BotonNuevoUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(BotonBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(BotonBackUP)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -104,6 +104,7 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonBackUPActionPerformed
 
     private void BontonCambiarInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BontonCambiarInformacionActionPerformed
+        CambiarInfo.modificarUsuarioActual = true;
         this.dispose();
             CambiarInfo h = new CambiarInfo();
             h.setVisible(true);
@@ -117,7 +118,11 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonNuevoUsuarioActionPerformed
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
-        // TODO add your handling code here:
+        
+        BusquedaUsuario h = new BusquedaUsuario();
+            h.setVisible(true);
+            this.dispose();
+        
     }//GEN-LAST:event_BotonBuscarActionPerformed
 
     /**

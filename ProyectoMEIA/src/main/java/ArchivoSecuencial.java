@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class ArchivoSecuencial {
     
@@ -334,7 +335,7 @@ public class ArchivoSecuencial {
         return NumReorg;
     }
    
-   public void EliminarUsuario(String username)
+   public static void EliminarUsuario(String username)
    {
               //Buscar en Bitacora
        if (EliminarUsuarioDeArchivo(RutaArchivos.Bitacora, username)) 
@@ -362,13 +363,13 @@ public class ArchivoSecuencial {
 
         while ((line = file.readLine()) != null) 
         {
-            String[] data = line.split("|");
+            String[] data = line.split("\\|");
             
             //Si es el usuario buscado
-            if (data[0] == username) 
+            if (data[0].equals(username)) 
             {
                line = data[0] + "|" + data[1] + "|" + data[2] + "|" + data[3] + "|" + data[4] + "|" +  
-                      data[5] + "|" + data[6] + "|" + data[7] + "|" + data[8] + "|" + data[9] + "|" + data[10] + "|" + "0";
+                      data[5] + "|" + data[6] + "|" + data[7] + "|" + data[8] + "|" + data[9] + "|" + "0";
                
                found = true;
             }
@@ -402,7 +403,7 @@ public class ArchivoSecuencial {
 
         while ((line = file.readLine()) != null) 
         {
-            String[] data = line.split("|");
+            String[] data = line.split("\\|");
             
             //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
             //Si es el usuario buscado
@@ -456,16 +457,20 @@ public class ArchivoSecuencial {
        {
            return user1;
        }
-       else //Si el usuario estaba en maestro
+       else if(!user2.UserName.equals("")) //Si el usuario estaba en maestro
        {
            return user2;
+       }
+       else
+       {
+           return null;
        }
        
    }
    private static UserProperties obtenerUsuario(String username, String path)
    {
        UserProperties Usuario = new UserProperties();
-       Usuario.UserName = "default";
+       Usuario.UserName = "";
        
        try {
         // Recorrer Archivo Principal
@@ -499,6 +504,198 @@ public class ArchivoSecuencial {
     }
        return Usuario;
    }
+
+   public static void ModificarUsuario(String username, UserProperties cambios)
+   {
+              //Buscar en Bitacora
+       if (!ModificarUsuarioDeArchivo(RutaArchivos.Bitacora, username, cambios)) 
+       {
+         //Buscar en maestro
+           if (!ModificarUsuarioDeArchivo(RutaArchivos.Master, username, cambios)) 
+           {
+            JOptionPane.showMessageDialog(null, "No existe el usuario en la base de datos.");   
+           }
+       }
+       
+   }
+   
+   private static boolean ModificarUsuarioDeArchivo(String ruta, String username, UserProperties Usuario)
+   {
+       boolean found = false;
+       
+       try {
+        // Recorrer Archivo Principal
+        BufferedReader file = new BufferedReader(new FileReader(ruta));
+        StringBuffer inputBuffer = new StringBuffer();
+        String line;
+        String currentLine = "";
+
+        while ((line = file.readLine()) != null) 
+        {
+            String[] data = line.split("\\|");
+            
+            //Si es el usuario buscado
+            if (data[0].equals(username)) 
+            {
+               //Si es el usuario buscado
+                //<editor-fold defaultstate="collapsed" desc="comment">
+                
+                if (data[0].equals(username))
+                {
+                    currentLine = "";
+                    
+                    currentLine = currentLine + (username);
+                    
+                    if (!"".equals(Usuario.Name) && Usuario.Name != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.Name);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[1]);
+                    }
+                    
+                    if (!"".equals(Usuario.LastName) && Usuario.LastName != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.LastName);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[2]);
+                    }
+                    
+                    if (!"".equals(Usuario.Password) && Usuario.Password != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.Password);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[3]);
+                    }
+                    
+                    if (!"".equals(Usuario.Role) && Usuario.Role != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.Role);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[4]);
+                    }
+                    
+                    if (!"".equals(Usuario.Birthday) && Usuario.Birthday != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.Birthday);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[5]);
+                    }
+                    
+                    if (!"".equals(Usuario.Mail) && Usuario.Mail != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.Mail);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[6]);
+                    }
+                    
+                    if (!"".equals(Usuario.Phone) && Usuario.Phone != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.Phone);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[7]);
+                    }
+                    
+                    if (!"".equals(Usuario.PhotoPath) &&  Usuario.PhotoPath != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.PhotoPath);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[8]);
+                    }
+                    
+                    if (!"".equals(Usuario.Description) && Usuario.Description != null)
+                    {
+                        currentLine = currentLine + ("|" + Usuario.Description);
+                    }
+                    else
+                    {
+                        currentLine = currentLine + ("|" +  data[9]);
+                    }
+                    
+//</editor-fold>
+    
+                currentLine = currentLine + ("|" +  "1");
+                
+                line = currentLine;
+            }
+            
+               found = true;
+               
+               CambiarInfoModificarDescriptor(ruta);
+            }
+            
+            inputBuffer.append(line);
+            inputBuffer.append('\n');
+        }
+        file.close();
+
+        // write the new string with the replaced line OVER the same file
+        FileOutputStream fileOut = new FileOutputStream(ruta);
+        fileOut.write(inputBuffer.toString().getBytes());
+        fileOut.close();
+
+    } 
+       catch (Exception e) 
+       {
+        System.out.println("Problem reading file.");
+       }
+        return found;
+}
+   private static void CambiarInfoModificarDescriptor(String ruta)
+   {
+       try {
+        // Recorrer Archivo Descriptor
+        BufferedReader file = new BufferedReader(new FileReader(ruta));
+        StringBuffer inputBuffer = new StringBuffer();
+        String line;
+        int contador = 1;
+
+        while ((line = file.readLine()) != null) 
+        {
+            String[] data = line.split("\\|");
+            
+            //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
+            if (contador == 5) 
+            {
+                Date date = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+                String FechaActual=ft.format(date);
+                
+               line = data[0] + "|" + FechaActual; 
+            }
+            
+            inputBuffer.append(line);
+            inputBuffer.append('\n');
+            contador++;
+        }
+        file.close();
+
+        // write the new string with the replaced line OVER the same file
+        FileOutputStream fileOut = new FileOutputStream(ruta);
+        fileOut.write(inputBuffer.toString().getBytes());
+        fileOut.close();
+
+    } 
+       catch (Exception e) {
+        System.out.println("Problem reading file.");
+    }
+   }
+    
    public void Reorganizar()
    {
             List<String> lista1 = new ArrayList<String>();
