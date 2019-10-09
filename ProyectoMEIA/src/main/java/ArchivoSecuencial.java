@@ -8,21 +8,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author allan
- */
 public class ArchivoSecuencial {
     
     public void EscribirDescriptorBitacora(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
@@ -112,14 +105,15 @@ public class ArchivoSecuencial {
             }
             // Usuarios-> eliminar inactivos y reordenar
             EscribirEnArchivo(NombreArchivo,strContenido);
-            FileWriter Escribir = new FileWriter("C:/MEIA/Bitacora"+NombreArchivo+".txt",false);
+            Reorganizar();
+            Date date = new Date();
+             SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+             String FechaActual=ft.format(date);
+             FileWriter Escribir = new FileWriter("C:/MEIA/BitacoraUsuarios.txt",false);
             BufferedWriter bw = new BufferedWriter(Escribir);          
             bw.write("");
             Escribir.close();  
-             Date date = new Date();
-             SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
-             String FechaActual=ft.format(date);
-            EscribirDescriptorBitacora(NombreArchivo,"Secuencial",IdentificarAdmin("C:/MEIA/"+NombreArchivo+".txt"),IdentificarFechaCreacion("C:/MEIA/desc_Bitacora"+NombreArchivo+".txt"),FechaActual,0,0,0,0,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,5,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,6 +140,12 @@ public class ArchivoSecuencial {
     
     public void EscribirEnArchivo(String NombreArchivo,String strContenido)
     {
+        Boolean Activo=false;
+        String[]split=strContenido.split("\\|");
+        if("1".equals(split[10]))
+        {
+            Activo=true;
+        }
         try {
             FileWriter Escribir=null;
             Escribir = new FileWriter("C:/MEIA/"+NombreArchivo+".txt",true);
@@ -161,15 +161,27 @@ public class ArchivoSecuencial {
              Date date = new Date();
              SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
              String FechaActual=ft.format(date);
-            EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/"+NombreArchivo+".txt"),IdentificarFechaCreacion("C:/MEIA/desc_"+NombreArchivo+".txt"),FechaActual,IdentificarTotRegistros("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegActivos("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegInactivos("C:/MEIA/desc_"+NombreArchivo+".txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
-
+             if (Activo)
+             {
+                EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/"+NombreArchivo+".txt"),IdentificarFechaCreacion("C:/MEIA/desc_"+NombreArchivo+".txt"),FechaActual,IdentificarTotRegistros("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegActivos("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegInactivos("C:/MEIA/desc_"+NombreArchivo+".txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+             }
+             else
+             {
+                 EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/"+NombreArchivo+".txt"),IdentificarFechaCreacion("C:/MEIA/desc_"+NombreArchivo+".txt"),FechaActual,IdentificarTotRegistros("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegActivos("C:/MEIA/desc_"+NombreArchivo+".txt"),IdentificarRegInactivos("C:/MEIA/desc_"+NombreArchivo+".txt")+1,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+             }
         }
         else 
         {
             Date date = new Date();
              SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
              String FechaActual=ft.format(date);
-            EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/"+NombreArchivo+".txt"),FechaActual,FechaActual,IdentificarTotRegistros("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegActivos("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegInactivos("C:/MEIA/desc_"+NombreArchivo+".txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+             if (Activo) {
+                 EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/"+NombreArchivo+".txt"),FechaActual,FechaActual,IdentificarTotRegistros("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegActivos("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegInactivos("C:/MEIA/desc_"+NombreArchivo+".txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+            }
+             else
+             {
+                 EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/"+NombreArchivo+".txt"),FechaActual,FechaActual,IdentificarTotRegistros("C:/MEIA/desc_"+NombreArchivo+".txt")+1,IdentificarRegActivos("C:/MEIA/desc_"+NombreArchivo+".txt"),IdentificarRegInactivos("C:/MEIA/desc_"+NombreArchivo+".txt")+1,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+             } 
             
         }
     }
@@ -682,6 +694,42 @@ public class ArchivoSecuencial {
        catch (Exception e) {
         System.out.println("Problem reading file.");
     }
+
+   public void Reorganizar()
+   {
+            List<String> lista1 = new ArrayList<String>();
+            RutaArchivos RutaArchivosIr= new RutaArchivos();
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(RutaArchivosIr.Master));
+            String line;
+            while ((line = file.readLine()) != null) 
+            {
+                String[]split=line.split("\\|");
+                if ("1".equals(split[10])){
+                    lista1.add(line);
+                }
+            }            
+            file.close();
+            Collections.sort(lista1);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(RutaArchivosIr.Master));
+            for (String line2 : lista1)
+            {
+                writer.write(line2);                 
+                writer.newLine();
+            }
+            writer.close();
+           Date date = new Date();
+             SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+             String FechaActual=ft.format(date);
+             int TamanoLista=lista1.size();
+             EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_Usuarios.txt"),FechaActual,TamanoLista,TamanoLista,0,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
+        }           
+
    }
 }
 
