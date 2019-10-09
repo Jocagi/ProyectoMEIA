@@ -188,7 +188,7 @@ public class CreateNewUser extends javax.swing.JFrame {
 
     private void ImportPhotoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportPhotoBtnActionPerformed
         JFileChooser dialogo = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Imagenes", "jpg");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagenes", "jpg");
         File ficheroImagen;
         String rutaArchivo;
         dialogo.setFileFilter(filtro);
@@ -305,9 +305,10 @@ public class CreateNewUser extends javax.swing.JFrame {
                         Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
                 ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
                 JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
-                this.dispose();
                 LoginForm h = new LoginForm();
                 h.setVisible(true);
+                this.dispose();
+                
             }           
         }
     }                      

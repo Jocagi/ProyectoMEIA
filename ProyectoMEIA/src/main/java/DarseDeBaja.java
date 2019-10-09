@@ -120,11 +120,13 @@ public class DarseDeBaja extends javax.swing.JFrame {
     private void BotonNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNOActionPerformed
         try {
             this.dispose();
+            try{
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(DarseDeBaja.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_BotonNOActionPerformed
 
     /**

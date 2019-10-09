@@ -441,7 +441,7 @@ public class ArchivoSecuencial {
        UserProperties user1 = obtenerUsuario(username, RutaArchivos.Bitacora);
        UserProperties user2 = obtenerUsuario(username, RutaArchivos.Master);
        
-       if (user1.UserName != "") //Si el usuario estaba en bitacora 
+       if (!user1.UserName.equals("")) //Si el usuario estaba en bitacora 
        {
            return user1;
        }

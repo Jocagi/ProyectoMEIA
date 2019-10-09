@@ -34,7 +34,6 @@ public class MenuAplicacion extends javax.swing.JFrame {
         catch(Exception ex)
         {
         }
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,6 +49,9 @@ public class MenuAplicacion extends javax.swing.JFrame {
         Nombre = new javax.swing.JLabel();
         Role = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,37 +68,51 @@ public class MenuAplicacion extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Nombre:");
+
+        jLabel2.setText("jLabel2");
+
+        jLabel3.setText("Rol:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addComponent(Nombre)
                     .addComponent(Username)
-                    .addComponent(Role))
+                    .addComponent(Role)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addContainerGap(89, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Nombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Username)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(1, 1, 1)
                         .addComponent(Role))
                     .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -106,8 +122,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
 private void cargarContenido()
 {
         try {
-            //Imagen
-            
+            //Imagen            
             BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));
         Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
@@ -124,12 +139,12 @@ private void cargarContenido()
           
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (Role.getText().equals("Admin")) {
+        if (Role.getText().equals("admin")||Role.getText().equals("Admin")) {
             this.dispose();
             ConfiguracionAdmin h = new ConfiguracionAdmin();
             h.setVisible(true);
         }
-        else if (Role.getText().equals("Usuario")) {
+        else if (Role.getText().equals("usuario")||Role.getText().equals("Usuario")) {
             this.dispose();
             ConfiguracionUsuario h = new ConfiguracionUsuario();
             h.setVisible(true);
@@ -170,6 +185,7 @@ private void cargarContenido()
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 try {
                     new MenuAplicacion().setVisible(true);
                 } catch (IOException ex) {
@@ -185,5 +201,8 @@ private void cargarContenido()
     private javax.swing.JLabel Role;
     private javax.swing.JLabel Username;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

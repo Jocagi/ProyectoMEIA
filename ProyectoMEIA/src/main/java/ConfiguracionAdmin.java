@@ -51,6 +51,11 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
         });
 
         BotonBuscar.setText("Buscar Usuario");
+        BotonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBuscarActionPerformed(evt);
+            }
+        });
 
         BotonBackUP.setText("BackUp del Sistema");
         BotonBackUP.addActionListener(new java.awt.event.ActionListener() {
@@ -105,10 +110,15 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BontonCambiarInformacionActionPerformed
 
     private void BotonNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNuevoUsuarioActionPerformed
-        this.dispose();
-            CreateNewUser h = new CreateNewUser();
+        CreateNewUser h = new CreateNewUser();
             h.setVisible(true);
+            this.dispose();
+            
     }//GEN-LAST:event_BotonNuevoUsuarioActionPerformed
+
+    private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotonBuscarActionPerformed
 
     /**
      * @param args the command line arguments

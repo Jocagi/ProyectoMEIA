@@ -59,10 +59,6 @@ public class CambiarContraseña extends javax.swing.JFrame {
             }
         });
 
-        CurrentPassword.setText("jPasswordField1");
-
-        NewPassword.setText("jPasswordField1");
-
         ConfirmPassword.setText("jPasswordField2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

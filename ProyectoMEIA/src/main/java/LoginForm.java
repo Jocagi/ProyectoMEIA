@@ -102,20 +102,13 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCreateNewUserActionPerformed
 
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
-        
-        
-//            this.dispose();
-//            MenuAplicacion Siguiente = new MenuAplicacion();
-//            Siguiente.setVisible(true);
-//          
-
+ 
         try {
             String Usuario=UserField.getText();
             String Password=Arrays.toString(jPasswordField1.getPassword());
         
             if(EstaEnBitacora(Usuario,Password)||EstaEnUsuarios(Usuario,Password))
         {
-            JOptionPane.showMessageDialog(null, "Te has logeado exitosamente, estas siendo redirigido");                        
             
             UserProperties usuario = ArchivoSecuencial.getUser(Usuario);
             //Singleton
@@ -124,11 +117,10 @@ public class LoginForm extends javax.swing.JFrame {
                 } catch (Exception ex) {
                     Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            
             this.setVisible(false);
             MenuAplicacion Siguiente = new MenuAplicacion();
-            Siguiente.setVisible(true);
-        }
+            Siguiente.setVisible(true);            
+ }
         else{
             JOptionPane.showMessageDialog(null, "Usuario o contrasena incorrectos, prueba otra vez");
             }   } catch (IOException ex) {                                           
