@@ -11,6 +11,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.nio.file.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author user
@@ -127,11 +129,17 @@ public class BackUpForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        BackUp.MoverCarpeta(fieldOrigen.getText(), fieldDestino.getText());
         
-        this.dispose();
+            try {
+            String Destino=fieldDestino.getText()+"\\MEIA_Backup";
+            BackUp.MoverCarpeta(fieldOrigen.getText(),Destino );
+            
+            this.dispose();
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(BackUpForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
             
     }//GEN-LAST:event_jButton1ActionPerformed
 
