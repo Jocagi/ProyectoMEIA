@@ -19,7 +19,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class CambiarInfo extends javax.swing.JFrame {
 
     
-    public static String username = ""; //Variable que define el usuario que se modifica 
+    public static boolean modificarUsuarioActual = true; //Variable que define el usuario que se modifica 
+    
     /**
      * Creates new form CambiarInfo
      */
@@ -188,11 +189,8 @@ public class CambiarInfo extends javax.swing.JFrame {
     private void BotonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConfirmarActionPerformed
 
         try {
-            //TODO Actualizar datos en archivo
-            
             UserProperties Usuario = new UserProperties();
             
-                Usuario.UserName = username;
                 Usuario.Name = NameField.getText();
                 Usuario.LastName = LastNameField.getText();
                 Usuario.Birthday = BirthdayField.getText();
@@ -202,7 +200,22 @@ public class CambiarInfo extends javax.swing.JFrame {
                 Usuario.Description = DescriptionField.getText();
                 Usuario.Status = true;
             
-            ArchivoSecuencial.ModificarUsuario(Login.getUsername(), Usuario);
+            if (modificarUsuarioActual)
+            {    
+                
+            Usuario.UserName = Login.getUsername();
+            ArchivoSecuencial.ModificarUsuario(Login.getUsername(), Usuario);    
+            
+            }
+            else //Se modifica un usuario buscado
+            {
+                
+                Usuario.UserName = UsuarioBuscado.user.UserName;
+                ArchivoSecuencial.ModificarUsuario(UsuarioBuscado.user.UserName, Usuario);
+                
+            }
+            
+            modificarUsuarioActual = true; //default
             
             this.dispose();
             MenuAplicacion h = new MenuAplicacion();

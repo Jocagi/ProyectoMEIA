@@ -445,9 +445,13 @@ public class ArchivoSecuencial {
        {
            return user1;
        }
-       else //Si el usuario estaba en maestro
+       else if(!user1.UserName.equals("")) //Si el usuario estaba en maestro
        {
            return user2;
+       }
+       else
+       {
+           return null;
        }
        
    }

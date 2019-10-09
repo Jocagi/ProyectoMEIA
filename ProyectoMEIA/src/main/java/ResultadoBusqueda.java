@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,21 +19,15 @@ import javax.swing.JOptionPane;
  *
  * @author user
  */
-public class MenuAplicacion extends javax.swing.JFrame {
+public class ResultadoBusqueda extends javax.swing.JFrame {
 
     /**
-     * Creates new form MenuAplicacion
+     * Creates new form ResultadoBusqueda
      */
-    public MenuAplicacion() throws IOException {
+    public ResultadoBusqueda() {
         initComponents();
-        try
-        {
-            cargarContenido();
-        }
-        catch(Exception ex)
-        {
-        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +45,9 @@ public class MenuAplicacion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,7 +57,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
 
         Role.setText("Rol");
 
-        jButton1.setText("Configuracion");
+        jButton1.setText("Eliminar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -74,16 +70,23 @@ public class MenuAplicacion extends javax.swing.JFrame {
 
         jLabel3.setText("Rol:");
 
+        jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Regresar");
+
+        jLabel4.setText("Resultado:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(109, 109, 109)
                 .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,39 +96,59 @@ public class MenuAplicacion extends javax.swing.JFrame {
                     .addComponent(Role)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGap(115, 115, 115)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(142, 142, 142))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jLabel4))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Nombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Username)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
-                        .addGap(1, 1, 1)
-                        .addComponent(Role))
-                    .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                        .addGap(5, 5, 5)
+                        .addComponent(Role)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(jButton3))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void cargarContenido()
+
+    private void cargarContenido()
 {
     Login.updateInfo();
     
         try {
             //Imagen            
-            BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));
+        BufferedImage img = ImageIO.read(new File(UsuarioBuscado.user.PhotoPath));
         Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
         Fotografia.setIcon(imageIcon);
@@ -135,27 +158,44 @@ private void cargarContenido()
         }
         
             //Nombre
-            Nombre.setText(Login.getUserFullName());
-            Username.setText(Login.getUsername());
-            Role.setText(Login.getUserRole());    
-         
+            Nombre.setText(UsuarioBuscado.user.Name + " " + UsuarioBuscado.user.LastName);
+            Username.setText(UsuarioBuscado.user.UserName);
+            Role.setText(UsuarioBuscado.user.Role);    
+          
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (Role.getText().equals("admin")||Role.getText().equals("Admin")) {
-            this.dispose();
-            ConfiguracionAdmin h = new ConfiguracionAdmin();
-            h.setVisible(true);
+        if (Role.getText().equals("admin")||Role.getText().equals("Admin"))
+        {
+            JOptionPane.showMessageDialog(null, "No se puede eliminar al Admin");
         }
         else if (Role.getText().equals("usuario")||Role.getText().equals("Usuario")) {
-            this.dispose();
-            ConfiguracionUsuario h = new ConfiguracionUsuario();
-            h.setVisible(true);
+            
+            try {
+                ArchivoSecuencial.EliminarUsuario(UsuarioBuscado.user.UserName);
+                
+                JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
+                
+                this.dispose();
+                MenuAplicacion h = new MenuAplicacion();
+                h.setVisible(true);
+                
+            } catch (IOException ex) {
+                Logger.getLogger(ResultadoBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Error en la aplicacion");                        
+            JOptionPane.showMessageDialog(null, "Error en la aplicacion");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        CambiarInfo.modificarUsuarioActual = false;
+        this.dispose();
+            CambiarInfo h = new CambiarInfo();
+            h.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,25 +214,20 @@ private void cargarContenido()
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                try {
-                    new MenuAplicacion().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(MenuAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new ResultadoBusqueda().setVisible(true);
             }
         });
     }
@@ -203,8 +238,11 @@ private void cargarContenido()
     private javax.swing.JLabel Role;
     private javax.swing.JLabel Username;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }

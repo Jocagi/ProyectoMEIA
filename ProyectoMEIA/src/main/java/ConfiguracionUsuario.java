@@ -88,7 +88,7 @@ public class ConfiguracionUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonInfoActionPerformed
-        CambiarInfo.username = Login.getUsername();
+        CambiarInfo.modificarUsuarioActual = true;
         this.dispose();
             CambiarInfo h = new CambiarInfo();
             h.setVisible(true);
