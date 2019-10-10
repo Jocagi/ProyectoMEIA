@@ -114,7 +114,7 @@ public class ArchivoSecuencial {
             BufferedWriter bw = new BufferedWriter(Escribir);          
             bw.write("");
             Escribir.close();  
-            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,5,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,IdentificarNumReorg("C:/MEIA/desc_BitacoraUsuarios.txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -336,7 +336,11 @@ public class ArchivoSecuencial {
                 Linea=LeerArchivo.readLine();
                 split=Linea.split("\\|");
             }
-            NumReorg=Integer.parseInt(split[1]);
+                if (split.length==1) {
+                    NumReorg=5;
+                }
+                else{            NumReorg=Integer.parseInt(split[1]);
+}
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -791,7 +795,7 @@ try {
             BufferedWriter bw = new BufferedWriter(Escribir);          
             bw.write("");
             Escribir.close();  
-            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,5,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,IdentificarNumReorg("C:/MEIA/desc_BitacoraUsuarios.txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
