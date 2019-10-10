@@ -302,13 +302,30 @@ public class CreateNewUser extends javax.swing.JFrame {
                 
             }           
         }
-        LoginForm h = new LoginForm();
-                h.setVisible(true);
-                this.setVisible(false);
-            }
+        
+                if (Login.IsActive()) 
+                {
+                    
+                    try {
+                        MenuAplicacion h = new MenuAplicacion();
+                        h.setVisible(true);
+                        this.setVisible(false);
+                    } catch (IOException ex) {
+                        Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+               
+                }
+                else
+                {
+                  LoginForm h = new LoginForm();
+                  h.setVisible(true);
+                 this.setVisible(false);
+                  
+                }
+        }
             else 
             {            
-                JOptionPane.showMessageDialog(null, "Escoge otro numbre de usuario por favor.");
+                JOptionPane.showMessageDialog(null, "Escoge otro nombre de usuario por favor.");
             }
     }                      
     }//GEN-LAST:event_CreateUserBtnActionPerformed

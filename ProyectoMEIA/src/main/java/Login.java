@@ -28,6 +28,18 @@ public class Login {
     
     // metodos getter y setter
     
+    public static boolean IsActive()
+    {
+        if (currentLogin != null) 
+        {
+             return true;    
+        }
+        else
+        {
+            return false;
+        }    
+    }
+    
     public static void updateInfo()
     {
         user = ArchivoSecuencial.getUser(user.UserName);

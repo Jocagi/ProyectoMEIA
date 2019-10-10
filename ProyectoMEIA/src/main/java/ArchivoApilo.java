@@ -59,7 +59,7 @@ public class ArchivoApilo
             FileWriter Escribir = null;
             Escribir = new FileWriter(path, true);
             BufferedWriter bw = new BufferedWriter(Escribir);          
-            bw.write(strContenido+ System.getProperty( "line.separator" ));
+            bw.write(strContenido + System.getProperty( "line.separator" ));
             bw.close();
             Escribir.close();    
         } catch (IOException ex) {
@@ -107,7 +107,7 @@ public class ArchivoApilo
             }
             
             inputBuffer.append(line);
-            inputBuffer.append('\n');
+            inputBuffer.append(System.getProperty("line.separator"));
             contador++;
         }
         file.close();
