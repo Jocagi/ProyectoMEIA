@@ -320,6 +320,7 @@ public class CreateNewUser extends javax.swing.JFrame {
 
         return Archivo.length()==0&&Archivo2.length()==0;
     }
+    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {

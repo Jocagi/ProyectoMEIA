@@ -81,6 +81,7 @@ public class ArchivoSecuencial {
             bw.write(regAtributos);
             bw.close();
             Escribir.close();
+            
         } catch (IOException ex) {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
         }
