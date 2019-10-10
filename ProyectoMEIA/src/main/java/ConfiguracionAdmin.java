@@ -1,3 +1,8 @@
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -31,6 +36,7 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
         BotonNuevoUsuario = new javax.swing.JButton();
         BotonBuscar = new javax.swing.JButton();
         BotonBackUP = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +70,13 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Menu");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,6 +90,10 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
                     .addComponent(BotonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotonBackUP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(168, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +108,9 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
                 .addComponent(BotonBuscar)
                 .addGap(18, 18, 18)
                 .addComponent(BotonBackUP)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,6 +143,16 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
             this.dispose();
         
     }//GEN-LAST:event_BotonBuscarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+try {
+            MenuAplicacion Menu = new MenuAplicacion();
+            Menu.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(BackUpForm.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +194,7 @@ public class ConfiguracionAdmin extends javax.swing.JFrame {
     private javax.swing.JButton BotonBackUP;
     private javax.swing.JButton BotonBuscar;
     private javax.swing.JButton BotonNuevoUsuario;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

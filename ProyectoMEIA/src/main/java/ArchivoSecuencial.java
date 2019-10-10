@@ -230,7 +230,16 @@ public class ArchivoSecuencial {
                 Linea=LeerArchivo.readLine();
                 split=Linea.split("\\|");
             }
-            FechaCreacion=split[1];
+                if (FechaCreacion.equals("")||split.length==1) {
+                    Date date = new Date();
+             SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+             String FechaActual=ft.format(date);
+                            return FechaActual;
+
+                }
+                else
+                {            FechaCreacion=split[1];
+}
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -731,6 +740,98 @@ public class ArchivoSecuencial {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
         }           
 
+   }
+   public void ReorganizarAlSalir()
+   {
+       
+            List<String> lista1 = new ArrayList<String>();
+            RutaArchivos RutaArchivosIr= new RutaArchivos();
+                    String line;
+try {
+            File Bitacora = new File(RutaArchivosIr.Bitacora);
+            if (Bitacora.exists()) {
+                BufferedReader file2 = new BufferedReader(new FileReader(RutaArchivosIr.Bitacora));
+            while ((line = file2.readLine()) != null) 
+            {
+                String[]split=line.split("\\|");
+                if ("1".equals(split[10])){
+                    lista1.add(line);
+                }
+            }            
+            file2.close();
+            }
+                        File Master = new File(RutaArchivosIr.Master);
+                        if (Master.exists()) {
+        BufferedReader file = new BufferedReader(new FileReader(RutaArchivosIr.Master));
+            while ((line = file.readLine()) != null) 
+            {
+                String[]split=line.split("\\|");
+                if ("1".equals(split[10])){
+                    lista1.add(line);
+                }
+            }            
+            file.close();
+    }
+            
+            Collections.sort(lista1);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(RutaArchivosIr.Master));
+            for (String line2 : lista1)
+            {
+                writer.write(line2);                 
+                writer.newLine();
+            }
+            writer.close();
+           Date date = new Date();
+             SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+             String FechaActual=ft.format(date);
+             int TamanoLista=lista1.size();
+             EscribirDescriptor("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_Usuarios.txt"),FechaActual,TamanoLista,TamanoLista,0,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+                 FileWriter Escribir = new FileWriter("C:/MEIA/BitacoraUsuarios.txt",false);
+            BufferedWriter bw = new BufferedWriter(Escribir);          
+            bw.write("");
+            Escribir.close();  
+            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,5,"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
+        }           
+
+   }
+   public Boolean UsuarioValido(String Usuario)
+   {
+        try {
+           BufferedReader fileBitacora = new BufferedReader(new FileReader("C:/MEIA/BitacoraUsuarios.txt"));
+            String line;
+            while ((line = fileBitacora.readLine()) != null) 
+            {
+            String[] data = line.split("\\|");            
+            //Si es el usuario buscado
+                if (data[0].equals(Usuario)) 
+                {
+                    return false;
+                }
+            }
+            fileBitacora.close();
+            BufferedReader fileMaster = new BufferedReader(new FileReader("C:/MEIA/Usuarios.txt"));
+            while ((line = fileMaster.readLine()) != null) 
+            {
+            String[] data = line.split("\\|");            
+            //Si es el usuario buscado
+                if (data[0].equals(Usuario)) 
+                {
+                    return false;
+                }
+            }
+            fileMaster.close();
+        
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
+        }         
+        return true;
    }
 }
 

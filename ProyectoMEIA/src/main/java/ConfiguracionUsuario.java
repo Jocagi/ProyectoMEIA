@@ -1,3 +1,8 @@
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,6 +35,7 @@ public class ConfiguracionUsuario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BotonInfo = new javax.swing.JButton();
         BotonContraseña = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +62,13 @@ public class ConfiguracionUsuario extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Menu");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,6 +82,10 @@ public class ConfiguracionUsuario extends javax.swing.JFrame {
                         .addComponent(BotonEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotonInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(192, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +98,9 @@ public class ConfiguracionUsuario extends javax.swing.JFrame {
                 .addComponent(BotonInfo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BotonEliminar)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -105,6 +124,15 @@ public class ConfiguracionUsuario extends javax.swing.JFrame {
             CambiarContraseña h = new CambiarContraseña();
             h.setVisible(true);
     }//GEN-LAST:event_BotonContraseñaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+try {
+            MenuAplicacion Menu = new MenuAplicacion();
+            Menu.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(BackUpForm.class.getName()).log(Level.SEVERE, null, ex);
+        }    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +173,7 @@ public class ConfiguracionUsuario extends javax.swing.JFrame {
     private javax.swing.JButton BotonContraseña;
     private javax.swing.JButton BotonEliminar;
     private javax.swing.JButton BotonInfo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

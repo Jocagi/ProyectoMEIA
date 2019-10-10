@@ -1,7 +1,9 @@
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -127,4 +129,22 @@ public class PasswordProperties {
              }
              return PasswordCifrado; 
          }
+         public void CreateFiles()
+         {
+             try {
+                 FileWriter EscribirP = new FileWriter("C:/MEIA/puntuacion.txt",false);
+                 EscribirP.write("6"+ System.getProperty( "line.separator" )+"3"+ System.getProperty( "line.separator" )+"2"
+                         + System.getProperty( "line.separator" )+"1"+ System.getProperty( "line.separator" ) +"2"+ System.getProperty( "line.separator" )
+                         +"4" + System.getProperty( "line.separator" )+"6" + System.getProperty( "line.separator" )+"3");
+                 EscribirP.close();
+                 
+                 FileWriter EscribirR = new FileWriter("C:/MEIA/resultado.txt",false);
+                 EscribirR.write("0,20"+ System.getProperty( "line.separator" )+"21,30"+ System.getProperty( "line.separator" )
+                         +"31,45"+ System.getProperty( "line.separator" )+"46,300");
+                 EscribirR.close();
+             } catch (IOException ex) {
+                 Logger.getLogger(PasswordProperties.class.getName()).log(Level.SEVERE, null, ex);
+             } 
+         }
 }
+

@@ -217,7 +217,9 @@ public class CreateNewUser extends javax.swing.JFrame {
         }
         else
         {
-        Usuario.UserName=NewUserField.getText();
+            if(ASecuencial.UsuarioValido(NewUserField.getText()))
+            {
+                Usuario.UserName=NewUserField.getText();
         Usuario.Name=NameField.getText();
         Usuario.LastName=LastNameField.getText();
         Usuario.Password=Arrays.toString(PasswordField.getPassword());
@@ -250,7 +252,6 @@ public class CreateNewUser extends javax.swing.JFrame {
         //Validacion de administrador o de Usuario
             if (EsPrimero()) 
             {
-                try {         
                     Usuario.Role="Admin";
                     Date date = new Date();
                     SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
@@ -268,13 +269,6 @@ public class CreateNewUser extends javax.swing.JFrame {
                             Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
                     ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
                     JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
-                    this.setVisible(false);
-                    MenuAplicacion Menu;
-                    Menu = new MenuAplicacion();
-                    Menu.setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
             else
             {                    
@@ -304,13 +298,18 @@ public class CreateNewUser extends javax.swing.JFrame {
                 String Escribir=Usuario.UserName+"|"+Usuario.Name+"|"+Usuario.LastName+"|"+PasswordCifrado+"|"+Usuario.Role+"|"+Usuario.Birthday+"|"+
                         Usuario.Mail+"|"+Usuario.Phone+"|"+Usuario.PhotoPath+"|"+Usuario.Description+"|"+status;
                 ASecuencial.EscribirEnBitacora("Usuarios",Escribir);
-                JOptionPane.showMessageDialog(null, "Creacion Exitosa.");
-                LoginForm h = new LoginForm();
-                h.setVisible(true);
-                this.dispose();
+                JOptionPane.showMessageDialog(null, "Creacion Exitosa.");                
                 
             }           
         }
+        LoginForm h = new LoginForm();
+                h.setVisible(true);
+                this.setVisible(false);
+            }
+            else 
+            {            
+                JOptionPane.showMessageDialog(null, "Escoge otro numbre de usuario por favor.");
+            }
     }                      
     }//GEN-LAST:event_CreateUserBtnActionPerformed
 

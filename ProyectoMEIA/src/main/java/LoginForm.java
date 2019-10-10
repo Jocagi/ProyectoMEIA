@@ -16,6 +16,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     public LoginForm() {
         initComponents();
+        CreateDirectry();
     }
 
     @SuppressWarnings("unchecked")
@@ -94,7 +95,12 @@ public class LoginForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void CreateDirectry()
+    {    
+        new File("C:/MEIA").mkdirs();
+        PasswordProperties Pass = new PasswordProperties();
+        Pass.CreateFiles();
+    }
     private void BtnCreateNewUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCreateNewUserActionPerformed
             this.dispose();
             CreateNewUser h = new CreateNewUser();
