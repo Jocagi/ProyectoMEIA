@@ -231,7 +231,7 @@ public class ArchivoSecuencial {
                 Linea=LeerArchivo.readLine();
                 split=Linea.split("\\|");
             }
-                if (FechaCreacion.equals("")||split.length==1) {
+                if (split.length==1) {
                     Date date = new Date();
              SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
              String FechaActual=ft.format(date);
