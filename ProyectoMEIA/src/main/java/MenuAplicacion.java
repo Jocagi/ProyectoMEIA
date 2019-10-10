@@ -173,6 +173,7 @@ private void cargarContenido()
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         Login.destroySingleton();
+        
         ArchivoSecuencial ArcSec = new ArchivoSecuencial();
         ArcSec.ReorganizarAlSalir();
         LoginForm Inicio = new LoginForm();
