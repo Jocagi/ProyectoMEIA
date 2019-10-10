@@ -14,8 +14,8 @@ public class RutaArchivos {
     public static String DescMaster = "C:/MEIA/desc_Usuarios.txt";
     public static String Bitacora = "C:/MEIA/BitacoraUsuarios.txt";
     public static String DescBitacora = "C:/MEIA/desc_BitacoraUsuarios.txt";
-    public static String BackUp = "";
-    public static String DescBackUP = "";
+    public static String BackUp = "C:/MEIA/bitacora_backup.txt";
+    public static String DescBackUP = "C:/MEIA/desc_bitacora_backup.txt";
     public static String DirectorioImagenes = "";
     public static String RutaDelSistema = "C:/MEIA/";
     

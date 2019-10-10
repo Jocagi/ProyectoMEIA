@@ -24,6 +24,8 @@ public class BackUpForm extends javax.swing.JFrame {
      */
     public BackUpForm() {
         initComponents();
+        
+        fieldOrigen.setText(RutaArchivos.RutaDelSistema);
     }
 
     /**
@@ -35,7 +37,7 @@ public class BackUpForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        Transfer = new javax.swing.JButton();
         fieldOrigen = new javax.swing.JTextField();
         fieldDestino = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -46,10 +48,10 @@ public class BackUpForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Transferir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Transfer.setText("Transferir");
+        Transfer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                TransferActionPerformed(evt);
             }
         });
 
@@ -101,7 +103,7 @@ public class BackUpForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(Transfer))
                     .addComponent(jButton4))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
@@ -118,7 +120,7 @@ public class BackUpForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(Transfer)
                     .addComponent(jLabel2)
                     .addComponent(jButton3))
                 .addContainerGap(45, Short.MAX_VALUE))
@@ -127,9 +129,8 @@ public class BackUpForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void TransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TransferActionPerformed
 
-        
             try {
             String Destino=fieldDestino.getText()+"\\MEIA_Backup";
             BackUp.MoverCarpeta(fieldOrigen.getText(),Destino );
@@ -137,11 +138,14 @@ public class BackUpForm extends javax.swing.JFrame {
             this.dispose();
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
+            
+        ArchivoApilo.AgregarNuevoRegistroBackUp(Destino, Login.getUsername());
+        
         } catch (IOException ex) {
             Logger.getLogger(BackUpForm.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_TransferActionPerformed
 
     private void fieldDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldDestinoActionPerformed
         // TODO add your handling code here:
@@ -215,9 +219,9 @@ public class BackUpForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Transfer;
     private javax.swing.JTextField fieldDestino;
     private javax.swing.JTextField fieldOrigen;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
