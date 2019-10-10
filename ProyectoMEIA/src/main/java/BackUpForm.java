@@ -45,7 +45,6 @@ public class BackUpForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,13 +81,6 @@ public class BackUpForm extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Menu");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,7 +100,6 @@ public class BackUpForm extends javax.swing.JFrame {
                             .addComponent(fieldOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
@@ -132,9 +123,7 @@ public class BackUpForm extends javax.swing.JFrame {
                     .addComponent(Transfer)
                     .addComponent(jLabel2)
                     .addComponent(jButton3))
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -193,17 +182,6 @@ public class BackUpForm extends javax.swing.JFrame {
             fieldOrigen.setText(rutaArchivo);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            MenuAplicacion Menu = new MenuAplicacion();
-            Menu.setVisible(true);
-            this.dispose();
-        } catch (IOException ex) {
-            Logger.getLogger(BackUpForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
