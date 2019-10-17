@@ -1,3 +1,3 @@
 # ProyectoMEIA
 #Fase 1
-#Allan Davila, Jose Ortiz y Andres Guzman
+#Allan Davila, Jose Giron y Andres Guzman
