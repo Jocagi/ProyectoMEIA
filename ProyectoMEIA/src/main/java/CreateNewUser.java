@@ -222,7 +222,8 @@ public class CreateNewUser extends javax.swing.JFrame {
                 Usuario.UserName=NewUserField.getText();
         Usuario.Name=NameField.getText();
         Usuario.LastName=LastNameField.getText();
-        Usuario.Password=Arrays.toString(PasswordField.getPassword());
+        String PasswordObtener = new String(PasswordField.getPassword());
+        Usuario.Password=PasswordObtener;
         String ResultadoValPass=Password.Validar(Usuario.Password);        
         Usuario.Birthday=BirthDayField.getText();
         Usuario.Mail=MailField.getText();

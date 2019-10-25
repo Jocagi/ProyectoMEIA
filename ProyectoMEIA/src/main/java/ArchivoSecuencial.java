@@ -105,7 +105,6 @@ public class ArchivoSecuencial {
                 Linea=LeerArchivo.readLine();
             }
             // Usuarios-> eliminar inactivos y reordenar
-            EscribirEnArchivo(NombreArchivo,strContenido);
             Reorganizar();
             Date date = new Date();
              SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
@@ -114,7 +113,7 @@ public class ArchivoSecuencial {
             BufferedWriter bw = new BufferedWriter(Escribir);          
             bw.write("");
             Escribir.close();  
-            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,IdentificarNumReorg("C:/MEIA/desc_BitacoraUsuarios.txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+            EscribirBitacoraNueva(NombreArchivo,strContenido);
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -837,6 +836,23 @@ try {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
         }         
         return true;
+   }
+   public void EscribirBitacoraNueva(String NombreArchivo,String strContenido)
+   {
+      Date date = new Date();
+      SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+      String FechaActual=ft.format(date); 
+      try {
+            FileWriter Escribir=null;
+            Escribir = new FileWriter("C:/MEIA/Bitacora"+NombreArchivo+".txt",true);
+            BufferedWriter bw = new BufferedWriter(Escribir);          
+            bw.write(strContenido+ System.getProperty( "line.separator" ));
+            bw.close();
+            Escribir.close();    
+            EscribirDescriptorBitacora("Usuarios","Secuencial",IdentificarAdmin("C:/MEIA/Usuarios.txt"),IdentificarFechaCreacion("C:/MEIA/desc_BitacoraUsuarios.txt"),FechaActual,0,0,0,IdentificarNumReorg("C:/MEIA/desc_BitacoraUsuarios.txt"),"Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");   
+          } catch (IOException ex) {
+            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
    }
 }
 
