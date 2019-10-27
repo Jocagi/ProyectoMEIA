@@ -207,7 +207,7 @@ public class CreateNewUser extends javax.swing.JFrame {
         ArchivoSecuencial ASecuencial=new ArchivoSecuencial();
         if (NewUserField.getText().equals("")||NameField.getText().equals("")||LastNameField.getText().equals("")||PasswordField.getText().equals("")||
                 BirthDayField.getText().equals("")||MailField.getText().equals("")||PhoneField.getText().equals("")||PhotoPathField.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Haz dejado un campo vacio, rellenalo para continuar");
+                        JOptionPane.showMessageDialog(null, "Has dejado un campo vacio, rellenalo para continuar");
         }
         else if(NewUserField.getText().contains("|")||NameField.getText().contains("|")||LastNameField.getText().contains("|")
                 ||PasswordField.getText().contains("|")||BirthDayField.getText().contains("|")||MailField.getText().contains("|")
@@ -238,17 +238,6 @@ public class CreateNewUser extends javax.swing.JFrame {
         else
         {
             String PasswordCifrado=Password.Encriptar(Usuario.Password);
-            try { 
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                byte[] messageDigest = md.digest(Usuario.Password.getBytes()); 
-                BigInteger no = new BigInteger(1, messageDigest); 
-                PasswordCifrado = no.toString(16); 
-                while (PasswordCifrado.length() < 32) { 
-                PasswordCifrado = "0" + PasswordCifrado; 
-            } 
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
         //Validacion de administrador o de Usuario
             if (EsPrimero()) 

@@ -110,11 +110,11 @@ public class LoginForm extends javax.swing.JFrame {
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
  
         try {
-            String Usuario=UserField.getText();
-            String Password=Arrays.toString(jPasswordField1.getPassword());
-        
-            if(EstaEnBitacora(Usuario,Password)||EstaEnUsuarios(Usuario,Password))
-        {
+            String Usuario = UserField.getText();
+            String Password = new String(jPasswordField1.getPassword());
+            
+            if(EstaEnArchivo(Usuario,Password, RutaArchivos.Bitacora)|| EstaEnArchivo(Usuario,Password, RutaArchivos.Master))
+            {
             
             UserProperties usuario = ArchivoSecuencial.getUser(Usuario);
             //Singleton
@@ -126,7 +126,7 @@ public class LoginForm extends javax.swing.JFrame {
             this.setVisible(false);
             MenuAplicacion Siguiente = new MenuAplicacion();
             Siguiente.setVisible(true);            
- }
+            }
         else{
             JOptionPane.showMessageDialog(null, "Usuario o contrasena incorrectos, prueba otra vez");
             }   } catch (IOException ex) {                                           
@@ -135,38 +135,11 @@ public class LoginForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_BtnIngresarActionPerformed
     
-    public Boolean EstaEnBitacora(String Usuario, String Password)
+    public Boolean EstaEnArchivo(String Usuario, String Password, String Ruta)
     {
 
         try {
-            File Archivo = new File(RutaArchivos.Bitacora);
-            FileReader LecturaArchivo;
-            LecturaArchivo = new FileReader(Archivo);
-            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
-            String Linea=LeerArchivo.readLine();
-            String []split;
-            while(Linea!=null)
-            {
-                split=Linea.split("\\|");
-                PasswordProperties Cifrado = new PasswordProperties();
-                String PasswordDecifrado=Cifrado.Encriptar(Password);
-                if (Usuario.equals(split[0])&&PasswordDecifrado.equals(split[3]))
-                {
-                    return true;
-                }
-                Linea=LeerArchivo.readLine();                        
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateNewUser.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        return false;
-    }
-    public Boolean EstaEnUsuarios(String Usuario, String Password)
-    {
-        try {
-            File Archivo = new File(RutaArchivos.Master);
+            File Archivo = new File(Ruta);
             FileReader LecturaArchivo;
             LecturaArchivo = new FileReader(Archivo);
             BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);

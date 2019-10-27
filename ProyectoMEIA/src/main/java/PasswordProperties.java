@@ -116,7 +116,7 @@ public class PasswordProperties {
     }
          public String Encriptar(String Password)
          {
-             String PasswordCifrado="";
+             String PasswordCifrado = "";
              try {
                  MessageDigest md = MessageDigest.getInstance("MD5");
                  byte[] messageDigest = md.digest(Password.getBytes());
@@ -124,7 +124,8 @@ public class PasswordProperties {
                  PasswordCifrado = no.toString(16);
                  while (PasswordCifrado.length() < 32) {
                      PasswordCifrado = "0" + PasswordCifrado; 
-                 }} catch (NoSuchAlgorithmException ex) {
+                 }
+             } catch (NoSuchAlgorithmException ex) {
                  Logger.getLogger(PasswordProperties.class.getName()).log(Level.SEVERE, null, ex);
              }
              return PasswordCifrado; 
