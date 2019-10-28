@@ -138,7 +138,7 @@ private void cargarContenido()
     
         try {
             //Imagen            
-            BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));
+        BufferedImage img = ImageIO.read(new File(Login.getUserPhoto()));
         Image dimg = img.getScaledInstance(Fotografia.getWidth(), Fotografia.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
         Fotografia.setIcon(imageIcon);

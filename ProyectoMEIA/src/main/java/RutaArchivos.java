@@ -1,3 +1,6 @@
+
+import java.io.File;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,5 +21,6 @@ public class RutaArchivos {
     public static String DescBackUP = "C:/MEIA/desc_bitacora_backup.txt";
     public static String DirectorioImagenes = "";
     public static String RutaDelSistema = "C:/MEIA/";
-    
+ 
+    public static String Logo = new File("").getAbsolutePath() + "/src/logo.png";
 }
