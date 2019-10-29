@@ -13,12 +13,12 @@ import java.util.logging.Logger;
  *
  * @author user
  */
-public class ConfiguracionMateriales extends javax.swing.JFrame {
+public class ConfiguracionDonaciones extends javax.swing.JFrame {
 
     /**
-     * Creates new form ConfiguracionMateriales
+     * Creates new form ConfiguracionDonaciones
      */
-    public ConfiguracionMateriales() {
+    public ConfiguracionDonaciones() {
         initComponents();
     }
 
@@ -40,14 +40,14 @@ public class ConfiguracionMateriales extends javax.swing.JFrame {
 
         jLabel1.setText("Configuracion Materiales:");
 
-        BotonNuevoUsuario.setText("Ingresar Nuevo Material");
+        BotonNuevoUsuario.setText("Ingresar Nueva Donación");
         BotonNuevoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonNuevoUsuarioActionPerformed(evt);
             }
         });
 
-        BotonBuscar.setText("Buscar Material");
+        BotonBuscar.setText("Buscar Donaciones");
         BotonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonBuscarActionPerformed(evt);
@@ -71,7 +71,7 @@ public class ConfiguracionMateriales extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotonNuevoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                     .addComponent(BotonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -80,34 +80,31 @@ public class ConfiguracionMateriales extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(22, 22, 22)
                 .addComponent(BotonNuevoUsuario)
                 .addGap(18, 18, 18)
                 .addComponent(BotonBuscar)
                 .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(jButton1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNuevoUsuarioActionPerformed
-        
-        FormularioDonacion h = new FormularioDonacion();
+
+        FormularioMateriales h = new FormularioMateriales();
         h.setVisible(true);
         this.dispose();
-
     }//GEN-LAST:event_BotonNuevoUsuarioActionPerformed
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
 
-        BusquedaMaterial h = new BusquedaMaterial();
+        BusquedaDonacion h = new BusquedaDonacion();
         h.setVisible(true);
         this.dispose();
-
     }//GEN-LAST:event_BotonBuscarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -116,7 +113,7 @@ public class ConfiguracionMateriales extends javax.swing.JFrame {
             Menu.setVisible(true);
             this.dispose();
         } catch (IOException ex) {
-            Logger.getLogger(ConfiguracionMateriales.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConfiguracionDonaciones.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -137,20 +134,20 @@ public class ConfiguracionMateriales extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConfiguracionMateriales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguracionDonaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConfiguracionMateriales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguracionDonaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConfiguracionMateriales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguracionDonaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConfiguracionMateriales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguracionDonaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfiguracionMateriales().setVisible(true);
+                new ConfiguracionDonaciones().setVisible(true);
             }
         });
     }

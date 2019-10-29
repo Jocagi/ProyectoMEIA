@@ -146,9 +146,14 @@ public class FormularioMateriales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        LoginForm Inicio = new LoginForm();
-        Inicio.setVisible(true);
-        this.dispose();
+
+        try {
+            MenuAplicacion Menu = new MenuAplicacion();
+            Menu.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(FormularioMateriales.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void ImportPhotoBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportPhotoBtn2ActionPerformed
