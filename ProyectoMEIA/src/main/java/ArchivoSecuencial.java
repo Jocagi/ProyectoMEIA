@@ -109,7 +109,7 @@ public class ArchivoSecuencial {
             Date date = new Date();
              SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
              String FechaActual=ft.format(date);
-             FileWriter Escribir = new FileWriter("C:/MEIA/BitacoraUsuarios.txt",false);
+             FileWriter Escribir = new FileWriter("C:/MEIA/Bitacora"+NombreArchivo+".txt",false);
             BufferedWriter bw = new BufferedWriter(Escribir);          
             bw.write("");
             Escribir.close();  

@@ -16,7 +16,9 @@ import java.util.logging.Logger;
  *
  * @author allan
  */
-class UserProperties {
+class UserProperties 
+{
+    
     public String UserName;
     public String Name;
     public String LastName;
@@ -29,6 +31,7 @@ class UserProperties {
     public String Description;
     public Boolean Status = true;
     
-    public UserProperties() {
+    public UserProperties() 
+    {
     }
 }
