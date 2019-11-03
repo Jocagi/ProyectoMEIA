@@ -27,5 +27,7 @@ public class RutaArchivos {
     public static String Logo = new File("").getAbsolutePath() + "/src/logo.png";
     
     public static String Materiales = "C:/MEIA/materiales.txt";
-    public static String DescMateriales = "C:/MEIA/bitacora_materiales.txt";
+    public static String DescMateriales = "C:/MEIA/desc_materiales.txt";
+    public static String BitacoraMateriales = "C:/MEIA/BitacoraMateriales.txt";
+    public static String DescBitacoraMateriales = "C:/MEIA/desc_BitacoraMateriales.txt";
 }

@@ -91,7 +91,7 @@ public class ArchivoSecuencialUsuarios extends ArchivoSecuencial
             }
             
             inputBuffer.append(line);
-            inputBuffer.append('\n');
+            inputBuffer.append(System.getProperty( "line.separator" ));
         }
         file.close();
 
@@ -147,7 +147,7 @@ public class ArchivoSecuencialUsuarios extends ArchivoSecuencial
             }
             
             inputBuffer.append(line);
-            inputBuffer.append('\n');
+            inputBuffer.append(System.getProperty( "line.separator" ));
             contador++;
         }
         file.close();
@@ -357,7 +357,7 @@ public class ArchivoSecuencialUsuarios extends ArchivoSecuencial
             }
             
             inputBuffer.append(line);
-            inputBuffer.append('\n');
+            inputBuffer.append(System.getProperty( "line.separator" ));
         }
         file.close();
 
@@ -398,7 +398,7 @@ public class ArchivoSecuencialUsuarios extends ArchivoSecuencial
             }
             
             inputBuffer.append(line);
-            inputBuffer.append('\n');
+            inputBuffer.append(System.getProperty( "line.separator" ));
             contador++;
         }
         file.close();
