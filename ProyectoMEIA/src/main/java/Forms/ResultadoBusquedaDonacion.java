@@ -69,6 +69,18 @@ public class ResultadoBusquedaDonacion extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setText("Resultado Busqueda Donacion");
 
+        jTextField1.setEditable(false);
+
+        jTextField2.setEditable(false);
+
+        jTextField3.setEditable(false);
+
+        jTextField4.setEditable(false);
+
+        jTextField5.setEditable(false);
+
+        jTextField6.setEditable(false);
+
         jButton1.setText("Regresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,18 +179,33 @@ public class ResultadoBusquedaDonacion extends javax.swing.JFrame {
 
     private void cargarContenido(){
         ArchivoSecuencialIndizado ACI = new ArchivoSecuencialIndizado();
-        String[] resultado=ACI.Buscar(DonacionBuscada.llave).split("\\|");
-        jTextField1.setText(resultado[0]);
-        jTextField2.setText(resultado[1]);
-        jTextField3.setText(resultado[2]);
-        jTextField4.setText(resultado[3]);
-        jTextField5.setText(resultado[4]);
-        jTextField6.setText(resultado[5]);        
+        String resultado=ACI.Buscar(DonacionBuscada.llave);
+        if (resultado.equals("")) {
+            try {
+                JOptionPane.showMessageDialog(null, "Algo ha salido mal, redireccionando a Menu");
+                this.dispose();
+                MenuAplicacion Siguiente = new MenuAplicacion();         
+                Siguiente.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(ResultadoBusquedaDonacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+ }
+        else{
+            String[]Mostrar=resultado.split("\\|");
+             jTextField1.setText(Mostrar[0]);
+        jTextField2.setText(Mostrar[1]);
+        jTextField3.setText(Mostrar[2]);
+        jTextField4.setText(Mostrar[3]);
+        jTextField5.setText(Mostrar[4]);
+        jTextField6.setText(Mostrar[5]); 
+        }
+              
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
  try {            
-            this.setVisible(false);
-            MenuAplicacion Siguiente = new MenuAplicacion();
+this.dispose();
+MenuAplicacion Siguiente = new MenuAplicacion();
             Siguiente.setVisible(true);         
             
         } catch (IOException ex) {
@@ -194,11 +221,17 @@ public class ResultadoBusquedaDonacion extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             ArchivoSecuencialIndizado ACI = new ArchivoSecuencialIndizado();
-            ACI.Eliminar(DonacionBuscada.llave);
-            JOptionPane.showMessageDialog(null, "Eliminacion Exitosa");
-            this.setVisible(false);
+            if(ACI.Eliminar(DonacionBuscada.llave)){
+                        JOptionPane.showMessageDialog(null, "Eliminacion Exitosa");
+                 this.dispose();
             MenuAplicacion Siguiente = new MenuAplicacion();
-            Siguiente.setVisible(true);      
+            Siguiente.setVisible(true);   }   
+            else{    
+                JOptionPane.showMessageDialog(null, "Algo salio mal, estas siendo redirigido al menu");
+                 this.dispose();
+            MenuAplicacion Siguiente = new MenuAplicacion();
+            Siguiente.setVisible(true);
+            }
         } catch (IOException ex) {
             Logger.getLogger(ResultadoBusquedaDonacion.class.getName()).log(Level.SEVERE, null, ex);
         }

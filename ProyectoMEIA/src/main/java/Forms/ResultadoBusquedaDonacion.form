@@ -150,16 +150,34 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField1">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField2">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField3">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField4">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField5">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField6">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

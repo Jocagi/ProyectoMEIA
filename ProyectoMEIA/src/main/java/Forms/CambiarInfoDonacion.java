@@ -164,11 +164,16 @@ public class CambiarInfoDonacion extends javax.swing.JFrame {
         try {
             ArchivoSecuencialIndizado ASI=new ArchivoSecuencialIndizado();
             String NuevaInfo=jTextField1.getText()+"|"+jTextField2.getText()+"|"+jTextField3.getText()+"|"+jTextField4.getText()+"|"+jTextField5.getText()+"|"+jTextField6.getText();
-            ASI.Modificar(DonacionBuscada.llave,NuevaInfo);
-            JOptionPane.showMessageDialog(null, "Modificacion Exitosa");
+            if (ASI.Modificar(DonacionBuscada.llave,NuevaInfo)) {
+                            JOptionPane.showMessageDialog(null, "Modificacion Exitosa");
+            
             this.dispose();
             MenuAplicacion Siguiente = new MenuAplicacion();
             Siguiente.setVisible(true);
+            }else{
+                                            JOptionPane.showMessageDialog(null, "Algo ha salido mal, intenta otra vez");
+
+            }
         } catch (IOException ex) {
             Logger.getLogger(CambiarInfoDonacion.class.getName()).log(Level.SEVERE, null, ex);
         }
