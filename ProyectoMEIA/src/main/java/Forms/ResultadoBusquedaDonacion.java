@@ -180,6 +180,9 @@ public class ResultadoBusquedaDonacion extends javax.swing.JFrame {
     private void cargarContenido(){
         ArchivoSecuencialIndizado ACI = new ArchivoSecuencialIndizado();
         String resultado=ACI.Buscar(DonacionBuscada.llave);
+        DonacionBuscada.resultado = resultado;
+        DonacionBuscada.setDonation(resultado);
+        
         if (resultado.equals("")) {
             try {
                 

@@ -36,7 +36,9 @@ public class ArchivoSecuencialIndizado {
             if (NumeroBloque==0) {
                 try {
                     //Escribir Maestro
-                    FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones1.txt",true); 
+
+                    FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones1.txt",true);
+
                     BufferedWriter bw1 = new BufferedWriter(Escribir);
                     bw1.write(Datos);
                     bw1.close();
@@ -185,7 +187,7 @@ public class ArchivoSecuencialIndizado {
                 File[] listOfFiles = folder.listFiles();                 
 		if(listOfFiles.length >0){
 			for(int i = 0; i < listOfFiles.length;i++){
-				if(listOfFiles[i].getName().equals("Donaciones"+i)){
+				if(listOfFiles[i].getName().contains("Donaciones")){
 					NoBloque++;
 				}
 			}
@@ -487,7 +489,7 @@ public class ArchivoSecuencialIndizado {
         return (numeroReg);
     }
      public String Buscar(String Llave){             
- String resultado="";
+     String resultado="";
         try {
             BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceDonaciones.txt"));
             String linea = Archivo.readLine();
