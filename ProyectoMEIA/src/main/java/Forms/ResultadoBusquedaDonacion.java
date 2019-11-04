@@ -192,10 +192,16 @@ public class ResultadoBusquedaDonacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        ArchivoSecuencialIndizado ACI = new ArchivoSecuencialIndizado();
-        ACI.Eliminar(DonacionBuscada.llave);
-                JOptionPane.showMessageDialog(null, "Eliminacion Exitosa");
-
+        try {
+            ArchivoSecuencialIndizado ACI = new ArchivoSecuencialIndizado();
+            ACI.Eliminar(DonacionBuscada.llave);
+            JOptionPane.showMessageDialog(null, "Eliminacion Exitosa");
+            this.setVisible(false);
+            MenuAplicacion Siguiente = new MenuAplicacion();
+            Siguiente.setVisible(true);      
+        } catch (IOException ex) {
+            Logger.getLogger(ResultadoBusquedaDonacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
