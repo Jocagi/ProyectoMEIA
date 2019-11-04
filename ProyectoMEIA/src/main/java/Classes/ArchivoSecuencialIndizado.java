@@ -540,6 +540,12 @@ public class ArchivoSecuencialIndizado {
                         for (int i = 0; i < ContenidoArchivo.size(); i++) {
                             if (ContenidoArchivo.get(i).contains(Llave)) {
                                 String []ContenidoAnterior=ContenidoArchivo.get(i).split("\\|");
+                                String []Nuevo=NuevoContenido.split("\\|");
+                                for (int j = 0; j < Nuevo.length; j++) {
+                                    if (Nuevo[j].equals("")) {
+                                        Nuevo[j]=ContenidoAnterior[j];
+                                    }
+                                }
                                 ContenidoArchivo.set(i,(NuevoContenido+"|"+ContenidoAnterior[6]+"|"+ContenidoAnterior[7]+"|"+ContenidoAnterior[8]));
                             }
                         }
