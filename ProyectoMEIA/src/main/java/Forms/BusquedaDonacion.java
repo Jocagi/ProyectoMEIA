@@ -1,6 +1,7 @@
 package Forms;
 
-
+import Classes.ArchivoSecuencialIndizado;
+import Classes.DonacionBuscada;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -145,16 +146,17 @@ public class BusquedaDonacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        if(true)
-        {
-
-            //To Do... Codigo para buscar
-
+            ArchivoSecuencialIndizado ACInd=new ArchivoSecuencialIndizado();
+        if (UserField.getText().equals("")|| MaterialField.getText().equals("")||DateField.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Haz dejado campos vacios, llenalos e intenta otra vez");
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Material no encontrado");
+            String llave=UserField.getText()+"|"+MaterialField.getText()+"|"+DateField.getText();
+            DonacionBuscada.llave=llave;
+            this.setVisible(false);
+            ResultadoBusquedaDonacion Siguiente = new ResultadoBusquedaDonacion();
+            Siguiente.setVisible(true); 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
