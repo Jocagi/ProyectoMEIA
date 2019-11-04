@@ -97,7 +97,7 @@ public class ConfiguracionDonaciones extends javax.swing.JFrame {
 
     private void BotonNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNuevoUsuarioActionPerformed
 
-        FormularioMateriales h = new FormularioMateriales();
+        FormularioDonacion h = new FormularioDonacion();
         h.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BotonNuevoUsuarioActionPerformed

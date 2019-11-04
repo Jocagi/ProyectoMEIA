@@ -98,7 +98,7 @@ public class ConfiguracionMateriales extends javax.swing.JFrame {
 
     private void BotonNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNuevoUsuarioActionPerformed
         
-        FormularioDonacion h = new FormularioDonacion();
+        FormularioMateriales h = new FormularioMateriales();
         h.setVisible(true);
         this.dispose();
 
