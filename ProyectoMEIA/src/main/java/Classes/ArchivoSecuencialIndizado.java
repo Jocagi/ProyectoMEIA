@@ -500,6 +500,9 @@ public class ArchivoSecuencialIndizado {
                 linea=Archivo.readLine();
             }
             Archivo.close();
+            if (Bloque.equals("")) {
+                return "";
+            }
             BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
                     linea=Archivo2.readLine();
                     while(linea!=null){
@@ -515,7 +518,7 @@ public class ArchivoSecuencialIndizado {
         } 
         return (resultado);        
     }
-     public void Modificar(String Llave, String NuevoContenido){
+     public Boolean Modificar(String Llave, String NuevoContenido){
          BufferedReader Archivo = null;
                     List<String> ContenidoArchivo = new ArrayList<String>();
                     try {
@@ -529,7 +532,11 @@ public class ArchivoSecuencialIndizado {
                 }
                 linea=Archivo.readLine();
             }
-            Archivo.close();     
+            
+            Archivo.close();   
+                        if (Bloque.equals("")) {
+                            return false;
+                        }
             BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
                     linea=Archivo2.readLine();
                     while(linea!=null){
@@ -540,6 +547,12 @@ public class ArchivoSecuencialIndizado {
                         for (int i = 0; i < ContenidoArchivo.size(); i++) {
                             if (ContenidoArchivo.get(i).contains(Llave)) {
                                 String []ContenidoAnterior=ContenidoArchivo.get(i).split("\\|");
+                                String []Nuevo=NuevoContenido.split("\\|");
+                                for (int j = 0; j < Nuevo.length; j++) {
+                                    if (Nuevo[j].equals("")) {
+                                        Nuevo[j]=ContenidoAnterior[j];
+                                    }
+                                }
                                 ContenidoArchivo.set(i,(NuevoContenido+"|"+ContenidoAnterior[6]+"|"+ContenidoAnterior[7]+"|"+ContenidoAnterior[8]));
                             }
                         }
@@ -553,8 +566,9 @@ public class ArchivoSecuencialIndizado {
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         }
-     }
-      public void Eliminar(String Llave){
+                            return true;
+ }
+      public Boolean Eliminar(String Llave){
          BufferedReader Archivo = null;
                     List<String> ContenidoArchivo = new ArrayList<String>();
                     List<String> ContenidoIndice = new ArrayList<String>();
@@ -571,6 +585,9 @@ public class ArchivoSecuencialIndizado {
                 linea=Archivo.readLine();
             }
             Archivo.close();     
+                        if (Bloque.equals("")) {
+                            return false;
+                        }
                         for (int i = 0; i < ContenidoIndice.size(); i++) {
                             if (ContenidoIndice.get(i).contains(Llave)) {
                                String []ContenidoAnterior=ContenidoIndice.get(i).split("\\|");
@@ -578,7 +595,7 @@ public class ArchivoSecuencialIndizado {
                                         +"|"+ContenidoAnterior[3]+"|"+ContenidoAnterior[4]+"|"+ContenidoAnterior[5]+"|0"));
                             }
                         }
-                        BufferedWriter Archivo7= new BufferedWriter(new FileWriter("C:/MEIA/desc_IndiceDonaciones.txt",false));
+                        BufferedWriter Archivo7= new BufferedWriter(new FileWriter("C:/MEIA/IndiceDonaciones.txt",false));
                         for (int i = 0; i < ContenidoIndice.size(); i++) {
                             Archivo7.write(ContenidoIndice.get(i)+System.getProperty("line.separator"));
                         }
@@ -608,6 +625,7 @@ public class ArchivoSecuencialIndizado {
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         }
+                    return true;
      }
       
       public void Reorganizar(){
