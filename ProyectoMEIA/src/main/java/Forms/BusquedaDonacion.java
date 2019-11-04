@@ -154,9 +154,10 @@ public class BusquedaDonacion extends javax.swing.JFrame {
         {
             String llave=UserField.getText()+"|"+MaterialField.getText()+"|"+DateField.getText();
             DonacionBuscada.llave=llave;
-            this.setVisible(false);
+            
             ResultadoBusquedaDonacion Siguiente = new ResultadoBusquedaDonacion();
-            Siguiente.setVisible(true); 
+            Siguiente.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
