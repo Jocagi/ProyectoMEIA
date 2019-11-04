@@ -541,17 +541,26 @@ public class ArchivoSecuencialIndizado {
       public void Eliminar(String Llave){
          BufferedReader Archivo = null;
                     List<String> ContenidoArchivo = new ArrayList<String>();
+                    List<String> ContenidoIndice = new ArrayList<String>();
                     try {
             Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceDonaciones.txt"));
             String linea = Archivo.readLine();
             String Bloque="";
             while(linea!=null){
+                ContenidoIndice.add(linea);
                 if (linea.contains(Llave)) {
                     String[] Analizando=linea.split("\\|");
                     Bloque=Analizando[1].split("\\.")[0];                    
                 }
             }
             Archivo.close();     
+                        for (int i = 0; i < ContenidoIndice.size(); i++) {
+                            if (ContenidoIndice.get(i).contains(Llave)) {
+                               String []ContenidoAnterior=ContenidoIndice.get(i).split("\\|");
+                                ContenidoIndice.set(i,(ContenidoAnterior[0]+"|"+ContenidoAnterior[1]+"|"+ContenidoAnterior[2]
+                                        +"|"+ContenidoAnterior[3]+"|"+ContenidoAnterior[4]+"|"+ContenidoAnterior[5]+"|0"));
+                            }
+                        }
             BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
                     linea=Archivo2.readLine();
                     while(linea!=null){
