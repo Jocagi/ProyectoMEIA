@@ -210,6 +210,9 @@ private void cargarContenido()
         ArchivoSecuencial ArcSec = new ArchivoSecuencial();
         ArcSec.Reorganizar("Usuarios");
         
+        ArchivoSecuencial ArcMat = new ArchivoSecuencial();
+        ArcMat.Reorganizar("Materiales");
+        
         LoginForm Inicio = new LoginForm();
         Inicio.setVisible(true);
         this.dispose();

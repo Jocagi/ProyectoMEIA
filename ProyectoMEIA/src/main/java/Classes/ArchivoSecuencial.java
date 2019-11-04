@@ -49,7 +49,7 @@ public class ArchivoSecuencial
             BufferedWriter bw = new BufferedWriter(Escribir);
             
             String content = ObtenerContenidoDescriptor(NombreArchivo, TipoOrg, UsuarioCreador, FechaCreacion, FechaModificacion,
-            TotRegistros, RegistrosActivos, RegistrosInactivos, Atributos, 0);
+            TotRegistros, RegistrosActivos, RegistrosInactivos, Atributos, -1);
             
             //Escribir en descriptor
             bw.write(content);
@@ -66,8 +66,8 @@ public class ArchivoSecuencial
     {
             String regReorganizacion = "";
             
-            //Si el numero de reorganizacion es cero, entonce se asume que es el descriptor del archivo master
-            if (NumeroReorganizacion != 0) 
+            //Si el numero de reorganizacion menor a cero, entonce se asume que es el descriptor del archivo master
+            if (NumeroReorganizacion >= 0) 
             {
             regReorganizacion="Numero_Reorganizacion|"+Integer.toString(NumeroReorganizacion)+System.getProperty("line.separator");
             }
@@ -96,7 +96,7 @@ public class ArchivoSecuencial
         int ReorgRegistros = IdentificarNumReorg(pathArchivoDescriptor);
         
         //Si la bitacora esta llena
-        if (TotalRegistros>ReorgRegistros) {
+        if (TotalRegistros+1>ReorgRegistros) {
             
             // Usuarios-> eliminar inactivos y reordenar
             Reorganizar(NombreArchivo);
@@ -108,8 +108,7 @@ public class ArchivoSecuencial
         else
         {
             try {
-            FileWriter Escribir=null;
-            Escribir = new FileWriter(pathArchivoBitacora,true);
+            FileWriter Escribir = new FileWriter(pathArchivoBitacora,true);
             BufferedWriter bw = new BufferedWriter(Escribir);          
             bw.write(strContenido + System.getProperty( "line.separator" ));
             bw.close();
@@ -242,7 +241,7 @@ public class ArchivoSecuencial
                 while ((line = file.readLine()) != null) 
                 {
                 String[]split=line.split("\\|");
-                if ("1".equals(split[10])) //Si es un registro activo
+                if ("1".equals(split[split.length - 1])) //Si es un registro activo
                 {
                     elementosArchivo.add(line);
                 }}            
@@ -263,8 +262,8 @@ public class ArchivoSecuencial
             
             int TamanoLista = elementosArchivo.size();
             
-            EscribirDescriptor(NombreArchivo,"Secuencial",IdentificarCreadorArchivo(pathDescMaster),IdentificarFechaCreacion(pathDescMaster),FechaActual,TamanoLista,
-                    TamanoLista,0,IdentificarAtributos(pathDescMaster));   
+            EscribirDescriptor(NombreArchivo,"Secuencial",IdentificarCreadorArchivo(pathDescBitacora),IdentificarFechaCreacion(pathDescMaster),FechaActual,TamanoLista,
+                    TamanoLista,0,IdentificarAtributos(pathDescBitacora));   
             
             //Vaciar Bitacora
             FileWriter EscribirBitacora = new FileWriter(pathBitacora,false);
@@ -306,6 +305,9 @@ public class ArchivoSecuencial
                 }
                 Linea=LeerArchivo.readLine();
             }
+            
+            LecturaArchivo.close();
+            LeerArchivo.close();
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);

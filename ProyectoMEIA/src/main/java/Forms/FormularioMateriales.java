@@ -1,11 +1,18 @@
 package Forms;
 
 
+import Classes.ArchivoSecuencial;
+import Classes.Login;
+import Classes.MaterialProperties;
+import Classes.RutaArchivos;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
@@ -46,8 +53,8 @@ public class FormularioMateriales extends javax.swing.JFrame {
         TypeField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         FinishBtn = new javax.swing.JButton();
-        DegField = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
+        DegField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,24 +102,23 @@ public class FormularioMateriales extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jButton2)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(PhotoPathField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ImportPhotoBtn2))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(NameField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(TypeField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(DegField, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton2)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(PhotoPathField)
+                                    .addComponent(DegField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(NameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                                    .addComponent(TypeField, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ImportPhotoBtn2))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(95, 95, 95)
                         .addComponent(jLabel1)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +145,7 @@ public class FormularioMateriales extends javax.swing.JFrame {
                     .addComponent(ImportPhotoBtn2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FinishBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -172,11 +178,55 @@ public class FormularioMateriales extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ImportPhotoBtn2ActionPerformed
 
+    
+    public boolean EsPrimero()
+    {
+        File Archivo= new File(RutaArchivos.Materiales);
+        File Archivo2= new File(RutaArchivos.BitacoraMateriales);
+
+        return Archivo.length()==0&&Archivo2.length()==0;
+    }
+    
     private void FinishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinishBtnActionPerformed
+         
+        MaterialProperties Material = new MaterialProperties();
+        ArchivoSecuencial ASecuencial = new ArchivoSecuencial();
+        String Atributos = "Usuario|Nombre_Material|Fecha|Peso|Descripción|Evento|Usuario_Transacción|Fecha_Creacion|Estatus";
                     
-        //To Do... Codigo para crear material
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+        String FechaActual=ft.format(date);
+        
+        
+        //Escribir en Materiales.txt     
+        int status = 1;
+        
+        String Escribir= NameField.getText()+"|"+TypeField.getText()+"|"+PhotoPathField.getText()+"|"+DegField.getText()+"|"+FechaActual+"|"+Login.getUsername()+"|"+ status;
+                
+        ASecuencial.EscribirEnBitacora("Materiales",Escribir,Atributos);
+        
+        //Actualizar Descriptor
+        if (!EsPrimero()) 
+        {
+            
+        String FechaCreacion = ASecuencial.IdentificarFechaCreacion(RutaArchivos.DescBitacoraMateriales);
+        String CreadorOriginal=ASecuencial.IdentificarCreadorArchivo(RutaArchivos.DescBitacoraMateriales);
+        int TotalRegistros=ASecuencial.IdentificarTotRegistros(RutaArchivos.DescBitacoraMateriales);
+        int TotalRegistrosActivos=ASecuencial.IdentificarRegActivos(RutaArchivos.DescBitacoraMateriales);
+        int TotalRegistrosInactivos=ASecuencial.IdentificarRegInactivos(RutaArchivos.DescBitacoraMateriales);
+        int NumReorga=ASecuencial.IdentificarNumReorg(RutaArchivos.DescBitacoraMateriales);
+                
+        ASecuencial.EscribirDescriptorBitacora("Materiales","Secuencial",CreadorOriginal,FechaCreacion,FechaActual,TotalRegistros+1,
+                        TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga,Atributos);
+        }
+        else
+        {
+            ASecuencial.EscribirDescriptorBitacora("Materiales","Secuencial",Login.getUsername(),FechaActual,FechaActual,1,1,0,5,Atributos);
+        }
         
         try {
+        
+        JOptionPane.showMessageDialog(null, "Operacion Exitosa.");
         
             MenuAplicacion h = new MenuAplicacion();            
             h.setVisible(true);
@@ -222,7 +272,7 @@ public class FormularioMateriales extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField DegField;
+    private javax.swing.JTextField DegField;
     private javax.swing.JButton FinishBtn;
     private javax.swing.JButton ImportPhotoBtn2;
     private javax.swing.JTextField NameField;

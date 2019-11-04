@@ -284,21 +284,13 @@ public class CreateNewUser extends javax.swing.JFrame {
             {                    
                 Usuario.Role="Usuario";
                 String Administrador=ArchivoSecuencialUsuarios.IdentificarAdmin(RutaArchivos.Bitacora);
-                if ("".equals(Administrador)) {
+                if ("".equals(Administrador)) 
+                {
                     Administrador=ArchivoSecuencialUsuarios.IdentificarAdmin(RutaArchivos.Master);
                 }
-                String FechaCreacion=ASecuencial.IdentificarFechaCreacion(RutaArchivos.DescBitacora);
-                int TotalRegistros=ASecuencial.IdentificarTotRegistros(RutaArchivos.DescBitacora);
-                int TotalRegistrosActivos=ASecuencial.IdentificarRegActivos(RutaArchivos.DescBitacora);
-                int TotalRegistrosInactivos=ASecuencial.IdentificarRegInactivos(RutaArchivos.DescBitacora);
-                int NumReorga=ASecuencial.IdentificarNumReorg(RutaArchivos.DescBitacora);
                 Date date = new Date();
                 SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
                 String FechaActual=ft.format(date);
-                //Actualizar Descriptor
-                ASecuencial.EscribirDescriptorBitacora("Usuarios","Secuencial",Administrador,FechaCreacion,FechaActual,TotalRegistros+1,
-                        TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga,
-                        "Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");
                 //Escribir en Usuarios.txt
                 int status;
                 if (Usuario.Status)
@@ -311,6 +303,18 @@ public class CreateNewUser extends javax.swing.JFrame {
                 ASecuencial.EscribirEnBitacora("Usuarios",Escribir,Atributos);
                 JOptionPane.showMessageDialog(null, "Creacion Exitosa.");                
                 
+                
+                String FechaCreacion=ASecuencial.IdentificarFechaCreacion(RutaArchivos.DescBitacora);
+                int TotalRegistros=ASecuencial.IdentificarTotRegistros(RutaArchivos.DescBitacora);
+                int TotalRegistrosActivos=ASecuencial.IdentificarRegActivos(RutaArchivos.DescBitacora);
+                int TotalRegistrosInactivos=ASecuencial.IdentificarRegInactivos(RutaArchivos.DescBitacora);
+                int NumReorga=ASecuencial.IdentificarNumReorg(RutaArchivos.DescBitacora);
+                
+                //Actualizar Descriptor
+                ASecuencial.EscribirDescriptorBitacora("Usuarios","Secuencial",Administrador,FechaCreacion,FechaActual,TotalRegistros+1,
+                        TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga,
+                        "Usuario|Nombre|Apellido|Password|Rol|Fecha_Nacimiento|Correo|Telefono|Path_Foto|Descripcion|Estatus");
+              
             }           
         }
         
