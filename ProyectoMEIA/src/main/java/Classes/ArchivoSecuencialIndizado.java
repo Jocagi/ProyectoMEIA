@@ -474,5 +474,107 @@ public class ArchivoSecuencialIndizado {
         } 
         return (numeroReg);
     }
-
+     public String Buscar(String Llave){             
+ String resultado="";
+        try {
+            BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceDonaciones.txt"));
+            String linea = Archivo.readLine();
+            String Bloque="";
+            while(linea!=null){
+                if (linea.contains(Llave)) {
+                    String[] Analizando=linea.split("\\|");
+                    Bloque=Analizando[1].split("\\.")[0];                    
+                }
+            }
+            Archivo.close();
+            BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
+                    linea=Archivo2.readLine();
+                    while(linea!=null){
+                        if (linea.contains(Llave)) {
+                            resultado=linea;
+                            break;
+                        }
+                    }
+                    Archivo2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return (resultado);        
+    }
+     public void Modificar(String Llave, String NuevoContenido){
+         BufferedReader Archivo = null;
+                    List<String> ContenidoArchivo = new ArrayList<String>();
+                    try {
+            Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceDonaciones.txt"));
+            String linea = Archivo.readLine();
+            String Bloque="";
+            while(linea!=null){
+                if (linea.contains(Llave)) {
+                    String[] Analizando=linea.split("\\|");
+                    Bloque=Analizando[1].split("\\.")[0];                    
+                }
+            }
+            Archivo.close();     
+            BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
+                    linea=Archivo2.readLine();
+                    while(linea!=null){
+                        ContenidoArchivo.add(linea);
+                    }
+                    Archivo2.close();
+                        for (int i = 0; i < ContenidoArchivo.size(); i++) {
+                            if (ContenidoArchivo.get(i).contains(Llave)) {
+                                String []ContenidoAnterior=ContenidoArchivo.get(i).split("\\|");
+                                ContenidoArchivo.set(i,(NuevoContenido+"|"+ContenidoAnterior[6]+"|"+ContenidoAnterior[7]+"|"+ContenidoAnterior[8]));
+                            }
+                        }
+              BufferedWriter Archivo3= new BufferedWriter(new FileWriter("C:/MEIA/Donaciones"+Bloque+".txt",false));
+                        for (int i = 0; i < ContenidoArchivo.size(); i++) {
+                            Archivo3.write(ContenidoArchivo.get(i));
+                        }
+                        Archivo3.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
+      public void Eliminar(String Llave){
+         BufferedReader Archivo = null;
+                    List<String> ContenidoArchivo = new ArrayList<String>();
+                    try {
+            Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceDonaciones.txt"));
+            String linea = Archivo.readLine();
+            String Bloque="";
+            while(linea!=null){
+                if (linea.contains(Llave)) {
+                    String[] Analizando=linea.split("\\|");
+                    Bloque=Analizando[1].split("\\.")[0];                    
+                }
+            }
+            Archivo.close();     
+            BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
+                    linea=Archivo2.readLine();
+                    while(linea!=null){
+                        ContenidoArchivo.add(linea);
+                    }
+                    Archivo2.close();
+                        for (int i = 0; i < ContenidoArchivo.size(); i++) {
+                            if (ContenidoArchivo.get(i).contains(Llave)) {
+                                String []ContenidoAnterior=ContenidoArchivo.get(i).split("\\|");
+                                ContenidoArchivo.set(i,(ContenidoAnterior[0]+"|"+ContenidoAnterior[1]+"|"+ContenidoAnterior[2]
+                                        +"|"+ContenidoAnterior[3]+"|"+ContenidoAnterior[4]+"|"+ContenidoAnterior[5]+"|"
+                                        +ContenidoAnterior[6]+"|"+ContenidoAnterior[7]+"|0"));
+                            }
+                        }
+              BufferedWriter Archivo3= new BufferedWriter(new FileWriter("C:/MEIA/Donaciones"+Bloque+".txt",false));
+                        for (int i = 0; i < ContenidoArchivo.size(); i++) {
+                            Archivo3.write(ContenidoArchivo.get(i));
+                        }
+                        Archivo3.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
 }
