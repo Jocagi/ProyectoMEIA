@@ -177,13 +177,12 @@ public class FormularioDonacion extends javax.swing.JFrame {
     private void FinishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinishBtnActionPerformed
 
         try {
-            //To Do... Codigo para crear donación
-            Date date = new Date();
-            SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
-            String FechaActual=ft.format(date);
+            
             Classes.ArchivoSecuencialIndizado ASIndizado= new Classes.ArchivoSecuencialIndizado();
-            ASIndizado.Insercion(NameField.getText()+"|"+TypeField.getText()+"|"+DateField.getText()+"|"+WeightField.getText()+"|"+DescField.getText()+"|"+NameField1.getText()+"|"+Login.getUsername()+"|"+FechaActual+"|1");
+            ASIndizado.Insercion(NameField.getText()+"|"+TypeField.getText()+"|"+DateField.getText()+"|"+WeightField.getText()+"|"+DescField.getText()+"|"
+                    +NameField1.getText()+"|"+Login.getUsername()+"|"+DateField.getText()+"|1");
             JOptionPane.showMessageDialog(null, "Donacion realizada con exito");                        
+            
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
             this.setVisible(false);

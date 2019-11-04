@@ -24,6 +24,11 @@ import javax.swing.JOptionPane;
 public class ArchivoSecuencialIndizado {
     public void Insercion(String Datos)
     {
+        
+      Date date = new Date();
+      SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+      String FechaActual=ft.format(date); 
+        
         String[]Campos=Datos.split("\\|");
         if (Campos.length==9)
         {
@@ -34,35 +39,42 @@ public class ArchivoSecuencialIndizado {
                     FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones1.txt",false);
                     BufferedWriter bw1 = new BufferedWriter(Escribir);
                     bw1.write(Datos);
+                    bw1.close();
                     Escribir.close();
+                    
                     //Actualizar descriptor
                     FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_Donaciones1.txt",false);
                     BufferedWriter bw = new BufferedWriter(Escribir2);
-                    bw.write("Nombre|Donaciones1.txt"+System.getProperty("line.separator"));
-                    bw.write("Creador|"+Campos[0]+System.getProperty("line.separator"));
-                    bw.write("FechaCreacion|"+Campos[7]+System.getProperty("line.separator"));
+                    bw.write("Nombre|Donaciones1"+System.getProperty("line.separator"));
+                    bw.write("Creador|"+Login.getUsername()+System.getProperty("line.separator"));
+                    bw.write("FechaCreacion|"+FechaActual+System.getProperty("line.separator"));
                     bw.write("RegActivos|1"+System.getProperty("line.separator"));
                     bw.write("RegInactivos|0"+System.getProperty("line.separator"));
                     bw.write("NumeroRegistros|1"+System.getProperty("line.separator"));
                     bw.write("MaxRegistros|10"+System.getProperty("line.separator"));
-                    bw.write("Atributos|Usuario, nombre_material, fecha, peso, descripción, evento, usuario_transacción, fecha_creacion,estatus");
+                    bw.write("Atributos|Usuario,nombre_material,fecha,peso,descripción,evento,usuario_transacción,fecha_creacion,estatus");
                     bw.close();
                     Escribir2.close();
+                    
                     //Agregar a indice
                     FileWriter EscribirIndice = new FileWriter("C:/MEIA/IndiceDonaciones.txt",true);
                     BufferedWriter bw2 = new BufferedWriter(EscribirIndice);
                     bw2.write("1|1.1|"+Campos[0]+"|"+Campos[1]+"|"+Campos[2]+"|0|1");
+                    bw2.close();
                     EscribirIndice.close();
+                    
                     //Descriptor
                     FileWriter EscribirDescIndice = new FileWriter("C:/MEIA/desc_IndiceDonaciones.txt",false);
                     BufferedWriter bw3 = new BufferedWriter(EscribirDescIndice);
-                    bw3.write("Nombre|IndiceDonaciones.txt"+System.getProperty("line.separator"));
-                    bw3.write("Creador|"+Campos[0]+System.getProperty("line.separator"));
-                    bw3.write("FechaCreacion|"+Campos[7]+System.getProperty("line.separator"));
+                    bw3.write("Nombre|IndiceDonaciones"+System.getProperty("line.separator"));
+                    bw3.write("Creador|"+Login.getUsername()+System.getProperty("line.separator"));
+                    bw3.write("FechaCreacion|"+FechaActual+System.getProperty("line.separator"));
                     bw3.write("RegInicial|1"+System.getProperty("line.separator"));
                     bw3.write("NoBloques|1"+System.getProperty("line.separator"));
                     bw3.write("Usuario,Nombre_Material,fecha");
+                    bw3.close();
                     EscribirDescIndice.close();
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -77,7 +89,9 @@ public class ArchivoSecuencialIndizado {
                         FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones"+(NumeroBloqueAEscribir+1)+".txt",true);
                         BufferedWriter bw1 = new BufferedWriter(Escribir);
                         bw1.write(Datos);
+                        bw1.close();
                         Escribir.close();
+                        
                         //Actualizar descriptor
                         FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_Donaciones"+(NumeroBloqueAEscribir+1)+".txt",false);
                         BufferedWriter bw = new BufferedWriter(Escribir2);
@@ -91,21 +105,26 @@ public class ArchivoSecuencialIndizado {
                         bw.write("Atributos|Usuario, nombre_material, fecha, peso, descripción, evento, usuario_transacción, fecha_creacion,estatus");
                         bw.close();
                         Escribir2.close();
+                        
                         //Agregar a indice
                         FileWriter EscribirIndice = new FileWriter("C:/MEIA/IndiceDonaciones.txt",true);
                         BufferedWriter bw2 = new BufferedWriter(EscribirIndice);
                         bw2.write((VerificarCantRegistrosIndice(NumeroBloqueAEscribir)+1)+"|"+(NumeroBloqueAEscribir+1)+"."+VerificarSiguiente(NumeroBloqueAEscribir)+"|"+Campos[0]+"|"+Campos[1]+"|"+Campos[2]+"|1|1");
+                        bw2.close();
                         EscribirIndice.close();
+                        
                         //Descriptor
                         FileWriter EscribirDescIndice = new FileWriter("C:/MEIA/desc_IndiceDonaciones.txt",false);
-                    BufferedWriter bw4 = new BufferedWriter(EscribirDescIndice);
-                    bw4.write("Nombre|IndiceDonaciones.txt"+System.getProperty("line.separator"));
-                    bw4.write("Creador|"+VerificarCreadorIndice()+System.getProperty("line.separator"));
-                    bw4.write("FechaCreacion|"+VerificarFechaIndice()+System.getProperty("line.separator"));
-                    bw4.write("RegInicial|"+VerificarRegInicial()+System.getProperty("line.separator"));
-                    bw4.write("NoBloques|"+VerificarBloques()+System.getProperty("line.separator"));
-                    bw4.write("Usuario,Nombre_Material,fecha");
+                        BufferedWriter bw4 = new BufferedWriter(EscribirDescIndice);
+                        bw4.write("Nombre|IndiceDonaciones.txt"+System.getProperty("line.separator"));
+                        bw4.write("Creador|"+VerificarCreadorIndice()+System.getProperty("line.separator"));
+                        bw4.write("FechaCreacion|"+VerificarFechaIndice()+System.getProperty("line.separator"));
+                        bw4.write("RegInicial|"+VerificarRegInicial()+System.getProperty("line.separator"));
+                        bw4.write("NoBloques|"+VerificarBloques()+System.getProperty("line.separator"));
+                        bw4.write("Usuario,Nombre_Material,fecha");
+                        bw4.close();
                         EscribirDescIndice.close();
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
                     } 
@@ -115,7 +134,9 @@ public class ArchivoSecuencialIndizado {
                     FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones"+NumeroBloqueAEscribir+".txt",true);
                     BufferedWriter bw=new BufferedWriter(Escribir);
                     bw.write(Datos);
+                    bw.close();
                     Escribir.close();
+                    
                     //Actualizar descriptor
                     FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_Donaciones"+NumeroBloqueAEscribir+".txt",false);
                     BufferedWriter bw2 = new BufferedWriter(Escribir2);
@@ -133,6 +154,8 @@ public class ArchivoSecuencialIndizado {
                     FileWriter EscribirIndice = new FileWriter("C:/MEIA/IndiceDonaciones.txt",true);
                     BufferedWriter bw3 = new BufferedWriter(EscribirIndice);
                     bw3.write((VerificarCantRegistrosIndice(NumeroBloqueAEscribir)+1)+"|"+NumeroBloqueAEscribir+"."+VerificarSiguiente(NumeroBloqueAEscribir)+"|"+Campos[0]+"|"+Campos[1]+"|"+Campos[2]+"|1|1");
+                    bw3.close();
+                    EscribirIndice.close();
                     //Actualizar Descriptor Indice
                     FileWriter EscribirDescIndice = new FileWriter("C:/MEIA/desc_IndiceDonaciones.txt",false);
                     BufferedWriter bw4 = new BufferedWriter(EscribirDescIndice);
@@ -144,6 +167,8 @@ public class ArchivoSecuencialIndizado {
                     bw4.write("Usuario,Nombre_Material,fecha");
                     EscribirDescIndice.close();
                     OrganizarIndice();
+                    bw4.close();
+                    EscribirDescIndice.close();
                 } catch (IOException ex) {
                     Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
                 }  
