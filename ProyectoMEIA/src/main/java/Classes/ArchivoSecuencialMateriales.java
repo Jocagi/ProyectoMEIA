@@ -28,11 +28,11 @@ public class ArchivoSecuencialMateriales extends ArchivoSecuencial
        MaterialProperties material1 = obtenerMaterial(key, RutaArchivos.BitacoraMateriales);
        MaterialProperties material2 = obtenerMaterial(key, RutaArchivos.Materiales);
        
-       if (!material1.Nombre.equals("")) //Si el usuario estaba en bitacora 
+       if (!material1.Nombre.equals("")) //Si el objeto estaba en bitacora 
        {
            return material1;
        }
-       else if(!material2.Nombre.equals("")) //Si el usuario estaba en maester
+       else if(!material2.Nombre.equals("")) //Si el objeto estaba en master
        {
            return material2;
        }
