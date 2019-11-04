@@ -36,7 +36,7 @@ public class ArchivoSecuencialIndizado {
             if (NumeroBloque==0) {
                 try {
                     //Escribir Maestro
-                    FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones1.txt",false);
+                    FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones1.txt",true); 
                     BufferedWriter bw1 = new BufferedWriter(Escribir);
                     bw1.write(Datos);
                     bw1.close();

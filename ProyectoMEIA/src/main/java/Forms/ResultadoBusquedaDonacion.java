@@ -182,10 +182,14 @@ public class ResultadoBusquedaDonacion extends javax.swing.JFrame {
         String resultado=ACI.Buscar(DonacionBuscada.llave);
         if (resultado.equals("")) {
             try {
-                JOptionPane.showMessageDialog(null, "Algo ha salido mal, redireccionando a Menu");
-                this.dispose();
+                
                 MenuAplicacion Siguiente = new MenuAplicacion();         
                 Siguiente.setVisible(true);
+                this.setVisible(false);
+                this.dispose();
+                
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el dato solicitado");
+                
             } catch (IOException ex) {
                 Logger.getLogger(ResultadoBusquedaDonacion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -228,9 +232,10 @@ MenuAplicacion Siguiente = new MenuAplicacion();
             Siguiente.setVisible(true);   }   
             else{    
                 JOptionPane.showMessageDialog(null, "Algo salio mal, estas siendo redirigido al menu");
-                 this.dispose();
+                 
             MenuAplicacion Siguiente = new MenuAplicacion();
             Siguiente.setVisible(true);
+            this.dispose();
             }
         } catch (IOException ex) {
             Logger.getLogger(ResultadoBusquedaDonacion.class.getName()).log(Level.SEVERE, null, ex);
