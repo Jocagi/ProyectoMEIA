@@ -207,10 +207,12 @@ public class CreateNewUser extends javax.swing.JFrame {
 
     private void ImportPhotoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportPhotoBtnActionPerformed
         JFileChooser dialogo = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagenes", "jpg");
+        FileNameExtensionFilter filtro1 = new FileNameExtensionFilter("JPG", "jpg");
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("PNG", "png");
+        dialogo.setFileFilter(filtro1);
+        dialogo.setFileFilter(filtro2);
         File ficheroImagen;
         String rutaArchivo;
-        dialogo.setFileFilter(filtro);
         int valor = dialogo.showOpenDialog(this);
         if (valor == JFileChooser.APPROVE_OPTION) {
             ficheroImagen = dialogo.getSelectedFile();
@@ -320,7 +322,6 @@ public class CreateNewUser extends javax.swing.JFrame {
         
                 if (Login.IsActive()) 
                 {
-                    
                     try {
                         MenuAplicacion h = new MenuAplicacion();
                         h.setVisible(true);

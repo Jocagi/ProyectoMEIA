@@ -1,5 +1,6 @@
 package Forms;
 
+import Classes.ArchivoSecuencialMateriales;
 import Classes.MaterialBuscado;
 import Classes.Login;
 import Classes.MaterialProperties;
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
@@ -56,8 +58,8 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Usuario = new javax.swing.JLabel();
         Fecha = new javax.swing.JLabel();
+        Usuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,9 +96,9 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
 
         jLabel2.setText("Fecha Creación:");
 
-        Usuario.setText("jLabel5");
+        Fecha.setText("jLabel5");
 
-        Fecha.setText("jLabel4");
+        Usuario.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,17 +122,18 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
                                     .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(125, 125, 125))
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(TimeField)
                             .addComponent(TypeField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(NombreField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PhotoPathField)
-                            .addComponent(Usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                            .addComponent(Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(Usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ImportPhotoBtn2)))
                 .addGap(31, 31, 31))
@@ -155,19 +158,19 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(PhotoPathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ImportPhotoBtn2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(Usuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(Fecha))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BotonConfirmar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(70, 70, 70))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(BotonConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65))
         );
 
         pack();
@@ -190,20 +193,21 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
         try {
             MaterialProperties Material = new MaterialProperties();
 
-        Material.Nombre = NombreField.getText();
-        Material.Tipo = TypeField.getText();
-        Material.TiempoDegradacion = TimeField.getText();
-        Material.PathImagen = PhotoPathField.getText();
-        Material.FechaCreacion = Fecha.getText();
-            
-               Material.UsuarioTransaccion = Login.getUsername();
+            Material.Nombre = NombreField.getText();
+            Material.Tipo = TypeField.getText();
+            Material.TiempoDegradacion = TimeField.getText();
+            Material.PathImagen = PhotoPathField.getText();
+            Material.FechaCreacion = Fecha.getText();
+            Material.UsuarioTransaccion = Login.getUsername();
                
-            //To Do... Modificar Material                
-            //ArchivoSecuencial.ModificarUsuario(Login.getUsername(), Usuario);
-
-            this.dispose();
+            //Modificar Material                
+            ArchivoSecuencialMateriales.ModificarMaterial(MaterialBuscado.material.Nombre, Material);
+            
+            JOptionPane.showMessageDialog(null, "Modificacion exitosa.");
+            
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
+            this.dispose();
 
         } catch (IOException ex) {
             Logger.getLogger(CambiarInfo.class.getName()).log(Level.SEVERE, null, ex);
@@ -225,10 +229,12 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
 
     private void ImportPhotoBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportPhotoBtn2ActionPerformed
         JFileChooser dialogo = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Imagenes", "jpg");
+        FileNameExtensionFilter filtro1 = new FileNameExtensionFilter("JPG", "jpg");
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("PNG", "png");
         File ficheroImagen;
         String rutaArchivo;
-        dialogo.setFileFilter(filtro);
+        dialogo.setFileFilter(filtro1);
+        dialogo.setFileFilter(filtro2);
         int valor = dialogo.showOpenDialog(this);
         if (valor == JFileChooser.APPROVE_OPTION) {
             ficheroImagen = dialogo.getSelectedFile();

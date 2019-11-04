@@ -65,7 +65,16 @@ public class ArchivoSecuencialMateriales extends ArchivoSecuencial
                 Material.TiempoDegradacion = data[3];
                 Material.UsuarioTransaccion = data[4];
                 Material.FechaCreacion = data[5];
-                Material.Status = true;      
+                
+                if ("1".equals(data[6]))
+                {
+                Material.Status = true;    
+                }
+                else
+                {
+                Material.Status = false;
+                }
+                      
             
             }
         }

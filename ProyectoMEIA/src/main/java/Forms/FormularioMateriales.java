@@ -166,10 +166,11 @@ public class FormularioMateriales extends javax.swing.JFrame {
 
     private void ImportPhotoBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportPhotoBtn2ActionPerformed
         JFileChooser dialogo = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagenes", "jpg");
-        File ficheroImagen;
+        FileNameExtensionFilter filtro1 = new FileNameExtensionFilter("JPG", "jpg");
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("PNG", "png");
+        dialogo.setFileFilter(filtro1);
+        dialogo.setFileFilter(filtro2);  File ficheroImagen;
         String rutaArchivo;
-        dialogo.setFileFilter(filtro);
         int valor = dialogo.showOpenDialog(this);
         if (valor == JFileChooser.APPROVE_OPTION) {
             ficheroImagen = dialogo.getSelectedFile();
@@ -196,14 +197,6 @@ public class FormularioMateriales extends javax.swing.JFrame {
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
         String FechaActual=ft.format(date);
-        
-        
-        //Escribir en Materiales.txt     
-        int status = 1;
-        
-        String Escribir= NameField.getText()+"|"+TypeField.getText()+"|"+PhotoPathField.getText()+"|"+DegField.getText()+"|"+FechaActual+"|"+Login.getUsername()+"|"+ status;
-                
-        ASecuencial.EscribirEnBitacora("Materiales",Escribir,Atributos);
         
         //Actualizar Descriptor
         if (!EsPrimero()) 
@@ -233,7 +226,16 @@ public class FormularioMateriales extends javax.swing.JFrame {
             this.setVisible(false);
         } catch (IOException ex) {
             Logger.getLogger(FormularioMateriales.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+        
+        
+        //Escribir en Materiales.txt     
+        int status = 1;
+        
+        String Escribir= NameField.getText()+"|"+TypeField.getText()+"|"+PhotoPathField.getText()+"|"+DegField.getText()+"|"+Login.getUsername()+"|"+FechaActual+"|"+ status;
+                
+        ASecuencial.EscribirEnBitacora("Materiales",Escribir,Atributos);
+        
     }//GEN-LAST:event_FinishBtnActionPerformed
 
     /**
