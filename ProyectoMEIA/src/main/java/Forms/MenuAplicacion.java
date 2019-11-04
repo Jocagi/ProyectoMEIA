@@ -2,6 +2,7 @@ package Forms;
 
 
 import Classes.ArchivoSecuencial;
+import Classes.ArchivoSecuencialIndizado;
 import Classes.Login;
 import Forms.LoginForm;
 import Forms.ConfiguracionMateriales;
@@ -212,6 +213,9 @@ private void cargarContenido()
         
         ArchivoSecuencial ArcMat = new ArchivoSecuencial();
         ArcMat.Reorganizar("Materiales");
+        
+        ArchivoSecuencialIndizado ArcSeqInd = new ArchivoSecuencialIndizado();
+        ArcSeqInd.Reorganizar();
         
         LoginForm Inicio = new LoginForm();
         Inicio.setVisible(true);

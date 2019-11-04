@@ -83,7 +83,7 @@ public class ArchivoSecuencialIndizado {
             {
               
                 int NumeroBloqueAEscribir= VerificarDescriptorBloque(NumeroBloque);
-                if (VerificarMaxRegistros(NumeroBloqueAEscribir)==VerificarTotRegistros(NumeroBloqueAEscribir)) {
+                if (VerificarMaxRegistros(NumeroBloqueAEscribir)==0) {
                     try {
                         //Escribir Maestro
                         FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones"+(NumeroBloqueAEscribir+1)+".txt",true);
@@ -143,9 +143,9 @@ public class ArchivoSecuencialIndizado {
                     bw2.write("Nombre|Donaciones"+NumeroBloqueAEscribir+".txt"+System.getProperty("line.separator"));
                     bw2.write("Creador|"+VerificarCreador(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
                     bw2.write("FechaCreacion|"+VerificarFecha(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
-                    bw2.write("RegActivos|"+VerificarRegActivos(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
+                    bw2.write("RegActivos|"+VerificarRegActivos(NumeroBloqueAEscribir+1)+System.getProperty("line.separator"));
                     bw2.write("RegInactivos|"+VerificarRegInactivos(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
-                    bw2.write("NumeroRegistros|"+VerificarTotRegistros(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
+                    bw2.write("NumeroRegistros|"+VerificarTotRegistros(NumeroBloqueAEscribir+1)+System.getProperty("line.separator"));
                     bw2.write("MaxRegistros|"+VerificarMaxRegistros(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
                     bw2.write("Atributos|Usuario, nombre_material, fecha, peso, descripción, evento, usuario_transacción, fecha_creacion,estatus");
                     bw2.close();
@@ -166,9 +166,8 @@ public class ArchivoSecuencialIndizado {
                     bw4.write("NoBloques|"+VerificarBloques()+System.getProperty("line.separator"));
                     bw4.write("Usuario,Nombre_Material,fecha");
                     EscribirDescIndice.close();
-                    OrganizarIndice();
                     bw4.close();
-                    EscribirDescIndice.close();
+                    OrganizarIndice();
                 } catch (IOException ex) {
                     Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
                 }  
@@ -186,7 +185,7 @@ public class ArchivoSecuencialIndizado {
                 File[] listOfFiles = folder.listFiles();                 
 		if(listOfFiles.length >0){
 			for(int i = 0; i < listOfFiles.length;i++){
-				if(listOfFiles[i].equals("Donaciones "+i)){
+				if(listOfFiles[i].getName().equals("Donaciones"+i)){
 					NoBloque++;
 				}
 			}
@@ -263,17 +262,9 @@ public class ArchivoSecuencialIndizado {
             String numeroReg=(Archivo.readLine()).split("\\|")[1];
             String numeroMax=(Archivo.readLine()).split("\\|")[1];
             if (numeroReg.equals(numeroMax)) {
-                //CrearNuevoBloque
-                FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones"+(BloqueAVerificar+1)+".txt",false);
-                Escribir.close();
-                FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_Donaciones"+(BloqueAVerificar+1)+".txt",false);
-                    BufferedWriter bw = new BufferedWriter(Escribir2);
-                    bw.write("NumeroRegistros|1"+System.getProperty("line.separator"));
-                    bw.write("MaxRegistros|10"+System.getProperty("line.separator"));
-                    bw.close();
-                    Escribir2.close();          
+                //CrearNuevoBloque               
                     return BloqueAVerificar+1;
-            }           
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -291,6 +282,7 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("NumeroRegistros")) {
                  numeroReg=linea.split("\\|")[1];
                 }
+           linea=Archivo.readLine();
             }
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
@@ -302,8 +294,9 @@ public class ArchivoSecuencialIndizado {
     int numeroReg=0;
         try {
             BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceDonaciones.txt"));
-            while(Archivo.readLine()!=null)   {
-                numeroReg++;
+                       String linea=Archivo.readLine();
+ while(linea!=null)   {
+                numeroReg++;linea=Archivo.readLine();
             }
     } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
@@ -316,8 +309,11 @@ public class ArchivoSecuencialIndizado {
     int numeroReg=0;
         try {
             BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+NumBloque+".txt"));
-            while(!Archivo.readLine().equals(""))   {
-                numeroReg++;
+            String linea=Archivo.readLine();
+
+            while(linea!=null)   {
+                numeroReg++;                    linea=Archivo.readLine();
+
             }
     } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
@@ -333,7 +329,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("Creador")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                               linea=Archivo.readLine();
+ }
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -348,7 +345,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("FechaCreacion")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                               linea=Archivo.readLine();
+ }
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -363,7 +361,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("RegActivos")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                                linea=Archivo.readLine();
+}
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -378,7 +377,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("RegInactivos")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                               linea=Archivo.readLine();
+ }
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -393,7 +393,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("NumeroRegistros")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                               linea=Archivo.readLine();
+ }
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -402,17 +403,23 @@ public class ArchivoSecuencialIndizado {
     public int VerificarMaxRegistros(int NumeroBloque){
         String numeroReg="";
         try {
-            BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/desc_Donaciones"+NumeroBloque+".txt"));
+            File Bitacora = new File("C:/MEIA/desc_Donaciones"+NumeroBloque+".txt");
+            if (Bitacora.exists()) {
+                BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/desc_Donaciones"+NumeroBloque+".txt"));
             String linea = Archivo.readLine();
             while(linea!=null){
                 if (linea.split("\\|")[0].equals("NumeroRegistros")) {
                  numeroReg=linea.split("\\|")[1];
                 }
+                linea=Archivo.readLine();
             }
+                    return Integer.parseInt(numeroReg);
+}
+            
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        return Integer.parseInt(numeroReg);
+        return 0;
     }
     public String VerificarCreadorIndice(){
         String numeroReg="";
@@ -423,7 +430,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("Creador")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                                linea=Archivo.readLine();
+}
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -438,7 +446,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("FechaCreacion")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                                linea=Archivo.readLine();
+}
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -453,7 +462,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("RegInicial")) {
                  numeroReg=linea.split("\\|")[1];
                 }
-            }
+                               linea=Archivo.readLine();
+ }
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -468,6 +478,8 @@ public class ArchivoSecuencialIndizado {
                 if (linea.split("\\|")[0].equals("NoBloques")) {
                  numeroReg=linea.split("\\|")[1];
                 }
+                linea=Archivo.readLine();
+
             }
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
@@ -485,6 +497,7 @@ public class ArchivoSecuencialIndizado {
                     String[] Analizando=linea.split("\\|");
                     Bloque=Analizando[1].split("\\.")[0];                    
                 }
+                linea=Archivo.readLine();
             }
             Archivo.close();
             BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
@@ -493,7 +506,8 @@ public class ArchivoSecuencialIndizado {
                         if (linea.contains(Llave)) {
                             resultado=linea;
                             break;
-                        }
+                        }           
+                        linea=Archivo2.readLine();
                     }
                     Archivo2.close();
         } catch (IOException ex) {
@@ -513,12 +527,14 @@ public class ArchivoSecuencialIndizado {
                     String[] Analizando=linea.split("\\|");
                     Bloque=Analizando[1].split("\\.")[0];                    
                 }
+                linea=Archivo.readLine();
             }
             Archivo.close();     
             BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
                     linea=Archivo2.readLine();
                     while(linea!=null){
                         ContenidoArchivo.add(linea);
+                        linea=Archivo2.readLine();
                     }
                     Archivo2.close();
                         for (int i = 0; i < ContenidoArchivo.size(); i++) {
@@ -552,6 +568,7 @@ public class ArchivoSecuencialIndizado {
                     String[] Analizando=linea.split("\\|");
                     Bloque=Analizando[1].split("\\.")[0];                    
                 }
+                linea=Archivo.readLine();
             }
             Archivo.close();     
                         for (int i = 0; i < ContenidoIndice.size(); i++) {
@@ -561,10 +578,16 @@ public class ArchivoSecuencialIndizado {
                                         +"|"+ContenidoAnterior[3]+"|"+ContenidoAnterior[4]+"|"+ContenidoAnterior[5]+"|0"));
                             }
                         }
+                        BufferedWriter Archivo7= new BufferedWriter(new FileWriter("C:/MEIA/desc_IndiceDonaciones.txt",false));
+                        for (int i = 0; i < ContenidoIndice.size(); i++) {
+                            Archivo7.write(ContenidoIndice.get(i)+System.getProperty("line.separator"));
+                        }
+                        Archivo7.close();
             BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+Bloque+".txt"));
                     linea=Archivo2.readLine();
                     while(linea!=null){
                         ContenidoArchivo.add(linea);
+                        linea=Archivo2.readLine();
                     }
                     Archivo2.close();
                         for (int i = 0; i < ContenidoArchivo.size(); i++) {
@@ -577,7 +600,7 @@ public class ArchivoSecuencialIndizado {
                         }
               BufferedWriter Archivo3= new BufferedWriter(new FileWriter("C:/MEIA/Donaciones"+Bloque+".txt",false));
                         for (int i = 0; i < ContenidoArchivo.size(); i++) {
-                            Archivo3.write(ContenidoArchivo.get(i));
+                            Archivo3.write(ContenidoArchivo.get(i)+System.getProperty("line.separator"));
                         }
                         Archivo3.close();
         } catch (FileNotFoundException ex) {
@@ -586,4 +609,81 @@ public class ArchivoSecuencialIndizado {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         }
      }
+      
+      public void Reorganizar(){
+          List<String> ContenidoArchivo = new ArrayList<String>();
+                    List<String> ContenidoIndice = new ArrayList<String>();
+                    //Actualizar Indice
+                    try {
+            BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceDonaciones.txt"));
+            String linea = Archivo.readLine();
+            while(linea!=null){
+                String []ContenidoAnterior=linea.split("\\|");
+                if (ContenidoAnterior[6].equals("1")) {
+                    ContenidoIndice.add(linea);
+                    linea=Archivo.readLine();
+                }
+            }
+            BufferedWriter Archivo2 = new BufferedWriter(new FileWriter("C:/MEIA/IndiceDonaciones.txt",false));
+                        for (int i = 0; i < ContenidoIndice.size(); i++) {
+                            Archivo2.write(ContenidoIndice.get(i)+System.getProperty("line.separator"));
+                        }
+                       Archivo2.close();
+                       BufferedWriter Archivo25 = new BufferedWriter(new FileWriter("C:/MEIA/desc_IndiceDonaciones.txt"));
+                       Archivo25.write("Nombre|IndiceDonaciones.txt"+System.getProperty("line.separator"));
+                    Archivo25.write("Creador|"+VerificarCreadorIndice()+System.getProperty("line.separator"));
+                    Archivo25.write("FechaCreacion|"+VerificarFechaIndice()+System.getProperty("line.separator"));
+                    Archivo25.write("RegInicial|"+VerificarRegInicial()+System.getProperty("line.separator"));
+                    Archivo25.write("NoBloques|"+VerificarBloques()+System.getProperty("line.separator"));
+                    Archivo25.write("Usuario,Nombre_Material,fecha");            
+                    Archivo25.close();
+            //Actualizar Bloques
+            int NoBloque = 0;
+                File folder = new File("C:/MEIA");
+                File[] listOfFiles = folder.listFiles();                 
+		if(listOfFiles.length >0){
+			for(int i = 0; i < listOfFiles.length;i++){
+				if(listOfFiles[i].getName().equals("Donaciones"+i)){
+					NoBloque++;
+				}
+			}
+                }
+                        for (int i = 1; i <= NoBloque; i++) {
+                            BufferedReader Archivo3 = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+i+".txt"));
+                    linea=Archivo3.readLine();
+                    while(linea!=null){
+                                      String []ContenidoAnterior=linea.split("\\|");
+                                      if (ContenidoAnterior[8].equals("1")) {
+                              ContenidoArchivo.add(linea);
+
+                        }
+                                     linea=Archivo3.readLine();
+   }
+                    Archivo3.close();
+                    BufferedWriter Archivo4 = new BufferedWriter(new FileWriter("C:/MEIA/Donaciones"+i+".txt",false));
+                            for (int j = 0; j < ContenidoArchivo.size(); j++) {
+                                Archivo4.write(ContenidoArchivo.get(j)+System.getProperty("line.separator"));
+                            }
+                            Archivo4.close();
+                            FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_Donaciones"+i+".txt",false);
+                    BufferedWriter bw2 = new BufferedWriter(Escribir2);
+                    bw2.write("Nombre|Donaciones"+i+".txt"+System.getProperty("line.separator"));
+                    bw2.write("Creador|"+VerificarCreador(i)+System.getProperty("line.separator"));
+                    bw2.write("FechaCreacion|"+VerificarFecha(i)+System.getProperty("line.separator"));
+                    bw2.write("RegActivos|"+ContenidoArchivo.size()+System.getProperty("line.separator"));
+                    bw2.write("RegInactivos|0"+System.getProperty("line.separator"));
+                    bw2.write("NumeroRegistros|"+ContenidoArchivo.size()+System.getProperty("line.separator"));
+                    bw2.write("MaxRegistros|5"+System.getProperty("line.separator"));
+                    bw2.write("Atributos|Usuario, nombre_material, fecha, peso, descripción, evento, usuario_transacción, fecha_creacion,estatus");
+                    bw2.close();
+                    Escribir2.close();
+                        }
+      
+                        
+      } catch (FileNotFoundException ex) {
+            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
 }
