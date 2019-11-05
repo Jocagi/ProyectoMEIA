@@ -57,6 +57,12 @@ public class CambiarInfoDonacion extends javax.swing.JFrame {
 
         jLabel6.setText("Evento:");
 
+        jTextField1.setEditable(false);
+
+        jTextField2.setEditable(false);
+
+        jTextField3.setEditable(false);
+
         jLabel1.setText("Usuario:");
 
         jLabel2.setText("Material Donado:");

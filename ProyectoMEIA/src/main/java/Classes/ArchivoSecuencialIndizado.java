@@ -73,7 +73,7 @@ public class ArchivoSecuencialIndizado {
                     bw3.write("FechaCreacion|"+FechaActual+System.getProperty("line.separator"));
                     bw3.write("RegInicial|1"+System.getProperty("line.separator"));
                     bw3.write("NoBloques|1"+System.getProperty("line.separator"));
-                    bw3.write("Usuario,Nombre_Material,fecha");
+                    bw3.write("Llave|Usuario,Nombre_Material,fecha");
                     bw3.close();
                     EscribirDescIndice.close();
                     
@@ -88,20 +88,20 @@ public class ArchivoSecuencialIndizado {
                 if (VerificarMaxRegistros(NumeroBloqueAEscribir)==0) {
                     try {
                         //Escribir Maestro
-                        FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones"+(NumeroBloqueAEscribir+1)+".txt",true);
+                        FileWriter Escribir = new FileWriter("C:/MEIA/Donaciones"+(NumeroBloqueAEscribir)+".txt",true);
                         BufferedWriter bw1 = new BufferedWriter(Escribir);
                     bw1.write(Datos+System.getProperty("line.separator"));
                         bw1.close();
                         Escribir.close();
                         
                         //Actualizar descriptor
-                        FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_D"+(NumeroBloqueAEscribir+1)+".txt",false);
+                        FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_D"+(NumeroBloqueAEscribir)+".txt",false);
                         BufferedWriter bw = new BufferedWriter(Escribir2);
                         bw.write("Nombre|Donaciones"+(NumeroBloqueAEscribir)+".txt"+System.getProperty("line.separator"));
-                        bw.write("Creador|"+VerificarCreador(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
-                        bw.write("FechaCreacion|"+VerificarFecha(NumeroBloqueAEscribir)+System.getProperty("line.separator"));
+                        bw.write("Creador|"+Login.getUsername()+System.getProperty("line.separator"));
+                        bw.write("FechaCreacion|"+FechaActual+System.getProperty("line.separator"));
                         bw.write("RegActivos|1"+System.getProperty("line.separator"));
-                        bw.write("RegInactivos|0"+VerificarRegInactivos(NumeroBloqueAEscribir+1)+System.getProperty("line.separator"));
+                        bw.write("RegInactivos|0"+System.getProperty("line.separator"));
                         bw.write("NumeroRegistros|1"+System.getProperty("line.separator"));
                         bw.write("MaxRegistros|10"+System.getProperty("line.separator"));
                         bw.write("Atributos|Usuario, nombre_material, fecha, peso, descripción, evento, usuario_transacción, fecha_creacion,estatus");
@@ -111,7 +111,7 @@ public class ArchivoSecuencialIndizado {
                         //Agregar a indice
                         FileWriter EscribirIndice = new FileWriter("C:/MEIA/IndiceD.txt",true);
                         BufferedWriter bw2 = new BufferedWriter(EscribirIndice);
-                        bw2.write((VerificarCantRegistrosIndice(NumeroBloqueAEscribir)+1)+"|"+(NumeroBloqueAEscribir+1)+"."+VerificarSiguiente(NumeroBloqueAEscribir)+"|"+Campos[0]+"|"+Campos[1]+"|"+Campos[2]+"|1|1"+System.getProperty("line.separator"));
+                        bw2.write((VerificarCantRegistrosIndice(NumeroBloqueAEscribir)+1)+"|"+(NumeroBloqueAEscribir)+"."+VerificarSiguiente(NumeroBloqueAEscribir)+"|"+Campos[0]+"|"+Campos[1]+"|"+Campos[2]+"|1|1"+System.getProperty("line.separator"));
                         bw2.close();
                         EscribirIndice.close();
                         
@@ -123,10 +123,14 @@ public class ArchivoSecuencialIndizado {
                         bw4.write("FechaCreacion|"+VerificarFechaIndice()+System.getProperty("line.separator"));
                         bw4.write("RegInicial|"+VerificarRegInicial()+System.getProperty("line.separator"));
                         bw4.write("NoBloques|"+VerificarBloques()+System.getProperty("line.separator"));
-                        bw4.write("Usuario,Nombre_Material,fecha");
+                        bw4.write("Llave|Usuario,Nombre_Material,fecha");
                         bw4.close();
                         EscribirDescIndice.close();
-                        
+                         File ArchivoNuevo1=new File("C:/MEIA/desc_IndiceDs.txt");
+                    File ArchivoViej1o=new File("C:/MEIA/desc_IndiceD.txt");
+                    ArchivoViej1o.delete();
+                    boolean bool2 = ArchivoNuevo1.renameTo(ArchivoViej1o);
+                    OrganizarIndice();
                     } catch (IOException ex) {
                         Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
                     } 
@@ -171,13 +175,14 @@ public class ArchivoSecuencialIndizado {
                     bw4.write("FechaCreacion|"+VerificarFechaIndice()+System.getProperty("line.separator"));
                     bw4.write("RegInicial|"+VerificarRegInicial()+System.getProperty("line.separator"));
                     bw4.write("NoBloques|"+VerificarBloques()+System.getProperty("line.separator"));
-                    bw4.write("Usuario,Nombre_Material,fecha");
+                    bw4.write("Llave|Usuario,Nombre_Material,fecha");
                     bw4.close();
                     EscribirDescIndice.close();
                     File ArchivoNuevo1=new File("C:/MEIA/desc_IndiceDp.txt");
                     File ArchivoViej1o=new File("C:/MEIA/desc_IndiceD.txt");
                     ArchivoViej1o.delete();
                     boolean bool2 = ArchivoNuevo1.renameTo(ArchivoViej1o);
+                    OrganizarIndice();
                 } catch (IOException ex) {
                     Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
                 }  
@@ -205,64 +210,92 @@ public class ArchivoSecuencialIndizado {
    	
     public void OrganizarIndice()
     {
+        //arreglar indice
         try {
             BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/IndiceD.txt"));
             String linea=Archivo.readLine();
             List<String> elementosArchivo = new ArrayList<String>();
-            int aux =0;
             while(linea!=null){
                 String[] campos=linea.split("\\|");
-                String llave=campos[2]+campos[3]+campos[4]+"|"+aux;
+                String llave=campos[2]+"|"+campos[3]+"|"+campos[4]+"&"+campos[0];
                 elementosArchivo.add(llave);
                 linea=Archivo.readLine();
-                aux++;
             }
             Archivo.close();
             Collections.sort(elementosArchivo);
-            int auxiliar=0;
-            BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/IndiceD.txt"));
-            linea=Archivo2.readLine(); 
-            List<String> ListaEscribir = new ArrayList<String>();
-            while(linea!=null){
-                ListaEscribir.add(linea);
-                linea=Archivo2.readLine();
+            List<String> nuevaList = new ArrayList<String>();
+            int aux=1;
+            while(aux<=elementosArchivo.size()){
+                String registro=elementosArchivo.get(aux-1).split("\\&")[1];
+                String auxiliar="";
+                if(aux==elementosArchivo.size()){
+                    auxiliar="-";
+                }
+                else{
+                    auxiliar=Integer.toString(aux);
+                }
+                nuevaList.add(registro+"|"+auxiliar);
+                aux++;
             }
-            List<String> ListaFinal = new ArrayList<String>();
-
-            for (int i = 0; i < ListaEscribir.size(); i++) {
-                for (int j = 0; j < elementosArchivo.size(); j++) {
-                    String Recorriendo=elementosArchivo.get(j);
-                    if (ListaEscribir.get(i).contains(Recorriendo)) {
-                        try{
-                        String siguiente= elementosArchivo.get(j+1);
-                            for (int k = 0; k < ListaEscribir.size(); k++) {
-                                if (ListaEscribir.get(k).contains(siguiente)) {
-                                    String[] Siguiente=ListaEscribir.get(k).split("\\|");
-                                    String Escribir =ListaEscribir.get(i);
-                                    String[] Arreglo = Escribir.split("\\|");
-                                    ListaFinal.add(Arreglo[0]+"|"+Arreglo[1]+"|"+Arreglo[2]+"|"+Arreglo[3]+"|"+Arreglo[4]+"|"+Siguiente[0]+"|"+Arreglo[6]);
-                                }
-                            }
-                        }finally{
-                           String Escribir =ListaEscribir.get(i);
-                           String[] Arreglo = Escribir.split("\\|"); 
-                           ListaFinal.add(Arreglo[0]+"|"+Arreglo[1]+"|"+Arreglo[2]+"|"+Arreglo[3]+"|"+Arreglo[4]+"|null|"+Arreglo[6]);                       
-                        }
+            BufferedReader Archivo2 = new BufferedReader(new FileReader("C:/MEIA/IndiceD.txt"));
+            linea=Archivo2.readLine();
+            List<String> escribirList= new ArrayList<String>();
+            
+            while(linea!=null){
+                for(int i=0;i<nuevaList.size();i++){
+                    if(linea.split("\\|")[0].equals( nuevaList.get(i).split("\\|")[0] ) ){
+                        String[] campos=linea.split("\\|");
+                        campos[5]=nuevaList.get(i).split("\\|")[1];
+                        escribirList.add(campos[0]+"|"+campos[1]+"|"+campos[2]+"|"+campos[3]+"|"+campos[4]+"|"+campos[5]+"|"+campos[6] + System.getProperty("line.separator"));
                     }
                 }
+                linea=Archivo2.readLine();
             }
+            //Archivo2.flush();
             Archivo2.close();
-            FileWriter Escribir = new FileWriter("C:/MEIA/IndiceD.txt",false);
-            for (int i = 0; i < ListaFinal.size(); i++) {
-                Escribir.write(ListaFinal.get(i));
+            BufferedWriter Archivo3 = new BufferedWriter(new FileWriter("C:/MEIA/IndiceD.txt"));
+            for(int i =0; i<escribirList.size();i++){
+                Archivo3.write(escribirList.get(i));
             }
-            Escribir.close();
-        } catch (FileNotFoundException ex) {
+            Archivo3.close();
+      
+            
+            //Modificar descriptor
+            
+            
+            BufferedReader Archivo5 = new BufferedReader(new FileReader("C:/MEIA/desc_IndiceD.txt"));
+            linea=Archivo5.readLine();
+            List<String> escribirDescriptor = new ArrayList<String>();
+            
+            int j = 1; //El indice esta en el registro #4 
+            while(linea!=null)
+            {
+                if (j == 4) 
+                {
+                    String Add = linea.split("\\|")[0] + "\\|" + elementosArchivo.get(0).split("\\&")[1];
+                    escribirDescriptor.add(Add);
+                }
+                else
+                {
+                    escribirDescriptor.add(linea);
+                }
+                linea=Archivo5.readLine();
+                j++;
+            }
+            
+            Archivo5.close();
+            
+            BufferedWriter Archivo4 = new BufferedWriter(new FileWriter("C:/MEIA/desc_IndiceD.txt"));
+            for(int i =0; i< escribirDescriptor.size();i++){
+                Archivo4.write(escribirDescriptor.get(i)+ System.getProperty("line.separator"));
+            }
+            Archivo4.close();
+      
+            } catch (FileNotFoundException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
     //Verificar Valores
      public int VerificarDescriptorBloque(int BloqueAVerificar)
@@ -495,21 +528,18 @@ Archivo.close();
         return (numeroReg);
     }
     public String VerificarBloques(){
-                String numeroReg="";
-        try {
-            BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/desc_IndiceD.txt"));
-            String linea = Archivo.readLine();
-            while(linea!=null){
-                if (linea.split("\\|")[0].equals("NoBloques")) {
-                 numeroReg=linea.split("\\|")[1];
+                int NoBloque=0;
+                NoBloque = 0;
+                File folder = new File("C:/MEIA");
+                File[] listOfFiles = folder.listFiles();
+                if(listOfFiles.length >0){
+                    for(int i = 0; i < listOfFiles.length;i++){
+                        if(listOfFiles[i].getName().contains("Donaciones")){
+                            NoBloque++;
+                        }
+                    }
                 }
-                linea=Archivo.readLine();
-
-            }Archivo.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        return (numeroReg);
+        return Integer.toString(NoBloque);
     }
      public String Buscar(String Llave){             
      String resultado="";
@@ -583,7 +613,7 @@ Archivo.close();
                         }
               BufferedWriter Archivo3= new BufferedWriter(new FileWriter("C:/MEIA/Donaciones"+Bloque+".txt",false));
                         for (int i = 0; i < ContenidoArchivo.size(); i++) {
-                            Archivo3.write(ContenidoArchivo.get(i));
+                            Archivo3.write(ContenidoArchivo.get(i)+ System.getProperty("line.separator"));
                         }
                         Archivo3.close();
         } catch (FileNotFoundException ex) {
@@ -645,6 +675,23 @@ Archivo.close();
                             Archivo3.write(ContenidoArchivo.get(i)+System.getProperty("line.separator"));
                         }
                         Archivo3.close();
+                              BufferedWriter Archivo4= new BufferedWriter(new FileWriter("C:/MEIA/desc_D"+Bloque+"s.txt",false));
+                              Archivo4.write("Nombre|Donaciones"+Bloque+".txt"+System.getProperty("line.separator"));
+                    Archivo4.write("Creador|"+(VerificarCreador(Integer.parseInt(Bloque)))+System.getProperty("line.separator"));
+                    Archivo4.write("FechaCreacion|"+VerificarFecha(Integer.parseInt(Bloque))+System.getProperty("line.separator"));
+                    Archivo4.write("RegActivos|"+((VerificarRegActivos(Integer.parseInt(Bloque)))-1)+System.getProperty("line.separator"));
+                    Archivo4.write("RegInactivos|"+(VerificarRegInactivos(Integer.parseInt(Bloque))+1)+System.getProperty("line.separator"));
+                    Archivo4.write("NumeroRegistros|"+(VerificarTotRegistros(Integer.parseInt(Bloque)))+System.getProperty("line.separator"));
+                    Archivo4.write("MaxRegistros|"+VerificarMaxRegistros(Integer.parseInt(Bloque))+System.getProperty("line.separator"));
+                    Archivo4.write("Atributos|Usuario, nombre_material, fecha, peso, descripción, evento, usuario_transacción, fecha_creacion,estatus");
+                    Archivo4.close();
+                    Archivo4.close();
+                    
+                    File ArchivoNuevo=new File("C:/MEIA/desc_D"+Bloque+"s.txt");
+                    File ArchivoViejo=new File("C:/MEIA/desc_D"+Bloque+".txt");
+                    ArchivoViejo.delete();
+                    boolean bool2 = ArchivoNuevo.renameTo(ArchivoViejo);
+        
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -664,8 +711,8 @@ Archivo.close();
                 String []ContenidoAnterior=linea.split("\\|");
                 if (ContenidoAnterior[6].equals("1")) {
                     ContenidoIndice.add(linea);
-                    linea=Archivo.readLine();
-                }
+                }                    linea=Archivo.readLine();
+
             }
             Archivo.close();
             BufferedWriter Archivo2 = new BufferedWriter(new FileWriter("C:/MEIA/IndiceD.txt",false));
@@ -673,21 +720,25 @@ Archivo.close();
                             Archivo2.write(ContenidoIndice.get(i)+System.getProperty("line.separator"));
                         }
                        Archivo2.close();
-                       BufferedWriter Archivo25 = new BufferedWriter(new FileWriter("C:/MEIA/desc_IndiceD.txt"));
+                       BufferedWriter Archivo25 = new BufferedWriter(new FileWriter("C:/MEIA/desc_IndiceDs.txt"));
                        Archivo25.write("Nombre|IndiceDonaciones.txt"+System.getProperty("line.separator"));
                     Archivo25.write("Creador|"+VerificarCreadorIndice()+System.getProperty("line.separator"));
                     Archivo25.write("FechaCreacion|"+VerificarFechaIndice()+System.getProperty("line.separator"));
                     Archivo25.write("RegInicial|"+VerificarRegInicial()+System.getProperty("line.separator"));
                     Archivo25.write("NoBloques|"+VerificarBloques()+System.getProperty("line.separator"));
-                    Archivo25.write("Usuario,Nombre_Material,fecha");            
+                    Archivo25.write("Llave|Usuario,Nombre_Material,fecha");            
                     Archivo25.close();
+                    File ANuevo=new File("C:/MEIA/desc_IndiceDs.txt");
+                    File AViejo=new File("C:/MEIA/desc_IndiceD.txt");
+                    AViejo.delete();
+                    boolean bool =ANuevo.renameTo(AViejo);
             //Actualizar Bloques
             int NoBloque = 0;
                 File folder = new File("C:/MEIA");
                 File[] listOfFiles = folder.listFiles();                 
 		if(listOfFiles.length >0){
 			for(int i = 0; i < listOfFiles.length;i++){
-				if(listOfFiles[i].getName().contains("Donaciones"+i)){
+				if(listOfFiles[i].getName().contains("Donaciones")){
 					NoBloque++;
 				}
 			}
@@ -705,11 +756,12 @@ Archivo.close();
    }
                     Archivo3.close();
                     BufferedWriter Archivo4 = new BufferedWriter(new FileWriter("C:/MEIA/Donaciones"+i+".txt",false));
+                    Archivo4.flush();
                             for (int j = 0; j < ContenidoArchivo.size(); j++) {
                                 Archivo4.write(ContenidoArchivo.get(j)+System.getProperty("line.separator"));
                             }
                             Archivo4.close();
-                            FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_D"+i+".txt",false);
+                            FileWriter Escribir2 = new FileWriter("C:/MEIA/desc_D"+i+"s.txt",false);
                     BufferedWriter bw2 = new BufferedWriter(Escribir2);
                     bw2.write("Nombre|Donaciones"+i+".txt"+System.getProperty("line.separator"));
                     bw2.write("Creador|"+VerificarCreador(i)+System.getProperty("line.separator"));
@@ -717,10 +769,15 @@ Archivo.close();
                     bw2.write("RegActivos|"+ContenidoArchivo.size()+System.getProperty("line.separator"));
                     bw2.write("RegInactivos|0"+System.getProperty("line.separator"));
                     bw2.write("NumeroRegistros|"+ContenidoArchivo.size()+System.getProperty("line.separator"));
-                    bw2.write("MaxRegistros|5"+System.getProperty("line.separator"));
+                    bw2.write("MaxRegistros|10"+System.getProperty("line.separator"));
                     bw2.write("Atributos|Usuario, nombre_material, fecha, peso, descripción, evento, usuario_transacción, fecha_creacion,estatus");
                     bw2.close();
                     Escribir2.close();
+                    File ArchivoNuevo = new File("C:/MEIA/desc_D"+i+"s.txt");
+                    File ArchivoViejo=new File("C:/MEIA/desc_D"+i+".txt");
+                    ArchivoViejo.delete();
+                    boolean bool2 = ArchivoNuevo.renameTo(ArchivoViejo);
+
                         }
       
                         
