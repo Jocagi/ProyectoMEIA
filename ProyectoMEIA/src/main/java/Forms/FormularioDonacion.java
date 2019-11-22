@@ -2,11 +2,17 @@ package Forms;
 
 
 import Classes.ArchivoSecuencialMateriales;
+import Classes.ArchivoSecuencialUsuarios;
 import Classes.MaterialProperties;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Classes.Login;
+import Classes.RutaArchivos;
+import Classes.UserProperties;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -67,7 +73,7 @@ public class FormularioDonacion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jLabel1.setText("Ingresar Nueva Donación");
 
-        jLabel3.setText("Ingrese su nombre:");
+        jLabel3.setText("Usuario de Donacion:");
 
         jLabel4.setText("Ingrese tipo de material:");
 
@@ -177,8 +183,14 @@ public class FormularioDonacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void FinishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinishBtnActionPerformed
-
-        try {
+        if (NameField.getText().equals("")||TypeField.getText().equals("")||DateField.getText().equals("")
+                ||WeightField.getText().equals("")||DescField.getText().equals("")
+                ||NameField1.getText().equals("")||DateField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Haz dejado un campo vacio, intentalo de nuevo");
+        }else{
+            if(UsuarioExiste(NameField.getText(),RutaArchivos.Bitacora)||
+                    UsuarioExiste(NameField.getText(),RutaArchivos.Master)){
+                try {
             
             MaterialProperties Material = ArchivoSecuencialMateriales.getMaterial(TypeField.getText());
             if (Material != null) 
@@ -201,6 +213,12 @@ public class FormularioDonacion extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(FormularioDonacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }else{
+                JOptionPane.showMessageDialog(null, "El Usuario especificado no existe en el registro");
+            }
+        
+        }
+        
     }//GEN-LAST:event_FinishBtnActionPerformed
 
     /**
@@ -237,6 +255,31 @@ public class FormularioDonacion extends javax.swing.JFrame {
             }
         });
     }
+    private boolean UsuarioExiste(String username, String path)
+   {      
+       try {
+        // Recorrer Archivo Principal        
+        File cosa =new File(path);
+        if(cosa.exists()){
+            BufferedReader file = new BufferedReader(new FileReader(path));
+            String line;
+            while ((line = file.readLine()) != null)         
+            {
+                String[] data = line.split("\\|");            
+            //Si es el usuario buscado
+            if (data[0].equals(username)) 
+            {
+                return true;
+            }
+            }     
+            file.close();        
+        }      
+    } 
+       catch (Exception e) {
+        System.out.println("Problem reading file.");
+    }
+       return false;
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DateField;
