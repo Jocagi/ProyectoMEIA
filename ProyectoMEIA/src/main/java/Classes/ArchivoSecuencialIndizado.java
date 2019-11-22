@@ -516,12 +516,25 @@ Archivo.close();
         try {
             BufferedReader Archivo = new BufferedReader(new FileReader("C:/MEIA/desc_IndiceD.txt"));
             String linea = Archivo.readLine();
-            while(linea!=null){
-                if (linea.split("\\|")[0].equals("RegInicial")) {
+            while(linea!=null)
+            {
+                try
+                {
+                    
+                if (linea.split("\\|")[0].equals("RegInicial")) 
+                {
                  numeroReg=linea.split("\\|")[1];
                 }
-                               linea=Archivo.readLine();
- }Archivo.close();
+                 
+                }
+                catch(Exception e)
+                {
+                    numeroReg = "0";
+                }         
+                
+                linea=Archivo.readLine();
+ }
+            Archivo.close();
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencialIndizado.class.getName()).log(Level.SEVERE, null, ex);
         } 
