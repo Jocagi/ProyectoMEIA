@@ -1,6 +1,9 @@
 package Forms;
 
-
+import Classes.ArchivoSecuencialMateriales;
+import Classes.MaterialBuscado;
+import Classes.MaterialProperties;
+import Classes.UsuarioBuscado;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +38,7 @@ public class BusquedaMaterial extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton2 = new javax.swing.JButton();
-        user = new javax.swing.JTextField();
+        material = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
 
@@ -48,9 +51,9 @@ public class BusquedaMaterial extends javax.swing.JFrame {
             }
         });
 
-        user.addActionListener(new java.awt.event.ActionListener() {
+        material.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userActionPerformed(evt);
+                materialActionPerformed(evt);
             }
         });
 
@@ -70,7 +73,7 @@ public class BusquedaMaterial extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(user)
+                    .addComponent(material)
                     .addComponent(jLabel1))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -86,7 +89,7 @@ public class BusquedaMaterial extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
                 .addContainerGap())
@@ -97,11 +100,15 @@ public class BusquedaMaterial extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        if(true)
+        MaterialProperties busqueda = ArchivoSecuencialMateriales.getMaterial(material.getText());
+        
+        if(busqueda != null && busqueda.Status == true)
         {
+            MaterialBuscado.material = busqueda; //Se guarda el usuario encontrado
             
-        //To Do... Codigo para buscar
-            
+            this.setVisible(false);
+            ResultadoBusquedaMaterial Siguiente = new ResultadoBusquedaMaterial();
+            Siguiente.setVisible(true); 
         }
         else
         {
@@ -110,9 +117,9 @@ public class BusquedaMaterial extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+    private void materialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userActionPerformed
+    }//GEN-LAST:event_materialActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     
@@ -165,6 +172,6 @@ public class BusquedaMaterial extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField user;
+    private javax.swing.JTextField material;
     // End of variables declaration//GEN-END:variables
 }

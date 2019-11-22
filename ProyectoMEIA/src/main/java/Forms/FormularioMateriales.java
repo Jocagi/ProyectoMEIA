@@ -2,6 +2,7 @@ package Forms;
 
 
 import Classes.ArchivoSecuencial;
+import Classes.ArchivoSecuencialMateriales;
 import Classes.Login;
 import Classes.MaterialProperties;
 import Classes.RutaArchivos;
@@ -166,10 +167,11 @@ public class FormularioMateriales extends javax.swing.JFrame {
 
     private void ImportPhotoBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportPhotoBtn2ActionPerformed
         JFileChooser dialogo = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagenes", "jpg");
-        File ficheroImagen;
+        FileNameExtensionFilter filtro1 = new FileNameExtensionFilter("JPG", "jpg");
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("PNG", "png");
+        dialogo.setFileFilter(filtro1);
+        dialogo.setFileFilter(filtro2);  File ficheroImagen;
         String rutaArchivo;
-        dialogo.setFileFilter(filtro);
         int valor = dialogo.showOpenDialog(this);
         if (valor == JFileChooser.APPROVE_OPTION) {
             ficheroImagen = dialogo.getSelectedFile();
@@ -189,21 +191,16 @@ public class FormularioMateriales extends javax.swing.JFrame {
     
     private void FinishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinishBtnActionPerformed
          
-        MaterialProperties Material = new MaterialProperties();
+        MaterialProperties Material = ArchivoSecuencialMateriales.getMaterial(TypeField.getText());
+            if (Material == null) 
+            {
+                
         ArchivoSecuencial ASecuencial = new ArchivoSecuencial();
         String Atributos = "Usuario|Nombre_Material|Fecha|Peso|Descripción|Evento|Usuario_Transacción|Fecha_Creacion|Estatus";
                     
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
         String FechaActual=ft.format(date);
-        
-        
-        //Escribir en Materiales.txt     
-        int status = 1;
-        
-        String Escribir= NameField.getText()+"|"+TypeField.getText()+"|"+PhotoPathField.getText()+"|"+DegField.getText()+"|"+FechaActual+"|"+Login.getUsername()+"|"+ status;
-                
-        ASecuencial.EscribirEnBitacora("Materiales",Escribir,Atributos);
         
         //Actualizar Descriptor
         if (!EsPrimero()) 
@@ -224,6 +221,20 @@ public class FormularioMateriales extends javax.swing.JFrame {
             ASecuencial.EscribirDescriptorBitacora("Materiales","Secuencial",Login.getUsername(),FechaActual,FechaActual,1,1,0,5,Atributos);
         }
         
+        
+        //Escribir en Materiales.txt     
+        int status = 1;
+        
+        String Escribir= NameField.getText()+"|"+TypeField.getText()+"|"+PhotoPathField.getText()+"|"+DegField.getText()+"|"+Login.getUsername()+"|"+FechaActual+"|"+ status;
+                
+        ASecuencial.EscribirEnBitacora("Materiales",Escribir,Atributos);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "El Material especificado ya existe en el registro");
+            }
+        
+            
         try {
         
         JOptionPane.showMessageDialog(null, "Operacion Exitosa.");
@@ -233,7 +244,8 @@ public class FormularioMateriales extends javax.swing.JFrame {
             this.setVisible(false);
         } catch (IOException ex) {
             Logger.getLogger(FormularioMateriales.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+        
     }//GEN-LAST:event_FinishBtnActionPerformed
 
     /**

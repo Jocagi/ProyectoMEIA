@@ -401,7 +401,6 @@ public class ArchivoSecuencial
         }
         
         return NumReorg;
-        
     }
    
 }

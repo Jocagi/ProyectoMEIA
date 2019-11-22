@@ -1,6 +1,8 @@
 package Forms;
 
 
+import Classes.ArchivoSecuencialMateriales;
+import Classes.MaterialProperties;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -178,6 +180,10 @@ public class FormularioDonacion extends javax.swing.JFrame {
 
         try {
             
+            MaterialProperties Material = ArchivoSecuencialMateriales.getMaterial(TypeField.getText());
+            if (Material != null) 
+            {
+                
             Classes.ArchivoSecuencialIndizado ASIndizado= new Classes.ArchivoSecuencialIndizado();
             ASIndizado.Insercion(NameField.getText()+"|"+TypeField.getText()+"|"+DateField.getText()+"|"+WeightField.getText()+"|"+DescField.getText()+"|"
                     +NameField1.getText()+"|"+Login.getUsername()+"|"+DateField.getText()+"|1");
@@ -186,6 +192,12 @@ public class FormularioDonacion extends javax.swing.JFrame {
             MenuAplicacion h = new MenuAplicacion();
             h.setVisible(true);
             this.setVisible(false);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "El Material especificado no existe en el registro");
+            }        
+            
         } catch (IOException ex) {
             Logger.getLogger(FormularioDonacion.class.getName()).log(Level.SEVERE, null, ex);
         }

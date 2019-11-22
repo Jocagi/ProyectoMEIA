@@ -1,6 +1,8 @@
 package Forms;
 
+import Classes.ArchivoSecuencialMateriales;
 import Classes.MaterialBuscado;
+import Classes.UsuarioBuscado;
 import Forms.MenuAplicacion;
 import Forms.CambiarInfoMaterial;
 import java.awt.Image;
@@ -11,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -203,7 +206,19 @@ public class ResultadoBusquedaMaterial extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //To Do... Eliminar material
+        //Eliminar material
+        try {
+                ArchivoSecuencialMateriales.EliminarMaterial(MaterialBuscado.material.Nombre);
+                
+                JOptionPane.showMessageDialog(null, "Elemento eliminado exitosamente");
+                
+                this.dispose();
+                MenuAplicacion h = new MenuAplicacion();
+                h.setVisible(true);
+                
+            } catch (IOException ex) {
+                Logger.getLogger(ResultadoBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

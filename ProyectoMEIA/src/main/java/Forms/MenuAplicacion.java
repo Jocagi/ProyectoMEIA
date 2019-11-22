@@ -40,6 +40,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
         try
         {
             cargarContenido();
+            validateUser();
         }
         catch(Exception ex)
         {
@@ -63,7 +64,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        MaterialButtom = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,10 +95,10 @@ public class MenuAplicacion extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Materiales");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        MaterialButtom.setText("Materiales");
+        MaterialButtom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                MaterialButtomActionPerformed(evt);
             }
         });
 
@@ -133,7 +134,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addComponent(MaterialButtom)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -156,7 +157,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(MaterialButtom))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -187,6 +188,14 @@ private void cargarContenido()
             Role.setText(Login.getUserRole());    
          
 }
+private void validateUser()
+{
+    if(!"Admin".equals(Login.getUserRole()))
+    {
+        MaterialButtom.setVisible(false);
+    }
+}
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (Role.getText().equals("admin")||Role.getText().equals("Admin")) {
             this.dispose();
@@ -223,11 +232,11 @@ private void cargarContenido()
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void MaterialButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaterialButtomActionPerformed
         ConfiguracionMateriales m = new  ConfiguracionMateriales();
         m.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_MaterialButtomActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         ConfiguracionDonaciones m = new  ConfiguracionDonaciones();
@@ -277,12 +286,12 @@ private void cargarContenido()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel Fotografia;
+    private javax.swing.JButton MaterialButtom;
     private javax.swing.JLabel Nombre;
     private javax.swing.JLabel Role;
     private javax.swing.JLabel Username;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

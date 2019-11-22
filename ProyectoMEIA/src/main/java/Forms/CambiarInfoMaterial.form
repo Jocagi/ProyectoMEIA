@@ -58,8 +58,8 @@
                           <Component id="TypeField" alignment="0" max="32767" attributes="0"/>
                           <Component id="NombreField" alignment="0" max="32767" attributes="0"/>
                           <Component id="PhotoPathField" max="32767" attributes="0"/>
-                          <Component id="Usuario" pref="233" max="32767" attributes="0"/>
-                          <Component id="Fecha" max="32767" attributes="0"/>
+                          <Component id="Fecha" pref="233" max="32767" attributes="0"/>
+                          <Component id="Usuario" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="ImportPhotoBtn2" min="-2" max="-2" attributes="0"/>
@@ -93,22 +93,22 @@
                   <Component id="PhotoPathField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ImportPhotoBtn2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Usuario" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="Usuario" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  <Component id="Fecha" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Fecha" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BotonConfirmar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="BotonConfirmar" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -176,12 +176,12 @@
         <Property name="text" type="java.lang.String" value="Fecha Creaci&#xf3;n:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="Usuario">
+    <Component class="javax.swing.JLabel" name="Fecha">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel5"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="Fecha">
+    <Component class="javax.swing.JLabel" name="Usuario">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel4"/>
       </Properties>
