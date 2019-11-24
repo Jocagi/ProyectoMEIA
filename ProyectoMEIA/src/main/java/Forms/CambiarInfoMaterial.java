@@ -1,5 +1,6 @@
 package Forms;
 
+import Classes.ArchivoArbolBinario;
 import Classes.ArchivoSecuencialMateriales;
 import Classes.MaterialBuscado;
 import Classes.Login;
@@ -76,6 +77,8 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        NombreField.setEditable(false);
 
         jLabel9.setText("Imagen:");
 
@@ -201,7 +204,7 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
             Material.UsuarioTransaccion = Login.getUsername();
                
             //Modificar Material                
-            ArchivoSecuencialMateriales.ModificarMaterial(MaterialBuscado.material.Nombre, Material);
+            ArchivoArbolBinario.ModificarMaterial(MaterialBuscado.material.Nombre, Material);
             
             JOptionPane.showMessageDialog(null, "Modificacion exitosa.");
             
