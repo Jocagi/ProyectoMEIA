@@ -97,7 +97,7 @@ public class ReporteMateriales extends javax.swing.JFrame {
        return elementosArchivo;
     }
     
-    private Icon getIcon(String path)
+    private Image getIcon(String path)
     {
         
         ImageIcon newIcon;
@@ -115,9 +115,7 @@ public class ReporteMateriales extends javax.swing.JFrame {
         Image img = newIcon.getImage();
         Image newimg = img.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         
-        Icon image = new ImageIcon(newimg);
-        
-        return image;
+        return newimg;
     }
     
      private void createAndShowGUI()
@@ -135,8 +133,26 @@ public class ReporteMateriales extends javax.swing.JFrame {
             
             String[] split = components.get(i).split("\\|");
             
+            //Set image
+        ImageIcon newIcon;
+        
+        try
+        {
+        newIcon= new ImageIcon(split[2]);
+        }
+        catch(Exception e)
+        {
+        newIcon= new ImageIcon(RutaArchivos.defaultImage);
+        }
+        
+        //Resize image to fit table
+        Image img = newIcon.getImage();
+        Image newimg = img.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+        
+        Icon image = new ImageIcon(newimg);
+        
             //Imagen
-            data[i][0] = (Object) getIcon(split[2]);
+            data[i][0] = image;
             //Material
             data[i][1] = split[0];
             //Tipo
