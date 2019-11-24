@@ -50,7 +50,7 @@ public class FiltroFechas {
 
             for (int i = 0; i < listaParcial.size(); i++) {
                 String []atributos = listaParcial.get(i).split("\\|");
-                Archivo = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+atributos[1] +".txt"));
+                Archivo = new BufferedReader(new FileReader("C:/MEIA/Donaciones"+atributos[1].split("\\.")[0] +".txt"));
                 linea=Archivo.readLine();
                 while(linea!=null){
                     if (linea.contains(atributos[2]+"|"+atributos[3]+"|"+atributos[4])) {
