@@ -1,6 +1,7 @@
 package Forms;
 
 
+import Classes.ArchivoArbolBinario;
 import Classes.ArchivoSecuencialMateriales;
 import Classes.ArchivoSecuencialUsuarios;
 import Classes.MaterialProperties;
@@ -86,7 +87,7 @@ public class FormularioDonacion extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Ingrese fecha (dd-mm-aa):");
+        jLabel6.setText("Ingrese fecha (aa-mm-dd):");
 
         jLabel8.setText("Ingrese evento:");
 
@@ -192,7 +193,7 @@ public class FormularioDonacion extends javax.swing.JFrame {
                     UsuarioExiste(NameField.getText(),RutaArchivos.Master)){
                 try {
             
-            MaterialProperties Material = ArchivoSecuencialMateriales.getMaterial(TypeField.getText());
+            MaterialProperties Material = ArchivoArbolBinario.getMaterial(TypeField.getText());
             if (Material != null) 
             {
                 

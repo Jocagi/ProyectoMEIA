@@ -57,7 +57,7 @@ public class ArchivoSecuencialMateriales extends ArchivoSecuencial
             String[] data = line.split("\\|");
             
             //Si es el usuario buscado
-            if (data[0].equals(key)) 
+            if (data[2].equals(key)) 
             {
                 Material.Nombre = data[0];
                 Material.Tipo = data[1];
