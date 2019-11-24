@@ -112,6 +112,11 @@ public class MenuAplicacion extends javax.swing.JFrame {
         });
 
         Reportes.setText("Reportes");
+        Reportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReportesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -254,6 +259,14 @@ private void validateUser()
         m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void ReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportesActionPerformed
+        // TODO add your handling code here:
+        ReporteMateriales n = new ReporteMateriales();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_ReportesActionPerformed
 
     /**
      * @param args the command line arguments
