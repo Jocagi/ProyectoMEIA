@@ -262,7 +262,6 @@ public class ArchivoArbolBinario
             try 
             {
                 //Anadir elementos del maestro a memoria
-                
                 File Master = new File(pathMaster);
                 
                 if (Master.exists()) 
@@ -270,24 +269,36 @@ public class ArchivoArbolBinario
                 BufferedReader file = new BufferedReader(new FileReader(pathMaster));
                 while ((line = file.readLine()) != null) 
                 {
-                String[]split=line.split("\\|");
-                if ("1".equals(split[split.length - 1])) //Si es un registro activo
-                {
-                    elementosArchivo.add(line);
-                }}            
+                    String[]split=line.split("\\|");
+                    
+                    if ("1".equals(split[split.length - 1])) //Si es un registro activo
+                    {
+                        elementosArchivo.add(line);
+                    }
+                }            
                     file.close();
                 }
             
-            for (String item : elementosArchivo)
+           //Escribir elementos en archivo
+           BufferedWriter writer = new BufferedWriter(new FileWriter(pathMaster));
+            
+           for (String item : elementosArchivo)
             {
-            EscribirEnArchivo(NombreArchivo, item);
+                writer.write(item);                 
+                writer.newLine();
             }
+           
+            writer.close();
             
             
             int TamanoLista = elementosArchivo.size();
             
             EscribirDescriptor(NombreArchivo,"Arbol Binario",IdentificarCreadorArchivo(pathDescMaster),IdentificarFechaCreacion(pathDescMaster),FechaActual,
                      IdentificarRegInicial(pathDescMaster),TamanoLista,TamanoLista,0,IdentificarAtributos(pathDescMaster));   
+            
+            
+            //Actualizar
+            ReordenarElementos(NombreArchivo);
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);

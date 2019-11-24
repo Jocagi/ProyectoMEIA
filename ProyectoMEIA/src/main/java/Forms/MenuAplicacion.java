@@ -1,6 +1,7 @@
 package Forms;
 
 
+import Classes.ArchivoArbolBinario;
 import Classes.ArchivoSecuencial;
 import Classes.ArchivoSecuencialIndizado;
 import Classes.Login;
@@ -165,9 +166,9 @@ public class MenuAplicacion extends javax.swing.JFrame {
                         .addComponent(Reportes))
                     .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(MaterialButtom))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MaterialButtom, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -230,7 +231,7 @@ private void validateUser()
         ArchivoSecuencial ArcSec = new ArchivoSecuencial();
         ArcSec.Reorganizar("Usuarios");
         
-        ArchivoSecuencial ArcMat = new ArchivoSecuencial();
+        ArchivoArbolBinario ArcMat = new ArchivoArbolBinario();
         ArcMat.Reorganizar("Materiales");
         
         ArchivoSecuencialIndizado ArcSeqInd = new ArchivoSecuencialIndizado();
