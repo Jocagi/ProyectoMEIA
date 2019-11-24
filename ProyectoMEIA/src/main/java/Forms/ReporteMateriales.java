@@ -164,7 +164,12 @@ public class ReporteMateriales extends javax.swing.JFrame {
             //Fecha
             data[i][5] = split[5];
             //Estatus
-            data[i][6] = split[6];
+            if (split[6].equals("1")) {
+                data[i][6]="Activo";
+            }else{
+                                data[i][6]="Inactivo";
+
+            }
             
         }
         
