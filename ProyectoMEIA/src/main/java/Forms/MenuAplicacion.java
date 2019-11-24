@@ -261,7 +261,11 @@ private void validateUser()
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void ReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportesActionPerformed
-        // TODO add your handling code here:
+        
+        ReporteMateriales n = new ReporteMateriales();
+        n.setVisible(true);
+        this.dispose();
+       
     }//GEN-LAST:event_ReportesActionPerformed
 
     /**

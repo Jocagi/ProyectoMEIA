@@ -25,6 +25,7 @@ public class RutaArchivos {
     public static String RutaDelSistema = "C:/MEIA/";
  
     public static String Logo = new File("").getAbsolutePath() + "/src/logo.png";
+    public static String defaultImage = new File("").getAbsolutePath() + "/src/default.png";
     
     public static String Materiales = "C:/MEIA/materiales.txt";
     public static String DescMateriales = "C:/MEIA/desc_materiales.txt";
