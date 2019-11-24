@@ -1,6 +1,7 @@
 package Forms;
 
 
+import Classes.ArchivoArbolBinario;
 import Classes.ArchivoSecuencial;
 import Classes.ArchivoSecuencialMateriales;
 import Classes.Login;
@@ -184,50 +185,37 @@ public class FormularioMateriales extends javax.swing.JFrame {
     public boolean EsPrimero()
     {
         File Archivo= new File(RutaArchivos.Materiales);
-        File Archivo2= new File(RutaArchivos.BitacoraMateriales);
-
-        return Archivo.length()==0&&Archivo2.length()==0;
+        
+        return Archivo.length()==0;
     }
     
     private void FinishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinishBtnActionPerformed
          
-        MaterialProperties Material = ArchivoSecuencialMateriales.getMaterial(TypeField.getText());
+        MaterialProperties Material = ArchivoArbolBinario.getMaterial(TypeField.getText());
             if (Material == null) 
             {
                 
-        ArchivoSecuencial ASecuencial = new ArchivoSecuencial();
-        String Atributos = "Usuario|Nombre_Material|Fecha|Peso|Descripción|Evento|Usuario_Transacción|Fecha_Creacion|Estatus";
+        ArchivoArbolBinario ABinario = new ArchivoArbolBinario();
+        String Atributos = "Izquierdo|Derecho|Nombre_Material|Tipo|Imagen|Tiempo_Para_Degradarse|Usuario|Fecha_Creacion|Estatus";
                     
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
         String FechaActual=ft.format(date);
         
         //Actualizar Descriptor
-        if (!EsPrimero()) 
+        if (EsPrimero()) 
         {
-            
-        String FechaCreacion = ASecuencial.IdentificarFechaCreacion(RutaArchivos.DescBitacoraMateriales);
-        String CreadorOriginal=ASecuencial.IdentificarCreadorArchivo(RutaArchivos.DescBitacoraMateriales);
-        int TotalRegistros=ASecuencial.IdentificarTotRegistros(RutaArchivos.DescBitacoraMateriales);
-        int TotalRegistrosActivos=ASecuencial.IdentificarRegActivos(RutaArchivos.DescBitacoraMateriales);
-        int TotalRegistrosInactivos=ASecuencial.IdentificarRegInactivos(RutaArchivos.DescBitacoraMateriales);
-        int NumReorga=ASecuencial.IdentificarNumReorg(RutaArchivos.DescBitacoraMateriales);
-                
-        ASecuencial.EscribirDescriptorBitacora("Materiales","Secuencial",CreadorOriginal,FechaCreacion,FechaActual,TotalRegistros+1,
-                        TotalRegistrosActivos+1,TotalRegistrosInactivos,NumReorga,Atributos);
-        }
-        else
-        {
-            ASecuencial.EscribirDescriptorBitacora("Materiales","Secuencial",Login.getUsername(),FechaActual,FechaActual,1,1,0,5,Atributos);
+            ABinario.EscribirDescriptor("Materiales","Arbol Binario",Login.getUsername(),FechaActual,FechaActual,1,0,0,0,Atributos);
         }
         
         
         //Escribir en Materiales.txt     
         int status = 1;
         
-        String Escribir= NameField.getText()+"|"+TypeField.getText()+"|"+PhotoPathField.getText()+"|"+DegField.getText()+"|"+Login.getUsername()+"|"+FechaActual+"|"+ status;
+        String Escribir= "-"+"|"+"-"+"|"+NameField.getText()+"|"+TypeField.getText()+"|"+PhotoPathField.getText()+"|"+DegField.getText()+"|"+Login.getUsername()+"|"+FechaActual+"|"+ status;
                 
-        ASecuencial.EscribirEnBitacora("Materiales",Escribir,Atributos);
+        ABinario.EscribirEnArchivo("Materiales",Escribir);
+            
             }
             else
             {
@@ -242,6 +230,7 @@ public class FormularioMateriales extends javax.swing.JFrame {
             MenuAplicacion h = new MenuAplicacion();            
             h.setVisible(true);
             this.setVisible(false);
+            
         } catch (IOException ex) {
             Logger.getLogger(FormularioMateriales.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,6 +1,7 @@
 package Forms;
 
 
+import Classes.ArchivoArbolBinario;
 import Classes.ArchivoSecuencial;
 import Classes.ArchivoSecuencialIndizado;
 import Classes.Login;
@@ -66,6 +67,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         MaterialButtom = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        Reportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +111,8 @@ public class MenuAplicacion extends javax.swing.JFrame {
             }
         });
 
+        Reportes.setText("Reportes");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,15 +126,20 @@ public class MenuAplicacion extends javax.swing.JFrame {
                         .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(Nombre)
-                            .addComponent(Username)
-                            .addComponent(Role)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(0, 100, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(Nombre)
+                                    .addComponent(Username)
+                                    .addComponent(Role)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(0, 100, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Reportes))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -152,12 +161,14 @@ public class MenuAplicacion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addGap(1, 1, 1)
-                        .addComponent(Role))
+                        .addComponent(Role)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(Reportes))
                     .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(MaterialButtom))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MaterialButtom, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -220,7 +231,7 @@ private void validateUser()
         ArchivoSecuencial ArcSec = new ArchivoSecuencial();
         ArcSec.Reorganizar("Usuarios");
         
-        ArchivoSecuencial ArcMat = new ArchivoSecuencial();
+        ArchivoArbolBinario ArcMat = new ArchivoArbolBinario();
         ArcMat.Reorganizar("Materiales");
         
         ArchivoSecuencialIndizado ArcSeqInd = new ArchivoSecuencialIndizado();
@@ -288,6 +299,7 @@ private void validateUser()
     public javax.swing.JLabel Fotografia;
     private javax.swing.JButton MaterialButtom;
     private javax.swing.JLabel Nombre;
+    private javax.swing.JButton Reportes;
     private javax.swing.JLabel Role;
     private javax.swing.JLabel Username;
     private javax.swing.JButton jButton1;

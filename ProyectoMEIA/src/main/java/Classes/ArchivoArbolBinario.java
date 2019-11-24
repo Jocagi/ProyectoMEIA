@@ -28,16 +28,20 @@ import javax.swing.JOptionPane;
  */
 public class ArchivoArbolBinario 
 {
-    private void contruirArbol(String NombreArchivo, List<String> contenidoArchivo)
+    
+    private static int RegistroInicial = -1;
+    
+    private static ArbolBinario construirArbol(List<Nodo> contenidoArchivo)
     {
         ArbolBinario arbol = new ArbolBinario();
-        for (String item : contenidoArchivo)
+        for (Nodo item : contenidoArchivo)
         {
             arbol.Insertar(item);
         }
+        return arbol;
     }
     
-    public void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
+    public static void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
             int RegistroInicial ,int TotRegistros, int RegistrosActivos,int RegistrosInactivos, String Atributos)
     {
         try {
@@ -57,10 +61,10 @@ public class ArchivoArbolBinario
         }
     }
     
-    private String ObtenerContenidoDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
+    private static String ObtenerContenidoDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
             int RegistroInicial, int TotRegistros, int RegistrosActivos,int RegistrosInactivos, String Atributos)
     {
-            String regArchivo="Archivo|Bitacora"+NombreArchivo+System.getProperty("line.separator");
+            String regArchivo="Archivo|"+NombreArchivo+System.getProperty("line.separator");
             String regOrganizacion="Organizacion|"+TipoOrg+System.getProperty("line.separator");
             String regUsuario="Usuario|"+UsuarioCreador+System.getProperty("line.separator");
             String regFechaCreacion="Fecha_Creacion|"+FechaCreacion+System.getProperty("line.separator");
@@ -76,28 +80,27 @@ public class ArchivoArbolBinario
             
     }
      
-    public void EscribirEnArchivo(String NombreArchivo,String strContenido)
+    public static void EscribirEnArchivo(String NombreArchivo,String strContenido)
     {
-        
        String pathMaster = "C:/MEIA/"+NombreArchivo+".txt";
        String pathDescMaster = "C:/MEIA/desc_"+NombreArchivo+".txt";
        
-        Boolean Activo=false;
         String[]split=strContenido.split("\\|");
-        
-        if("1".equals(split[split.length - 1]))
-        {
-            Activo=true;
-        }
+        Boolean Activo="1".equals(split[split.length - 1]);
         
         //Agregar contenido al achivo
         try {
-            FileWriter Escribir=null;
-            Escribir = new FileWriter(pathMaster,true);
-            BufferedWriter bw = new BufferedWriter(Escribir);          
+            FileWriter Escribir = new FileWriter(pathMaster,true);
+            BufferedWriter bw = new BufferedWriter(Escribir);
+            
             bw.write(strContenido+ System.getProperty( "line.separator" ));
+            
             bw.close();
-            Escribir.close();    
+            Escribir.close();  
+            
+        //Asignar indice correcto a cada atributo en el archivo
+        ReordenarElementos(NombreArchivo);
+        
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,14 +112,13 @@ public class ArchivoArbolBinario
              SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
              String FechaActual=ft.format(date);
              
-             String Organizacion = "Secuencial";
+             String Organizacion = "Arbol Binario";
              String Usuario = IdentificarCreadorArchivo(pathDescMaster);
              String Fecha_Creacion = IdentificarFechaCreacion(pathDescMaster);
              int Total_Registros = IdentificarTotRegistros(pathDescMaster);
              int Registros_Activos = IdentificarRegActivos(pathDescMaster);
              int Registros_Inactivos = IdentificarRegInactivos(pathDescMaster);;
              String Atributos = IdentificarAtributos(pathDescMaster);
-             int RegistroInicial = IdentificarRegInicial(pathDescMaster);
              
         if (Archivo.exists()) {
              
@@ -132,10 +134,120 @@ public class ArchivoArbolBinario
             }
         
         EscribirDescriptor(NombreArchivo,Organizacion,Usuario,Fecha_Creacion,FechaActual,RegistroInicial
-                ,Total_Registros,Registros_Activos,Registros_Inactivos, Atributos);   
+                ,Total_Registros,Registros_Activos,Registros_Inactivos, Atributos);
+        
     }
     
-   public void Reorganizar(String NombreArchivo)
+    private static void ReordenarElementos(String NombreArchivo)
+    {
+       String pathDescMaster = "C:/MEIA/desc_"+NombreArchivo+".txt";
+       
+       String path = "C:/MEIA/"+NombreArchivo+".txt";
+       
+       List<String> elementosArchivo = new ArrayList<String>();
+       List<Nodo> elementosActivos = new ArrayList<Nodo>();
+       List<String> nuevosElementos = new ArrayList<String>();
+       String line;
+       int posicion = 1;
+       
+       ArbolBinario arbol;
+            try 
+            {
+                //Anadir elementos del maestro a memoria
+                
+                File Master = new File(path);
+                
+                if (Master.exists()) 
+                {
+                BufferedReader file = new BufferedReader(new FileReader(path));
+                    while ((line = file.readLine()) != null) 
+                    {
+                    String[]split=line.split("\\|");
+                    if ("1".equals(split[split.length - 1])) //Si es un registro activo
+                    {
+                        elementosArchivo.add(line);
+                        elementosActivos.add(new Nodo(split[2], posicion)); //Anadir llave para insertarla en el arbol
+                    }
+                    else
+                    {
+                        elementosArchivo.add(line);
+                    }
+                    
+                    posicion++;
+                    }            
+                file.close();
+                
+                //Operaciones en arbol binario
+                
+                arbol = construirArbol(elementosActivos);
+                RegistroInicial = arbol.raiz.posicion;
+                
+                //Cambiar atributos
+                
+                for (String item : elementosArchivo)
+                {
+                    String[]split=item.split("\\|");
+                    Nodo res = arbol.Buscar(split[2]);
+                    
+                    String izquierdo = "-";
+                    String derecho = "-";
+                    
+                    if (res != null) 
+                    {
+                        if (res.izquierdo != null) 
+                        {
+                           izquierdo = Integer.toString(res.izquierdo.posicion);
+                        } 
+                        if (res.derecho != null) 
+                        {
+                            derecho = Integer.toString(res.derecho.posicion);
+                        } 
+                    }
+                    
+                    String tmp = izquierdo + "|" + derecho + "|" + split[2] + "|" + split[3] + "|" + 
+                                split[4] + "|" + split [5] + "|" + split[6] + "|"+ split[7]+ "|"+ split[8]; 
+                       
+                    nuevosElementos.add(tmp);
+                }
+                }
+                
+                //Escribir elementos en archivo
+           BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            
+           for (String item : nuevosElementos)
+            {
+                writer.write(item);                 
+                writer.newLine();
+            }
+           
+            writer.close();
+            
+            //Actualizar desscriptor 
+            
+             Date date = new Date();
+             SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+             String FechaActual=ft.format(date);
+             
+             String Organizacion = "Arbol Binario";
+             String Usuario = IdentificarCreadorArchivo(pathDescMaster);
+             String Fecha_Creacion = IdentificarFechaCreacion(pathDescMaster);
+             int Total_Registros = IdentificarTotRegistros(pathDescMaster);
+             int Registros_Activos = IdentificarRegActivos(pathDescMaster);
+             int Registros_Inactivos = IdentificarRegInactivos(pathDescMaster);;
+             String Atributos = IdentificarAtributos(pathDescMaster);
+        
+             EscribirDescriptor(NombreArchivo,Organizacion,Usuario,Fecha_Creacion,FechaActual,RegistroInicial
+                ,Total_Registros,Registros_Activos,Registros_Inactivos, Atributos);
+        
+            }
+            catch (IOException ex) {
+            Logger.getLogger(ArchivoArbolBinario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch(Exception e)
+            {}
+    }
+    
+   public static void Reorganizar(String NombreArchivo)
    {
        String pathMaster = "C:/MEIA/"+NombreArchivo+".txt";
        String pathDescMaster = "C:/MEIA/desc_"+NombreArchivo+".txt";
@@ -150,7 +262,6 @@ public class ArchivoArbolBinario
             try 
             {
                 //Anadir elementos del maestro a memoria
-                
                 File Master = new File(pathMaster);
                 
                 if (Master.exists()) 
@@ -158,24 +269,36 @@ public class ArchivoArbolBinario
                 BufferedReader file = new BufferedReader(new FileReader(pathMaster));
                 while ((line = file.readLine()) != null) 
                 {
-                String[]split=line.split("\\|");
-                if ("1".equals(split[split.length - 1])) //Si es un registro activo
-                {
-                    elementosArchivo.add(line);
-                }}            
+                    String[]split=line.split("\\|");
+                    
+                    if ("1".equals(split[split.length - 1])) //Si es un registro activo
+                    {
+                        elementosArchivo.add(line);
+                    }
+                }            
                     file.close();
                 }
             
-            for (String item : elementosArchivo)
+           //Escribir elementos en archivo
+           BufferedWriter writer = new BufferedWriter(new FileWriter(pathMaster));
+            
+           for (String item : elementosArchivo)
             {
-            EscribirEnArchivo(NombreArchivo, item);
+                writer.write(item);                 
+                writer.newLine();
             }
+           
+            writer.close();
             
             
             int TamanoLista = elementosArchivo.size();
             
-            EscribirDescriptor(NombreArchivo,"Arbol Bianrio",IdentificarCreadorArchivo(pathDescMaster),IdentificarFechaCreacion(pathDescMaster),FechaActual,
+            EscribirDescriptor(NombreArchivo,"Arbol Binario",IdentificarCreadorArchivo(pathDescMaster),IdentificarFechaCreacion(pathDescMaster),FechaActual,
                      IdentificarRegInicial(pathDescMaster),TamanoLista,TamanoLista,0,IdentificarAtributos(pathDescMaster));   
+            
+            
+            //Actualizar
+            ReordenarElementos(NombreArchivo);
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,7 +307,7 @@ public class ArchivoArbolBinario
         }           
    }
    
-    private String IdentificarValorEnDescriptor(String path, String llave)
+    private static String IdentificarValorEnDescriptor(String path, String llave)
     {
         String Resultado = "";
             try {
@@ -220,7 +343,7 @@ public class ArchivoArbolBinario
         return Resultado;
     }
    
-    public String IdentificarCreadorArchivo(String strPath)
+    public static String IdentificarCreadorArchivo(String strPath)
     {
         String creador = IdentificarValorEnDescriptor(strPath, "Usuario");
         
@@ -232,7 +355,7 @@ public class ArchivoArbolBinario
         return creador;
     }
     
-    public String IdentificarAtributos(String strPath)
+    public static String IdentificarAtributos(String strPath)
     {
         String valor = IdentificarValorEnDescriptor(strPath, "Atributos");
         
@@ -244,7 +367,7 @@ public class ArchivoArbolBinario
         return valor;
     }
     
-    public String IdentificarFechaCreacion(String strPath)
+    public static String IdentificarFechaCreacion(String strPath)
     {
         String FechaCreacion = IdentificarValorEnDescriptor(strPath, "Fecha_Creacion");
         
@@ -258,7 +381,7 @@ public class ArchivoArbolBinario
         return FechaCreacion;
     }
     
-    public int IdentificarTotRegistros(String strPath)
+    public static int IdentificarTotRegistros(String strPath)
     {
         int Registros = 0;
         
@@ -268,7 +391,7 @@ public class ArchivoArbolBinario
         return Registros;
     }
     
-    public int IdentificarRegActivos(String strPath)
+    public static int IdentificarRegActivos(String strPath)
     {
         int Registros = 0;
         
@@ -278,7 +401,7 @@ public class ArchivoArbolBinario
         return Registros;
     }
     
-    public int IdentificarRegInactivos(String strPath)
+    public static int IdentificarRegInactivos(String strPath)
     {
         int Registros = 0;
         
@@ -288,7 +411,7 @@ public class ArchivoArbolBinario
         return Registros;
     }
     
-    public int IdentificarRegInicial(String strPath)
+    public static int IdentificarRegInicial(String strPath)
     {
          int Num = 0;
         
@@ -309,11 +432,11 @@ public class ArchivoArbolBinario
     public static MaterialProperties getMaterial(String key)
     {
        //Buscar en archivos
-       MaterialProperties material1 = obtenerMaterial(key, RutaArchivos.Materiales);
+       MaterialProperties material = obtenerMaterial(key, RutaArchivos.Materiales);
        
-       if(!material1.Nombre.equals("")) //Si el objeto estaba en master
+       if(!material.Nombre.equals("")) //Si el objeto estaba en master
        {
-           return material1;
+           return material;
        }
        else
        {
@@ -336,16 +459,16 @@ public class ArchivoArbolBinario
             String[] data = line.split("\\|");
             
             //Si es el usuario buscado
-            if (data[0].equals(key)) 
+            if (data[2].equals(key)) 
             {
-                Material.Nombre = data[0];
-                Material.Tipo = data[1];
-                Material.PathImagen = data[2];
-                Material.TiempoDegradacion = data[3];
-                Material.UsuarioTransaccion = data[4];
-                Material.FechaCreacion = data[5];
+                Material.Nombre = data[2];
+                Material.Tipo = data[3];
+                Material.PathImagen = data[4];
+                Material.TiempoDegradacion = data[5];
+                Material.UsuarioTransaccion = data[6];
+                Material.FechaCreacion = data[7];
                 
-                if ("1".equals(data[6]))
+                if ("1".equals(data[8]))
                 {
                 Material.Status = true;    
                 }
@@ -371,6 +494,8 @@ public class ArchivoArbolBinario
        {
            //Modificar Descriptor
            EliminarYModificarDescriptor(RutaArchivos.DescMateriales);
+           //Reorganizar
+           ReordenarElementos("Materiales");
        }
    }
     
@@ -389,10 +514,10 @@ public class ArchivoArbolBinario
             String[] data = line.split("\\|");
             
             //Si es el usuario buscado
-            if (data[0].equals(key)) 
+            if (data[2].equals(key)) 
             {
-               line = data[0] + "|" + data[1] + "|" + data[2] + "|" + data[3] + "|" + data[4] + "|" +  
-                      data[5] + "|" + data[6] + "|" + "0";
+               line = "-"+ "|" + "-" + "|" + data[2] + "|" + data[3] + "|" + data[4] + "|" + data[5] + "|" + data[6] + "|" +  
+                      data[7] + "|" + "0";
                
                found = true;
             }
@@ -426,7 +551,7 @@ public class ArchivoArbolBinario
         {
             String[] data = line.split("\\|");
             
-            //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
+            //Modificar linea 5(Fecha Mod), 8(Reg. Activos), 9(Reg. Inactivos)
             //Si es el material buscado
             if (contador == 5) 
             {
@@ -436,14 +561,14 @@ public class ArchivoArbolBinario
                 
                line = data[0] + "|" + FechaActual; 
             }
-            if (contador == 7) {
+            if (contador == 8) {
                 int registros = Integer.parseInt(data[1]);
                 registros--;
                 
                 line = data[0] + "|" + 
                 Integer.toString(registros);
             }
-            if (contador == 8) {
+            if (contador == 9) {
                 int registros = Integer.parseInt(data[1]);
                 registros++;
                 
@@ -470,16 +595,11 @@ public class ArchivoArbolBinario
 
    public static void ModificarMaterial(String key, MaterialProperties cambios)
    {
-      //Buscar en Bitacora
-       if (!ModificarMaterialDeArchivo(RutaArchivos.BitacoraMateriales, key, cambios)) 
-       {
          //Buscar en maestro
         if (!ModificarMaterialDeArchivo(RutaArchivos.Materiales, key, cambios)) 
         {
             JOptionPane.showMessageDialog(null, "No existe el registro en la base de datos.");   
         }
-       }
-       
    }
    
    private static boolean ModificarMaterialDeArchivo(String ruta, String key, MaterialProperties Material)
@@ -497,12 +617,12 @@ public class ArchivoArbolBinario
         {
             String[] data = line.split("\\|");
             
-            //Si es el material buscado
-            if (data[0].equals(key)) 
+            //Si es el material buscado y esta activo
+            if (data[2].equals(key) && data[data.length - 1].equals("1")) 
             {
-                if (data[0].equals(key))
+                if (data[2].equals(key))
                 {
-                    currentLine = "";
+                    currentLine = "-|-|";
                     
                     currentLine = currentLine + (key); //Nombre material
                     
@@ -512,7 +632,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[1]);
+                        currentLine = currentLine + ("|" +  data[3]);
                     }
                     
                     if (!"".equals(Material.PathImagen) && Material.PathImagen != null)
@@ -521,7 +641,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[2]);
+                        currentLine = currentLine + ("|" +  data[4]);
                     }
                     
                     if (!"".equals(Material.TiempoDegradacion) && Material.TiempoDegradacion != null)
@@ -530,7 +650,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[3]);
+                        currentLine = currentLine + ("|" +  data[5]);
                     }
                     
                     if (!"".equals(Material.UsuarioTransaccion) && Material.UsuarioTransaccion != null)
@@ -539,7 +659,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[4]);
+                        currentLine = currentLine + ("|" +  data[6]);
                     }
                     
                     if (!"".equals(Material.FechaCreacion) && Material.FechaCreacion != null)
@@ -548,7 +668,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[5]);
+                        currentLine = currentLine + ("|" +  data[7]);
                     }
     
                 currentLine = currentLine + ("|" +  "1");
@@ -571,6 +691,7 @@ public class ArchivoArbolBinario
         fileOut.write(inputBuffer.toString().getBytes());
         fileOut.close();
 
+        ReordenarElementos("Materiales");
     } 
        catch (Exception e) 
        {
@@ -592,14 +713,16 @@ public class ArchivoArbolBinario
         {
             String[] data = line.split("\\|");
             
-            //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
+            //Modificar linea 5(Fecha Mod)
             if (contador == 5) 
             {
                 Date date = new Date();
                 SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
                 String FechaActual=ft.format(date);
                 
-               line = data[0] + "|" + FechaActual; 
+                line = data[0] + "|" + FechaActual; 
+            
+                break;
             }
             
             inputBuffer.append(line);
@@ -612,7 +735,6 @@ public class ArchivoArbolBinario
         FileOutputStream fileOut = new FileOutputStream(ruta);
         fileOut.write(inputBuffer.toString().getBytes());
         fileOut.close();
-
     } 
        catch (Exception e) {
         System.out.println("Problem reading file.");

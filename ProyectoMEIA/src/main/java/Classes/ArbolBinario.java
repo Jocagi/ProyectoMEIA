@@ -12,10 +12,21 @@ package Classes;
 class Nodo
 {
     int registro;
-    MaterialProperties material;
+    String material;
+    int posicion;
     
     Nodo izquierdo;
     Nodo derecho;
+    
+    Nodo(String Material)
+    {
+        this.material = Material;
+    }
+    Nodo(String Material, int Posicion)
+    {
+        this.material = Material;
+        this.posicion = Posicion;
+    }
 }
 
 public class ArbolBinario 
@@ -45,22 +56,54 @@ public class ArbolBinario
     }
     private void Insertar(Nodo raiz, Nodo nuevo)
     {
-        if (raiz.derecho == null) 
+        if ((nuevo.material.compareTo(raiz.material)) < 0)
         {
-          raiz.derecho = nuevo;      
-        }
-        else if (raiz.izquierdo == null) 
-        {
-          raiz.izquierdo = nuevo;      
-        }
-        else if ((nuevo.material.Nombre.compareTo(raiz.material.Nombre)) < 0)
-        {
-            Insertar(raiz.izquierdo, nuevo);
+            if (raiz.izquierdo == null) 
+            {
+            raiz.izquierdo = nuevo;      
+            }
+            else
+            {
+            Insertar(raiz.izquierdo, nuevo);    
+            }
         }
         else
         {
-            Insertar(raiz.derecho, nuevo);
+            if (raiz.derecho == null) 
+            {
+            raiz.derecho = nuevo;      
+            }
+            else
+            {
+            Insertar(raiz.derecho, nuevo);    
+            }
         }
     }
-    
+    public Nodo Buscar(String item)
+    {
+        if (raiz != null) {
+            return Buscar(item, raiz);
+        }
+        else return null;
+    }
+    private Nodo Buscar(String item, Nodo raiz)
+    {
+        if (raiz != null) {
+            if (item.equals(raiz.material)) {
+                return raiz;
+            }
+            else if ((item.compareTo(raiz.material)) < 0)
+            {
+            return Buscar(item, raiz.izquierdo);
+            }
+            else
+            {
+            return Buscar(item, raiz. derecho);
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

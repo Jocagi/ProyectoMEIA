@@ -1,5 +1,6 @@
 package Forms;
 
+import Classes.ArchivoArbolBinario;
 import Classes.ArchivoSecuencialMateriales;
 import Classes.MaterialBuscado;
 import Classes.MaterialProperties;
@@ -100,7 +101,7 @@ public class BusquedaMaterial extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        MaterialProperties busqueda = ArchivoSecuencialMateriales.getMaterial(material.getText());
+        MaterialProperties busqueda = ArchivoArbolBinario.getMaterial(material.getText());
         
         if(busqueda != null && busqueda.Status == true)
         {
