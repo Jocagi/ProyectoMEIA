@@ -595,16 +595,11 @@ public class ArchivoArbolBinario
 
    public static void ModificarMaterial(String key, MaterialProperties cambios)
    {
-      //Buscar en Bitacora
-       if (!ModificarMaterialDeArchivo(RutaArchivos.BitacoraMateriales, key, cambios)) 
-       {
          //Buscar en maestro
         if (!ModificarMaterialDeArchivo(RutaArchivos.Materiales, key, cambios)) 
         {
             JOptionPane.showMessageDialog(null, "No existe el registro en la base de datos.");   
         }
-       }
-       
    }
    
    private static boolean ModificarMaterialDeArchivo(String ruta, String key, MaterialProperties Material)
@@ -622,12 +617,12 @@ public class ArchivoArbolBinario
         {
             String[] data = line.split("\\|");
             
-            //Si es el material buscado
-            if (data[0].equals(key)) 
+            //Si es el material buscado y esta activo
+            if (data[2].equals(key) && data[data.length - 1].equals("1")) 
             {
-                if (data[0].equals(key))
+                if (data[2].equals(key))
                 {
-                    currentLine = "";
+                    currentLine = "-|-|";
                     
                     currentLine = currentLine + (key); //Nombre material
                     
@@ -637,7 +632,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[1]);
+                        currentLine = currentLine + ("|" +  data[3]);
                     }
                     
                     if (!"".equals(Material.PathImagen) && Material.PathImagen != null)
@@ -646,7 +641,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[2]);
+                        currentLine = currentLine + ("|" +  data[4]);
                     }
                     
                     if (!"".equals(Material.TiempoDegradacion) && Material.TiempoDegradacion != null)
@@ -655,7 +650,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[3]);
+                        currentLine = currentLine + ("|" +  data[5]);
                     }
                     
                     if (!"".equals(Material.UsuarioTransaccion) && Material.UsuarioTransaccion != null)
@@ -664,7 +659,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[4]);
+                        currentLine = currentLine + ("|" +  data[6]);
                     }
                     
                     if (!"".equals(Material.FechaCreacion) && Material.FechaCreacion != null)
@@ -673,7 +668,7 @@ public class ArchivoArbolBinario
                     }
                     else
                     {
-                        currentLine = currentLine + ("|" +  data[5]);
+                        currentLine = currentLine + ("|" +  data[7]);
                     }
     
                 currentLine = currentLine + ("|" +  "1");
@@ -696,6 +691,7 @@ public class ArchivoArbolBinario
         fileOut.write(inputBuffer.toString().getBytes());
         fileOut.close();
 
+        ReordenarElementos("Materiales");
     } 
        catch (Exception e) 
        {
@@ -717,14 +713,16 @@ public class ArchivoArbolBinario
         {
             String[] data = line.split("\\|");
             
-            //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
+            //Modificar linea 5(Fecha Mod)
             if (contador == 5) 
             {
                 Date date = new Date();
                 SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
                 String FechaActual=ft.format(date);
                 
-               line = data[0] + "|" + FechaActual; 
+                line = data[0] + "|" + FechaActual; 
+            
+                break;
             }
             
             inputBuffer.append(line);
@@ -737,7 +735,6 @@ public class ArchivoArbolBinario
         FileOutputStream fileOut = new FileOutputStream(ruta);
         fileOut.write(inputBuffer.toString().getBytes());
         fileOut.close();
-
     } 
        catch (Exception e) {
         System.out.println("Problem reading file.");
