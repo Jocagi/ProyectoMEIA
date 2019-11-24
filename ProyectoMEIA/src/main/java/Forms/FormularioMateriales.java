@@ -196,7 +196,7 @@ public class FormularioMateriales extends javax.swing.JFrame {
             {
                 
         ArchivoArbolBinario ABinario = new ArchivoArbolBinario();
-        String Atributos = "Izquierdo|Derecho|Usuario|Nombre_Material|Fecha|Peso|Descripción|Evento|Usuario_Transacción|Fecha_Creacion|Estatus";
+        String Atributos = "Izquierdo|Derecho|Nombre_Material|Tipo|Imagen|Tiempo_Para_Degradarse|Usuario|Fecha_Creacion|Estatus";
                     
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");

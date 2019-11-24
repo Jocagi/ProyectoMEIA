@@ -1,5 +1,6 @@
 package Forms;
 
+import Classes.ArchivoArbolBinario;
 import Classes.ArchivoSecuencialMateriales;
 import Classes.MaterialBuscado;
 import Classes.UsuarioBuscado;
@@ -208,7 +209,7 @@ public class ResultadoBusquedaMaterial extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Eliminar material
         try {
-                ArchivoSecuencialMateriales.EliminarMaterial(MaterialBuscado.material.Nombre);
+                ArchivoArbolBinario.EliminarMaterial(MaterialBuscado.material.Nombre);
                 
                 JOptionPane.showMessageDialog(null, "Elemento eliminado exitosamente");
                 
@@ -216,7 +217,9 @@ public class ResultadoBusquedaMaterial extends javax.swing.JFrame {
                 MenuAplicacion h = new MenuAplicacion();
                 h.setVisible(true);
                 
-            } catch (IOException ex) {
+            } catch (IOException ex) 
+            {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado");
                 Logger.getLogger(ResultadoBusqueda.class.getName()).log(Level.SEVERE, null, ex);
             }
     }//GEN-LAST:event_jButton1ActionPerformed

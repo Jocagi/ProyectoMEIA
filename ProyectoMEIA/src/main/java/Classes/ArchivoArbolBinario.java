@@ -31,7 +31,7 @@ public class ArchivoArbolBinario
     
     private static int RegistroInicial = -1;
     
-    private ArbolBinario construirArbol(List<Nodo> contenidoArchivo)
+    private static ArbolBinario construirArbol(List<Nodo> contenidoArchivo)
     {
         ArbolBinario arbol = new ArbolBinario();
         for (Nodo item : contenidoArchivo)
@@ -41,7 +41,7 @@ public class ArchivoArbolBinario
         return arbol;
     }
     
-    public void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
+    public static void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
             int RegistroInicial ,int TotRegistros, int RegistrosActivos,int RegistrosInactivos, String Atributos)
     {
         try {
@@ -61,7 +61,7 @@ public class ArchivoArbolBinario
         }
     }
     
-    private String ObtenerContenidoDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
+    private static String ObtenerContenidoDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
             int RegistroInicial, int TotRegistros, int RegistrosActivos,int RegistrosInactivos, String Atributos)
     {
             String regArchivo="Archivo|"+NombreArchivo+System.getProperty("line.separator");
@@ -80,7 +80,7 @@ public class ArchivoArbolBinario
             
     }
      
-    public void EscribirEnArchivo(String NombreArchivo,String strContenido)
+    public static void EscribirEnArchivo(String NombreArchivo,String strContenido)
     {
        String pathMaster = "C:/MEIA/"+NombreArchivo+".txt";
        String pathDescMaster = "C:/MEIA/desc_"+NombreArchivo+".txt";
@@ -138,8 +138,10 @@ public class ArchivoArbolBinario
         
     }
     
-    private void ReordenarElementos(String NombreArchivo)
+    private static void ReordenarElementos(String NombreArchivo)
     {
+       String pathDescMaster = "C:/MEIA/desc_"+NombreArchivo+".txt";
+       
        String path = "C:/MEIA/"+NombreArchivo+".txt";
        
        List<String> elementosArchivo = new ArrayList<String>();
@@ -219,7 +221,24 @@ public class ArchivoArbolBinario
             }
            
             writer.close();
-    
+            
+            //Actualizar desscriptor 
+            
+             Date date = new Date();
+             SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
+             String FechaActual=ft.format(date);
+             
+             String Organizacion = "Arbol Binario";
+             String Usuario = IdentificarCreadorArchivo(pathDescMaster);
+             String Fecha_Creacion = IdentificarFechaCreacion(pathDescMaster);
+             int Total_Registros = IdentificarTotRegistros(pathDescMaster);
+             int Registros_Activos = IdentificarRegActivos(pathDescMaster);
+             int Registros_Inactivos = IdentificarRegInactivos(pathDescMaster);;
+             String Atributos = IdentificarAtributos(pathDescMaster);
+        
+             EscribirDescriptor(NombreArchivo,Organizacion,Usuario,Fecha_Creacion,FechaActual,RegistroInicial
+                ,Total_Registros,Registros_Activos,Registros_Inactivos, Atributos);
+        
             }
             catch (IOException ex) {
             Logger.getLogger(ArchivoArbolBinario.class.getName()).log(Level.SEVERE, null, ex);
@@ -228,7 +247,7 @@ public class ArchivoArbolBinario
             {}
     }
     
-   public void Reorganizar(String NombreArchivo)
+   public static void Reorganizar(String NombreArchivo)
    {
        String pathMaster = "C:/MEIA/"+NombreArchivo+".txt";
        String pathDescMaster = "C:/MEIA/desc_"+NombreArchivo+".txt";
@@ -277,7 +296,7 @@ public class ArchivoArbolBinario
         }           
    }
    
-    private String IdentificarValorEnDescriptor(String path, String llave)
+    private static String IdentificarValorEnDescriptor(String path, String llave)
     {
         String Resultado = "";
             try {
@@ -313,7 +332,7 @@ public class ArchivoArbolBinario
         return Resultado;
     }
    
-    public String IdentificarCreadorArchivo(String strPath)
+    public static String IdentificarCreadorArchivo(String strPath)
     {
         String creador = IdentificarValorEnDescriptor(strPath, "Usuario");
         
@@ -325,7 +344,7 @@ public class ArchivoArbolBinario
         return creador;
     }
     
-    public String IdentificarAtributos(String strPath)
+    public static String IdentificarAtributos(String strPath)
     {
         String valor = IdentificarValorEnDescriptor(strPath, "Atributos");
         
@@ -337,7 +356,7 @@ public class ArchivoArbolBinario
         return valor;
     }
     
-    public String IdentificarFechaCreacion(String strPath)
+    public static String IdentificarFechaCreacion(String strPath)
     {
         String FechaCreacion = IdentificarValorEnDescriptor(strPath, "Fecha_Creacion");
         
@@ -351,7 +370,7 @@ public class ArchivoArbolBinario
         return FechaCreacion;
     }
     
-    public int IdentificarTotRegistros(String strPath)
+    public static int IdentificarTotRegistros(String strPath)
     {
         int Registros = 0;
         
@@ -361,7 +380,7 @@ public class ArchivoArbolBinario
         return Registros;
     }
     
-    public int IdentificarRegActivos(String strPath)
+    public static int IdentificarRegActivos(String strPath)
     {
         int Registros = 0;
         
@@ -371,7 +390,7 @@ public class ArchivoArbolBinario
         return Registros;
     }
     
-    public int IdentificarRegInactivos(String strPath)
+    public static int IdentificarRegInactivos(String strPath)
     {
         int Registros = 0;
         
@@ -381,7 +400,7 @@ public class ArchivoArbolBinario
         return Registros;
     }
     
-    public int IdentificarRegInicial(String strPath)
+    public static int IdentificarRegInicial(String strPath)
     {
          int Num = 0;
         
@@ -402,11 +421,11 @@ public class ArchivoArbolBinario
     public static MaterialProperties getMaterial(String key)
     {
        //Buscar en archivos
-       MaterialProperties material1 = obtenerMaterial(key, RutaArchivos.Materiales);
+       MaterialProperties material = obtenerMaterial(key, RutaArchivos.Materiales);
        
-       if(!material1.Nombre.equals("")) //Si el objeto estaba en master
+       if(!material.Nombre.equals("")) //Si el objeto estaba en master
        {
-           return material1;
+           return material;
        }
        else
        {
@@ -429,16 +448,16 @@ public class ArchivoArbolBinario
             String[] data = line.split("\\|");
             
             //Si es el usuario buscado
-            if (data[0].equals(key)) 
+            if (data[2].equals(key)) 
             {
-                Material.Nombre = data[0];
-                Material.Tipo = data[1];
-                Material.PathImagen = data[2];
-                Material.TiempoDegradacion = data[3];
-                Material.UsuarioTransaccion = data[4];
-                Material.FechaCreacion = data[5];
+                Material.Nombre = data[2];
+                Material.Tipo = data[3];
+                Material.PathImagen = data[4];
+                Material.TiempoDegradacion = data[5];
+                Material.UsuarioTransaccion = data[6];
+                Material.FechaCreacion = data[7];
                 
-                if ("1".equals(data[6]))
+                if ("1".equals(data[8]))
                 {
                 Material.Status = true;    
                 }
@@ -464,6 +483,8 @@ public class ArchivoArbolBinario
        {
            //Modificar Descriptor
            EliminarYModificarDescriptor(RutaArchivos.DescMateriales);
+           //Reorganizar
+           ReordenarElementos("Materiales");
        }
    }
     
@@ -482,10 +503,10 @@ public class ArchivoArbolBinario
             String[] data = line.split("\\|");
             
             //Si es el usuario buscado
-            if (data[0].equals(key)) 
+            if (data[2].equals(key)) 
             {
-               line = data[0] + "|" + data[1] + "|" + data[2] + "|" + data[3] + "|" + data[4] + "|" +  
-                      data[5] + "|" + data[6] + "|" + "0";
+               line = "-"+ "|" + "-" + "|" + data[2] + "|" + data[3] + "|" + data[4] + "|" + data[5] + "|" + data[6] + "|" +  
+                      data[7] + "|" + "0";
                
                found = true;
             }
@@ -519,7 +540,7 @@ public class ArchivoArbolBinario
         {
             String[] data = line.split("\\|");
             
-            //Modificar linea 5(Fecha Mod), 7(Reg. Activos), 8(Reg. Inactivos)
+            //Modificar linea 5(Fecha Mod), 8(Reg. Activos), 9(Reg. Inactivos)
             //Si es el material buscado
             if (contador == 5) 
             {
@@ -529,14 +550,14 @@ public class ArchivoArbolBinario
                 
                line = data[0] + "|" + FechaActual; 
             }
-            if (contador == 7) {
+            if (contador == 8) {
                 int registros = Integer.parseInt(data[1]);
                 registros--;
                 
                 line = data[0] + "|" + 
                 Integer.toString(registros);
             }
-            if (contador == 8) {
+            if (contador == 9) {
                 int registros = Integer.parseInt(data[1]);
                 registros++;
                 
