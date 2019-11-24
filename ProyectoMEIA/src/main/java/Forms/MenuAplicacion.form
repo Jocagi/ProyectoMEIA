@@ -78,7 +78,7 @@
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                       <Component id="Role" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="40" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="Reportes" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="Fotografia" min="-2" pref="153" max="-2" attributes="0"/>
