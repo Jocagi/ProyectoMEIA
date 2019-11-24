@@ -112,6 +112,11 @@ public class MenuAplicacion extends javax.swing.JFrame {
         });
 
         Reportes.setText("Reportes");
+        Reportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReportesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,7 +167,7 @@ public class MenuAplicacion extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(1, 1, 1)
                         .addComponent(Role)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Reportes))
                     .addComponent(Fotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
@@ -254,6 +259,10 @@ private void validateUser()
         m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void ReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ReportesActionPerformed
 
     /**
      * @param args the command line arguments
