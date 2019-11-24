@@ -28,13 +28,17 @@ import javax.swing.JOptionPane;
  */
 public class ArchivoArbolBinario 
 {
-    private void contruirArbol(String NombreArchivo, List<String> contenidoArchivo)
+    
+    private static int RegistroInicial = -1;
+    
+    private ArbolBinario construirArbol(List<Nodo> contenidoArchivo)
     {
         ArbolBinario arbol = new ArbolBinario();
-        for (String item : contenidoArchivo)
+        for (Nodo item : contenidoArchivo)
         {
             arbol.Insertar(item);
         }
+        return arbol;
     }
     
     public void EscribirDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
@@ -60,7 +64,7 @@ public class ArchivoArbolBinario
     private String ObtenerContenidoDescriptor(String NombreArchivo, String TipoOrg, String UsuarioCreador,String FechaCreacion, String FechaModificacion,
             int RegistroInicial, int TotRegistros, int RegistrosActivos,int RegistrosInactivos, String Atributos)
     {
-            String regArchivo="Archivo|Bitacora"+NombreArchivo+System.getProperty("line.separator");
+            String regArchivo="Archivo|"+NombreArchivo+System.getProperty("line.separator");
             String regOrganizacion="Organizacion|"+TipoOrg+System.getProperty("line.separator");
             String regUsuario="Usuario|"+UsuarioCreador+System.getProperty("line.separator");
             String regFechaCreacion="Fecha_Creacion|"+FechaCreacion+System.getProperty("line.separator");
@@ -78,26 +82,25 @@ public class ArchivoArbolBinario
      
     public void EscribirEnArchivo(String NombreArchivo,String strContenido)
     {
-        
        String pathMaster = "C:/MEIA/"+NombreArchivo+".txt";
        String pathDescMaster = "C:/MEIA/desc_"+NombreArchivo+".txt";
        
-        Boolean Activo=false;
         String[]split=strContenido.split("\\|");
-        
-        if("1".equals(split[split.length - 1]))
-        {
-            Activo=true;
-        }
+        Boolean Activo="1".equals(split[split.length - 1]);
         
         //Agregar contenido al achivo
         try {
-            FileWriter Escribir=null;
-            Escribir = new FileWriter(pathMaster,true);
-            BufferedWriter bw = new BufferedWriter(Escribir);          
+            FileWriter Escribir = new FileWriter(pathMaster,true);
+            BufferedWriter bw = new BufferedWriter(Escribir);
+            
             bw.write(strContenido+ System.getProperty( "line.separator" ));
+            
             bw.close();
-            Escribir.close();    
+            Escribir.close();  
+            
+        //Asignar indice correcto a cada atributo en el archivo
+        ReordenarElementos(NombreArchivo);
+        
         } catch (IOException ex) {
             Logger.getLogger(ArchivoSecuencial.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,14 +112,13 @@ public class ArchivoArbolBinario
              SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy 'at' hh:mm");
              String FechaActual=ft.format(date);
              
-             String Organizacion = "Secuencial";
+             String Organizacion = "Arbol Binario";
              String Usuario = IdentificarCreadorArchivo(pathDescMaster);
              String Fecha_Creacion = IdentificarFechaCreacion(pathDescMaster);
              int Total_Registros = IdentificarTotRegistros(pathDescMaster);
              int Registros_Activos = IdentificarRegActivos(pathDescMaster);
              int Registros_Inactivos = IdentificarRegInactivos(pathDescMaster);;
              String Atributos = IdentificarAtributos(pathDescMaster);
-             int RegistroInicial = IdentificarRegInicial(pathDescMaster);
              
         if (Archivo.exists()) {
              
@@ -132,7 +134,98 @@ public class ArchivoArbolBinario
             }
         
         EscribirDescriptor(NombreArchivo,Organizacion,Usuario,Fecha_Creacion,FechaActual,RegistroInicial
-                ,Total_Registros,Registros_Activos,Registros_Inactivos, Atributos);   
+                ,Total_Registros,Registros_Activos,Registros_Inactivos, Atributos);
+        
+    }
+    
+    private void ReordenarElementos(String NombreArchivo)
+    {
+       String path = "C:/MEIA/"+NombreArchivo+".txt";
+       
+       List<String> elementosArchivo = new ArrayList<String>();
+       List<Nodo> elementosActivos = new ArrayList<Nodo>();
+       List<String> nuevosElementos = new ArrayList<String>();
+       String line;
+       int posicion = 1;
+       
+       ArbolBinario arbol;
+            try 
+            {
+                //Anadir elementos del maestro a memoria
+                
+                File Master = new File(path);
+                
+                if (Master.exists()) 
+                {
+                BufferedReader file = new BufferedReader(new FileReader(path));
+                    while ((line = file.readLine()) != null) 
+                    {
+                    String[]split=line.split("\\|");
+                    if ("1".equals(split[split.length - 1])) //Si es un registro activo
+                    {
+                        elementosArchivo.add(line);
+                        elementosActivos.add(new Nodo(split[2], posicion)); //Anadir llave para insertarla en el arbol
+                    }
+                    else
+                    {
+                        elementosArchivo.add(line);
+                    }
+                    
+                    posicion++;
+                    }            
+                file.close();
+                
+                //Operaciones en arbol binario
+                
+                arbol = construirArbol(elementosActivos);
+                RegistroInicial = arbol.raiz.posicion;
+                
+                //Cambiar atributos
+                
+                for (String item : elementosArchivo)
+                {
+                    String[]split=item.split("\\|");
+                    Nodo res = arbol.Buscar(split[2]);
+                    
+                    String izquierdo = "-";
+                    String derecho = "-";
+                    
+                    if (res != null) 
+                    {
+                        if (res.izquierdo != null) 
+                        {
+                           izquierdo = Integer.toString(res.izquierdo.posicion);
+                        } 
+                        if (res.derecho != null) 
+                        {
+                            derecho = Integer.toString(res.derecho.posicion);
+                        } 
+                    }
+                    
+                    String tmp = izquierdo + "|" + derecho + "|" + split[2] + "|" + split[3] + "|" + 
+                                split[4] + "|" + split [5] + "|" + split[6] + "|"+ split[7]+ "|"+ split[8]; 
+                       
+                    nuevosElementos.add(tmp);
+                }
+                }
+                
+                //Escribir elementos en archivo
+           BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            
+           for (String item : nuevosElementos)
+            {
+                writer.write(item);                 
+                writer.newLine();
+            }
+           
+            writer.close();
+    
+            }
+            catch (IOException ex) {
+            Logger.getLogger(ArchivoArbolBinario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch(Exception e)
+            {}
     }
     
    public void Reorganizar(String NombreArchivo)
@@ -174,7 +267,7 @@ public class ArchivoArbolBinario
             
             int TamanoLista = elementosArchivo.size();
             
-            EscribirDescriptor(NombreArchivo,"Arbol Bianrio",IdentificarCreadorArchivo(pathDescMaster),IdentificarFechaCreacion(pathDescMaster),FechaActual,
+            EscribirDescriptor(NombreArchivo,"Arbol Binario",IdentificarCreadorArchivo(pathDescMaster),IdentificarFechaCreacion(pathDescMaster),FechaActual,
                      IdentificarRegInicial(pathDescMaster),TamanoLista,TamanoLista,0,IdentificarAtributos(pathDescMaster));   
             
         } catch (FileNotFoundException ex) {

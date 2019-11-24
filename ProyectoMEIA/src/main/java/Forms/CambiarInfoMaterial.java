@@ -77,6 +77,8 @@ public class CambiarInfoMaterial extends javax.swing.JFrame {
             }
         });
 
+        NombreField.setEditable(false);
+
         jLabel9.setText("Imagen:");
 
         ImportPhotoBtn2.setText("Importar");

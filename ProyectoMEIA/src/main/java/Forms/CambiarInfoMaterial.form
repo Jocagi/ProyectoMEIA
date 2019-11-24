@@ -131,6 +131,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="NombreField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
