@@ -54,9 +54,6 @@ public class ReporteDonaciones extends javax.swing.JFrame {
         this.elementos = lista;
         initComponents();
         
-        this.FechaInicio.setText("");
-        this.FechaFinal.setText("");
-        
         createAndShowGUI();
     }
 
@@ -145,11 +142,15 @@ public class ReporteDonaciones extends javax.swing.JFrame {
         Tabla = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        FechaInicio = new javax.swing.JTextField();
-        FechaFinal = new javax.swing.JTextField();
+        DiaInicio = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        MesInicio = new javax.swing.JTextField();
+        AnioInicio = new javax.swing.JTextField();
+        MesFin = new javax.swing.JTextField();
+        AnioFin = new javax.swing.JTextField();
+        DiaFin = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,17 +173,10 @@ public class ReporteDonaciones extends javax.swing.JFrame {
             }
         });
 
-        FechaInicio.setText("1999-01-31");
-        FechaInicio.addActionListener(new java.awt.event.ActionListener() {
+        DiaInicio.setText("Dia");
+        DiaInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FechaInicioActionPerformed(evt);
-            }
-        });
-
-        FechaFinal.setText("2019-12-31");
-        FechaFinal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FechaFinalActionPerformed(evt);
+                DiaInicioActionPerformed(evt);
             }
         });
 
@@ -197,6 +191,21 @@ public class ReporteDonaciones extends javax.swing.JFrame {
             }
         });
 
+        MesInicio.setText("Mes");
+
+        AnioInicio.setText("Año");
+
+        MesFin.setText("Mes");
+
+        AnioFin.setText("Año");
+
+        DiaFin.setText("Dia");
+        DiaFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DiaFinActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,24 +214,34 @@ public class ReporteDonaciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1073, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(469, 469, 469))
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(FechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(DiaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AnioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DiaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MesFin, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AnioFin, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(469, 469, 469))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,15 +252,24 @@ public class ReporteDonaciones extends javax.swing.JFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(FechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(jButton2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(DiaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2)
+                                .addComponent(MesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(AnioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(DiaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(MesFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(AnioFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -259,21 +287,23 @@ public class ReporteDonaciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void FechaFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FechaFinalActionPerformed
+    private void DiaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DiaInicioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_FechaFinalActionPerformed
-
-    private void FechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FechaInicioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FechaInicioActionPerformed
+    }//GEN-LAST:event_DiaInicioActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            
-        ReporteDonaciones h = new ReporteDonaciones(FiltroFechas.ListaFiltrada(FechaInicio.getText(),FechaFinal.getText()));
+        String fechaInicio=AnioInicio.getText()+"-"+MesInicio.getText()+"-"+DiaInicio.getText();
+        String fechaFinal=AnioFin.getText()+"-"+MesFin.getText()+"-"+DiaFin.getText();
+
+        ReporteDonaciones h = new ReporteDonaciones(FiltroFechas.ListaFiltrada(fechaInicio,fechaFinal));
         h.setVisible(true);
         
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void DiaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DiaFinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DiaFinActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,8 +342,12 @@ public class ReporteDonaciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField FechaFinal;
-    private javax.swing.JTextField FechaInicio;
+    private javax.swing.JTextField AnioFin;
+    private javax.swing.JTextField AnioInicio;
+    private javax.swing.JTextField DiaFin;
+    private javax.swing.JTextField DiaInicio;
+    private javax.swing.JTextField MesFin;
+    private javax.swing.JTextField MesInicio;
     private javax.swing.JTable Tabla;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
