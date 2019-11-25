@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author Allan Dávila
  */
 public class FiltroFechas {
-    public List ListaFiltrada(String fechaInicio,String fechaFinal){
+    public static List ListaFiltrada(String fechaInicio,String fechaFinal){
         BufferedReader Archivo=null;
                                 List<String>listaFinal= new ArrayList<String>();
 
@@ -38,13 +38,25 @@ public class FiltroFechas {
                 int mesActual=Integer.parseInt(atributos[4].split("\\-")[1]);
                 int diaActual=Integer.parseInt(atributos[4].split("\\-")[2]);             
                 
-                if (anioActual>anioInicio&&anioActual<anioFinal) {
-                    if (mesActual>mesInicio&&mesActual<mesFinal) {
-                        if (diaActual>diaInicio&&diaActual<diaFinal) {
-                            listaParcial.add(linea);
-                        }
+                if (anioActual>anioInicio && anioActual<anioFinal) 
+                {
+                    listaParcial.add(linea);
+                }
+                else if (anioActual == anioInicio)
+                {
+                    if (mesActual>mesInicio && diaActual>diaInicio) 
+                    {
+                       listaParcial.add(linea);
                     }
                 }
+                else if (anioActual == anioFinal)
+                {
+                    if (mesActual<mesFinal && diaActual<diaFinal) 
+                    {
+                       listaParcial.add(linea);
+                    }
+                }
+                
                 linea=Archivo.readLine();
             }
 

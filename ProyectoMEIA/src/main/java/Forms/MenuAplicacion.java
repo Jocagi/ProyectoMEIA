@@ -261,8 +261,8 @@ private void validateUser()
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void ReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportesActionPerformed
-        
-        ReporteMateriales n = new ReporteMateriales();
+ 
+        MenuReporte n = new MenuReporte();
         n.setVisible(true);
         this.dispose();
        
