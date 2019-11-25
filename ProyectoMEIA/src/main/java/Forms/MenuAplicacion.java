@@ -209,6 +209,7 @@ private void validateUser()
     if(!"Admin".equals(Login.getUserRole()))
     {
         MaterialButtom.setVisible(false);
+        Reportes.setVisible(false);
     }
 }
 

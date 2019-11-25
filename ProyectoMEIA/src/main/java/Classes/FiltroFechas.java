@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,9 +19,11 @@ import java.util.logging.Logger;
  * @author Allan Dávila
  */
 public class FiltroFechas {
-    public static List ListaFiltrada(String fechaInicio,String fechaFinal){
+    public static List ListaFiltrada(String fechaInicio,String fechaFinal)
+    {
+       
         BufferedReader Archivo=null;
-                                List<String>listaFinal= new ArrayList<String>();
+        List<String>listaFinal= new ArrayList<String>();
 
         try {
             int anioInicio=Integer.parseInt(fechaInicio.split("\\-")[0]);
@@ -38,23 +41,49 @@ public class FiltroFechas {
                 int mesActual=Integer.parseInt(atributos[4].split("\\-")[1]);
                 int diaActual=Integer.parseInt(atributos[4].split("\\-")[2]);             
                 
+                boolean sePuedeInsertar = false;
+                
                 if (anioActual>anioInicio && anioActual<anioFinal) 
                 {
+                    sePuedeInsertar = true;
+                }
+                else if (anioActual == anioInicio || anioActual == anioFinal)
+                {
+                    if (mesActual>=mesInicio && anioActual == anioInicio) 
+                    {
+                        if( !(mesActual==mesInicio && diaActual<=diaInicio) )
+                        {
+                            sePuedeInsertar = true;
+                        }
+                    }
+                    if (mesActual<=mesFinal && anioActual == anioFinal) 
+                    {
+                        if( !(mesActual==mesInicio && diaActual>=diaFinal) )
+                        {
+                            sePuedeInsertar = true;
+                        }
+                    }
+                    if (anioInicio == anioFinal) //Corregir error
+                    {
+                        if( (mesActual < mesInicio || mesActual > mesFinal) )
+                        {
+                            sePuedeInsertar = false;
+                        }
+                        else if (mesActual == mesInicio && diaActual < diaInicio)
+                        {
+                            sePuedeInsertar = false;
+                        }
+                        else if (mesActual == mesFinal && diaActual > diaFinal)
+                        {
+                            sePuedeInsertar = false;
+                        }
+                    }
+                }
+                
+                //Insertar
+                if (sePuedeInsertar)
+                {
                     listaParcial.add(linea);
-                }
-                else if (anioActual == anioInicio)
-                {
-                    if (mesActual>mesInicio && diaActual>diaInicio) 
-                    {
-                       listaParcial.add(linea);
-                    }
-                }
-                else if (anioActual == anioFinal)
-                {
-                    if (mesActual<mesFinal && diaActual<diaFinal) 
-                    {
-                       listaParcial.add(linea);
-                    }
                 }
                 
                 linea=Archivo.readLine();
@@ -78,7 +107,10 @@ public class FiltroFechas {
         } catch (IOException ex) { 
             Logger.getLogger(FiltroFechas.class.getName()).log(Level.SEVERE, null, ex);
         }
-                    return listaFinal;
+        
+        Collections.sort(listaFinal);
+        
+        return listaFinal;
 
     }
     
