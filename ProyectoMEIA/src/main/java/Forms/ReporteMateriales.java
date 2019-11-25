@@ -97,27 +97,6 @@ public class ReporteMateriales extends javax.swing.JFrame {
        return elementosArchivo;
     }
     
-    private Image getIcon(String path)
-    {
-        
-        ImageIcon newIcon;
-        
-        try
-        {
-        newIcon= new ImageIcon(path);
-        }
-        catch(Exception e)
-        {
-        newIcon= new ImageIcon(RutaArchivos.defaultImage);
-        }
-        
-        //Resize image to fit table
-        Image img = newIcon.getImage();
-        Image newimg = img.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
-        
-        return newimg;
-    }
-    
      private void createAndShowGUI()
     {
         List<String> components = getListOfComponents();
@@ -164,7 +143,14 @@ public class ReporteMateriales extends javax.swing.JFrame {
             //Fecha
             data[i][5] = split[5];
             //Estatus
-            data[i][6] = split[6];
+            if (split[6].equals("0")) 
+            {
+                data[i][6] = "Inactivo";
+            }
+            else
+            {
+            data[i][6] = "Activo";
+            }
             
         }
         
